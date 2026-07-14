@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import { CheckCircle2 } from "lucide-react";
 
 const SEGMENTOS = [
