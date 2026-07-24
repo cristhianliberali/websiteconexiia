@@ -88,14 +88,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Atendimento com IA humanizada para empresas que investem em tráfego pago. Responde em segundos, qualifica e vende 24/7.",
+          "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Conexi IA — Seu melhor vendedor, 24 horas por dia" },
+      { name: "twitter:description", content: "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1a3c0ac6-e943-4a00-8e5f-c7ab2e7d3259/id-preview-b5d42bb5--7ff0f72e-25b9-48db-8f61-0a8b7c3a2af7.lovable.app-1784911857309.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1a3c0ac6-e943-4a00-8e5f-c7ab2e7d3259/id-preview-b5d42bb5--7ff0f72e-25b9-48db-8f61-0a8b7c3a2af7.lovable.app-1784911857309.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: faviconMark.url, type: "image/png" },
+      { rel: "icon", href: "/__l5e/assets-v1/d9e4431e-b662-4289-9ed9-1a47cfb28122/conexi-mark.png", type: "image/png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
