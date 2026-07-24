@@ -153,7 +153,7 @@ export function DiagnosticoForm() {
         </Field>
       </div>
 
-      <button type="submit" className="btn-primary w-full py-4 text-base">
+      <button type="submit" className="btn-primary mt-8 w-full py-4 text-base">
         Quero meu diagnóstico gratuito
       </button>
       <p className="text-center text-sm text-surface-dark-muted">
