@@ -82,7 +82,7 @@ export function WhatsAppMockup() {
           ))}
 
           <div className="flex justify-end">
-            <div className="rounded-full bg-primary/15 px-3 py-1 text-xs font-medium text-[#075E54]">
+            <div className="rounded-full bg-success/20 px-3 py-1 text-xs font-medium text-[#075E54]">
               ✓ Lead qualificado · agendado
             </div>
           </div>

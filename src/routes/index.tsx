@@ -25,21 +25,23 @@ import { useState } from "react";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { WhatsAppMockup } from "@/components/WhatsAppMockup";
 import { DiagnosticoForm } from "@/components/DiagnosticoForm";
+import logoDark from "@/assets/conexi-logo-dark.png.asset.json";
+import logoWhite from "@/assets/conexi-logo-white.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
 });
 
-function Logo() {
+function Logo({ variant = "dark" }: { variant?: "dark" | "light" }) {
+  const src = variant === "light" ? logoWhite.url : logoDark.url;
   return (
-    <div className="flex items-center gap-2">
-      <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-        <Sparkles className="h-5 w-5" strokeWidth={2.5} />
-      </div>
-      <span className="font-display text-xl font-bold tracking-tight">
-        Conexi<span className="text-primary">IA</span>
-      </span>
-    </div>
+    <img
+      src={src}
+      alt="Conexi IA"
+      className="h-7 w-auto sm:h-8"
+      loading="eager"
+      decoding="async"
+    />
   );
 }
 
