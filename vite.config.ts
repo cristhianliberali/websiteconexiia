@@ -1,15 +1,10 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-import { nitro } from "nitro/vite";
 
 export default defineConfig({
-  vite: {
-    plugins: [
-      nitro({
-        preset: "static",
-      }),
-    ],
-  },
   tanstackStart: {
     server: { entry: "server" },
+    nitro: {
+      preset: "static",
+    },
   },
 });
