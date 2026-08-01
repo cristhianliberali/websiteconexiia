@@ -25,18 +25,16 @@ import { useState } from "react";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { WhatsAppMockup } from "@/components/WhatsAppMockup";
 import { DiagnosticoForm } from "@/components/DiagnosticoForm";
-import logoDark from "@/assets/conexi-logo-dark.png.asset.json";
-import logoWhite from "@/assets/conexi-logo-white.png.asset.json";
+import logoGray from "@/assets/conexi-logo-gray.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
 });
 
-function Logo({ variant = "dark" }: { variant?: "dark" | "light" }) {
-  const src = variant === "light" ? logoWhite.url : logoDark.url;
+function Logo() {
   return (
     <img
-      src={src}
+      src={logoGray.url}
       alt="Conexi IA"
       className="h-7 w-auto sm:h-8"
       loading="eager"
