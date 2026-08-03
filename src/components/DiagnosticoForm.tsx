@@ -48,6 +48,20 @@ export function DiagnosticoForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [plano, setPlano] = useState<{ plano: string; preco: string } | null>(null);
+
+  useEffect(() => {
+    function onPlano(ev: Event) {
+      const detail = (ev as CustomEvent<{ plano: string; preco: string }>).detail;
+      if (detail?.plano) {
+        setPlano(detail);
+        setStep(1);
+      }
+    }
+    window.addEventListener("conexi:plano-selecionado", onPlano);
+    return () => window.removeEventListener("conexi:plano-selecionado", onPlano);
+  }, []);
+
 
   function set<K extends keyof typeof form>(k: K, v: string) {
     setForm((f) => ({ ...f, [k]: v }));
