@@ -90,6 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://lp.conexiia.com.br/" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Conexi IA — Seu melhor vendedor, 24 horas por dia" },
       { name: "twitter:description", content: "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente." },
@@ -98,6 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: "https://lp.conexiia.com.br/" },
       { rel: "icon", href: "/favicon.webp", type: "image/webp" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },

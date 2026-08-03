@@ -28,6 +28,8 @@ This project was built with [Lovable](https://lovable.dev).
 
 **Live app**: https://conexi-flow-ai.lovable.app
 
+**Domínio de produção**: https://lp.conexiia.com.br (deploy via Easypanel, usando o `Dockerfile` na raiz do projeto)
+
 ## Build with Lovable
 
 Continue developing this project in the [Lovable editor](https://lovable.dev/projects/7ff0f72e-25b9-48db-8f61-0a8b7c3a2af7).
