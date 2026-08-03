@@ -144,6 +144,7 @@ export function DiagnosticoForm() {
   async function onSubmit(ev: FormEvent) {
     ev.preventDefault();
     if (sending) return;
+    setServerError("");
 
     const utms = { ...tracking, ...readTracking() };
     const contexto = {
@@ -156,7 +157,7 @@ export function DiagnosticoForm() {
     if (step === 1) {
       if (!validateStep1()) return;
       setSending(true);
-      await sendWebhook({
+      const res = await sendWebhook({
         etapa: 1,
         nome: form.nome.trim(),
         whatsapp: form.whatsapp,
@@ -167,6 +168,10 @@ export function DiagnosticoForm() {
         ...contexto,
       });
       setSending(false);
+      if (!res.ok) {
+        setServerError(res.mensagem || FALLBACK_ERRO);
+        return;
+      }
       setErrors({});
       setStep(2);
       return;
@@ -174,7 +179,7 @@ export function DiagnosticoForm() {
 
     if (!validateStep2()) return;
     setSending(true);
-    await sendWebhook({
+    const res = await sendWebhook({
       etapa: 2,
       nome: form.nome.trim(),
       whatsapp: form.whatsapp,
@@ -188,6 +193,11 @@ export function DiagnosticoForm() {
       ...contexto,
     });
     setSending(false);
+    if (!res.ok) {
+      setServerError(res.mensagem || FALLBACK_ERRO);
+      return;
+    }
+    setSuccessMsg(res.mensagem);
     setSubmitted(true);
   }
 
@@ -199,8 +209,8 @@ export function DiagnosticoForm() {
         </div>
         <h3 className="text-2xl font-bold text-surface-dark-foreground">Recebido!</h3>
         <p className="mt-3 text-surface-dark-muted">
-          Em instantes você recebe uma mensagem no seu WhatsApp. Fique de olho: a velocidade da
-          nossa resposta já é a primeira demonstração do produto.
+          {successMsg ||
+            "Em instantes você recebe uma mensagem no seu WhatsApp. Fique de olho: a velocidade da nossa resposta já é a primeira demonstração do produto."}
         </p>
       </div>
     );
