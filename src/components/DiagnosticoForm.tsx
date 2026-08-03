@@ -118,7 +118,10 @@ export function DiagnosticoForm() {
       empresa: form.empresa.trim(),
       segmento: form.segmento,
       atendentes: form.atendentes,
+      plano: plano?.plano ?? "",
+      preco: plano?.preco ?? "",
       enviado_em: new Date().toISOString(),
+
     });
     setSending(false);
     setSubmitted(true);
