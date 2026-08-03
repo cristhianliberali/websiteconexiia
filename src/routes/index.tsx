@@ -25,7 +25,7 @@ import { useState } from "react";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { WhatsAppMockup } from "@/components/WhatsAppMockup";
 import { DiagnosticoForm } from "@/components/DiagnosticoForm";
-import logoGray from "@/assets/conexi-logo-gray.webp.asset.json";
+import logoGray from "@/assets/conexi-logo-gray.webp";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/")({
 function Logo() {
   return (
     <img
-      src={logoGray.url}
+      src={logoGray}
       alt="Conexi IA"
       className="h-7 w-auto sm:h-8"
       loading="eager"
