@@ -1,7 +1,8 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { CheckCircle2 } from "lucide-react";
-
-const WEBHOOK_URL = "https://n8n.scnet.com.br/webhook/conexiia/formulario-leads";
+import { generateEventId, trackPixelEvent } from "@/lib/meta-pixel";
+import { getRecaptchaToken } from "@/lib/recaptcha";
+import { submitDiagnosticoLead } from "@/lib/server-functions";
 
 const SEGMENTOS = [
   "Provedor de internet",
@@ -83,31 +84,25 @@ function readTracking(): Record<string, string> {
   return merged;
 }
 
-type WebhookResult = { ok: boolean; mensagem: string };
-
 const FALLBACK_ERRO =
   "Não foi possível enviar seus dados agora. Tente novamente em instantes.";
 
-async function sendWebhook(payload: Record<string, unknown>): Promise<WebhookResult> {
+type WebhookResult = { ok: boolean; mensagem: string };
+
+async function sendLead(
+  payload: Record<string, unknown>,
+  recaptchaAction: string,
+  metaEventId: string,
+  isFinalStep: boolean,
+): Promise<WebhookResult> {
   try {
-    const res = await fetch(WEBHOOK_URL, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
+    const recaptcha_token = await getRecaptchaToken(recaptchaAction);
+    const res = await submitDiagnosticoLead({
+      data: { ...payload, recaptcha_token, meta_event_id: metaEventId, is_final_step: isFinalStep },
     });
-
-    let data: { status?: string; mensagem_usuario?: string } = {};
-    try {
-      const raw = await res.text();
-      data = raw ? JSON.parse(raw) : {};
-    } catch {
-      data = {};
-    }
-
-    const ok = res.ok && data.status !== "erro";
     return {
-      ok,
-      mensagem: data.mensagem_usuario || (ok ? "" : FALLBACK_ERRO),
+      ok: res.status !== "erro",
+      mensagem: res.mensagem_usuario || (res.status === "erro" ? FALLBACK_ERRO : ""),
     };
   } catch {
     return { ok: false, mensagem: FALLBACK_ERRO };
@@ -130,6 +125,7 @@ export function DiagnosticoForm() {
   const [successMsg, setSuccessMsg] = useState("");
   const [plano, setPlano] = useState<{ plano: string; preco: string } | null>(null);
   const [tracking, setTracking] = useState<Record<string, string>>({});
+  const [leadEventId] = useState(() => generateEventId());
 
   useEffect(() => {
     setTracking(readTracking());
@@ -186,16 +182,21 @@ export function DiagnosticoForm() {
     if (step === 1) {
       if (!validateStep1()) return;
       setSending(true);
-      const res = await sendWebhook({
-        etapa: 1,
-        nome: form.nome.trim(),
-        whatsapp: form.whatsapp,
-        whatsapp_digits: form.whatsapp.replace(/\D/g, ""),
-        plano: plano?.plano ?? "",
-        preco: plano?.preco ?? "",
-        enviado_em: new Date().toISOString(),
-        ...contexto,
-      });
+      const res = await sendLead(
+        {
+          etapa: 1,
+          nome: form.nome.trim(),
+          whatsapp: form.whatsapp,
+          whatsapp_digits: form.whatsapp.replace(/\D/g, ""),
+          plano: plano?.plano ?? "",
+          preco: plano?.preco ?? "",
+          enviado_em: new Date().toISOString(),
+          ...contexto,
+        },
+        "lead_step1",
+        leadEventId,
+        false,
+      );
       setSending(false);
       if (!res.ok) {
         setServerError(res.mensagem || FALLBACK_ERRO);
@@ -208,24 +209,31 @@ export function DiagnosticoForm() {
 
     if (!validateStep2()) return;
     setSending(true);
-    const res = await sendWebhook({
-      etapa: 2,
-      nome: form.nome.trim(),
-      whatsapp: form.whatsapp,
-      whatsapp_digits: form.whatsapp.replace(/\D/g, ""),
-      empresa: form.empresa.trim(),
-      segmento: form.segmento,
-      atendentes: form.atendentes,
-      plano: plano?.plano ?? "",
-      preco: plano?.preco ?? "",
-      enviado_em: new Date().toISOString(),
-      ...contexto,
-    });
+    const res = await sendLead(
+      {
+        etapa: 2,
+        nome: form.nome.trim(),
+        whatsapp: form.whatsapp,
+        whatsapp_digits: form.whatsapp.replace(/\D/g, ""),
+        empresa: form.empresa.trim(),
+        segmento: form.segmento,
+        atendentes: form.atendentes,
+        plano: plano?.plano ?? "",
+        preco: plano?.preco ?? "",
+        enviado_em: new Date().toISOString(),
+        ...contexto,
+      },
+      "lead_step2",
+      leadEventId,
+      true,
+    );
     setSending(false);
     if (!res.ok) {
       setServerError(res.mensagem || FALLBACK_ERRO);
       return;
     }
+    // Mesmo event_id usado na chamada CAPI (server) acima, para a Meta deduplicar.
+    trackPixelEvent("Lead", leadEventId, { content_name: "Diagnóstico gratuito" });
     setSuccessMsg(res.mensagem);
     setSubmitted(true);
   }

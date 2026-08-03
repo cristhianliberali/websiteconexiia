@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -11,6 +12,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { generateEventId, initMetaPixel, trackPixelEvent } from "../lib/meta-pixel";
+import { trackMetaEvent } from "../lib/server-functions";
+
+const SITE_URL = import.meta.env.VITE_SITE_URL || "https://lp.conexiia.com.br";
 
 function NotFoundComponent() {
   return (
@@ -90,7 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://lp.conexiia.com.br/" },
+      { property: "og:url", content: `${SITE_URL}/` },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Conexi IA — Seu melhor vendedor, 24 horas por dia" },
       { name: "twitter:description", content: "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente." },
@@ -99,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "canonical", href: "https://lp.conexiia.com.br/" },
+      { rel: "canonical", href: `${SITE_URL}/` },
       { rel: "icon", href: "/favicon.webp", type: "image/webp" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -131,6 +136,26 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const locationHref = useRouterState({ select: (s) => s.location.href });
+
+  // Roda na carga inicial e em toda navegação client-side (inclusive futuras
+  // páginas): inicializa o pixel e espelha PageView/ViewContent via CAPI com
+  // o mesmo event_id do fbq, para a Meta deduplicar os dois envios.
+  useEffect(() => {
+    initMetaPixel();
+
+    const pageViewId = generateEventId();
+    trackPixelEvent("PageView", pageViewId);
+    trackMetaEvent({
+      data: { event_name: "PageView", event_id: pageViewId, event_source_url: window.location.href },
+    }).catch(() => {});
+
+    const viewContentId = generateEventId();
+    trackPixelEvent("ViewContent", viewContentId);
+    trackMetaEvent({
+      data: { event_name: "ViewContent", event_id: viewContentId, event_source_url: window.location.href },
+    }).catch(() => {});
+  }, [locationHref]);
 
   return (
     <QueryClientProvider client={queryClient}>

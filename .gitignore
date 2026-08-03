@@ -16,6 +16,11 @@ dist-ssr
 .nitro
 *.local
 
+# Env files (segredos locais) — nunca commitar valores reais
+.env
+.env.*
+!.env.example
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
