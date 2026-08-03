@@ -24,6 +24,36 @@ function maskWhatsapp(v: string) {
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
 }
 
+const TRACKING_STORAGE_KEY = "conexi:tracking";
+const EXTRA_TRACKING_KEYS = ["gclid", "fbclid", "ttclid", "msclkid", "ref", "referrer_id"];
+
+function readTracking(): Record<string, string> {
+  if (typeof window === "undefined") return {};
+  let stored: Record<string, string> = {};
+  try {
+    stored = JSON.parse(sessionStorage.getItem(TRACKING_STORAGE_KEY) || "{}");
+  } catch {
+    stored = {};
+  }
+
+  const fromUrl: Record<string, string> = {};
+  const params = new URLSearchParams(window.location.search);
+  params.forEach((value, key) => {
+    const k = key.toLowerCase();
+    if (k.startsWith("utm_") || EXTRA_TRACKING_KEYS.includes(k)) {
+      if (value) fromUrl[k] = value;
+    }
+  });
+
+  const merged = { ...stored, ...fromUrl };
+  try {
+    sessionStorage.setItem(TRACKING_STORAGE_KEY, JSON.stringify(merged));
+  } catch {
+    // storage indisponível — segue sem persistir
+  }
+  return merged;
+}
+
 async function sendWebhook(payload: Record<string, unknown>) {
   try {
     await fetch(WEBHOOK_URL, {
@@ -49,6 +79,11 @@ export function DiagnosticoForm() {
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [plano, setPlano] = useState<{ plano: string; preco: string } | null>(null);
+  const [tracking, setTracking] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    setTracking(readTracking());
+  }, []);
 
   useEffect(() => {
     function onPlano(ev: Event) {
@@ -89,6 +124,14 @@ export function DiagnosticoForm() {
     ev.preventDefault();
     if (sending) return;
 
+    const utms = { ...tracking, ...readTracking() };
+    const contexto = {
+      ...utms,
+      utms,
+      page_url: typeof window !== "undefined" ? window.location.href : "",
+      referrer: typeof document !== "undefined" ? document.referrer : "",
+    };
+
     if (step === 1) {
       if (!validateStep1()) return;
       setSending(true);
@@ -100,7 +143,7 @@ export function DiagnosticoForm() {
         plano: plano?.plano ?? "",
         preco: plano?.preco ?? "",
         enviado_em: new Date().toISOString(),
-
+        ...contexto,
       });
       setSending(false);
       setErrors({});
@@ -121,7 +164,7 @@ export function DiagnosticoForm() {
       plano: plano?.plano ?? "",
       preco: plano?.preco ?? "",
       enviado_em: new Date().toISOString(),
-
+      ...contexto,
     });
     setSending(false);
     setSubmitted(true);
