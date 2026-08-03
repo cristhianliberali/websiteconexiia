@@ -25,15 +25,39 @@ function maskWhatsapp(v: string) {
 }
 
 const TRACKING_STORAGE_KEY = "conexi:tracking";
+const TRACKING_COOKIE_NAME = "conexi_tracking";
+const TRACKING_COOKIE_MAX_AGE_DAYS = 180;
 const EXTRA_TRACKING_KEYS = ["gclid", "fbclid", "ttclid", "msclkid", "ref", "referrer_id"];
 
+function readTrackingCookie(): Record<string, string> {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${TRACKING_COOKIE_NAME}=([^;]*)`));
+  if (!match) return {};
+  try {
+    return JSON.parse(decodeURIComponent(match[1]));
+  } catch {
+    return {};
+  }
+}
+
+function writeTrackingCookie(data: Record<string, string>) {
+  const maxAge = TRACKING_COOKIE_MAX_AGE_DAYS * 24 * 60 * 60;
+  const secure = window.location.protocol === "https:" ? "; Secure" : "";
+  document.cookie = `${TRACKING_COOKIE_NAME}=${encodeURIComponent(JSON.stringify(data))}; max-age=${maxAge}; path=/; SameSite=Lax${secure}`;
+}
+
+// Usa localStorage (sem o limite de 7 dias que o Safari/iOS impõe a cookies
+// escritos via JS) como fonte principal, com o cookie como reforço — assim a
+// UTM sobrevive mesmo se o usuário fechar o navegador e voltar dias depois.
 function readTracking(): Record<string, string> {
   if (typeof window === "undefined") return {};
   let stored: Record<string, string> = {};
   try {
-    stored = JSON.parse(sessionStorage.getItem(TRACKING_STORAGE_KEY) || "{}");
+    stored = JSON.parse(localStorage.getItem(TRACKING_STORAGE_KEY) || "{}");
   } catch {
     stored = {};
+  }
+  if (Object.keys(stored).length === 0) {
+    stored = readTrackingCookie();
   }
 
   const fromUrl: Record<string, string> = {};
@@ -47,9 +71,14 @@ function readTracking(): Record<string, string> {
 
   const merged = { ...stored, ...fromUrl };
   try {
-    sessionStorage.setItem(TRACKING_STORAGE_KEY, JSON.stringify(merged));
+    localStorage.setItem(TRACKING_STORAGE_KEY, JSON.stringify(merged));
   } catch {
     // storage indisponível — segue sem persistir
+  }
+  try {
+    writeTrackingCookie(merged);
+  } catch {
+    // ignora
   }
   return merged;
 }
