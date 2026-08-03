@@ -533,6 +533,165 @@ function Comparison() {
 }
 
 /* SESSÃO 9 — PLANOS */
+function PlanFeatures({ onClose }: { onClose: () => void }) {
+  const features = [
+    {
+      category: "Canais de atendimento",
+      items: [
+        { name: "WhatsApp Oficial", start: true, standart: true, pro: true },
+        { name: "Instagram Direct", start: true, standart: true, pro: true },
+        { name: "Facebook Messenger", start: false, standart: true, pro: true },
+        { name: "Webchat no site", start: false, standart: true, pro: true },
+        { name: "Telegram", start: false, standart: "Em breve", pro: "Em breve" },
+      ],
+    },
+    {
+      category: "Agentes de IA",
+      items: [
+        { name: "Agentes inclusos", start: "2", standart: "5", pro: "10" },
+        { name: "Agentes extras", start: "—", standart: "R$ 97/un.", pro: "R$ 97/un." },
+        { name: "Treinamento customizado", start: true, standart: true, pro: true },
+        { name: "Personalidade de voz da marca", start: false, standart: true, pro: true },
+      ],
+    },
+    {
+      category: "Volume e usuários",
+      items: [
+        { name: "Respostas de IA/mês", start: "500", standart: "1.000", pro: "2.000" },
+        { name: "Respostas extras", start: "—", standart: "R$ 0,12", pro: "R$ 0,10" },
+        { name: "Usuários da plataforma", start: "3", standart: "10", pro: "30" },
+        { name: "Usuários extras", start: "—", standart: "R$ 47/un.", pro: "R$ 47/un." },
+      ],
+    },
+    {
+      category: "Inteligência e automação",
+      items: [
+        { name: "IA generativa de linguagem natural", start: true, standart: true, pro: true },
+        { name: "Escolha de modelo de IA (OpenAI, Anthropic, Gemini, Groq)", start: false, standart: true, pro: true },
+        { name: "Fluxos de qualificação de leads", start: true, standart: true, pro: true },
+        { name: "Fluxos de recuperação de vendas", start: false, standart: true, pro: true },
+        { name: "Fluxos prontos para provedores", start: false, standart: false, pro: true },
+      ],
+    },
+    {
+      category: "Dados e integrações",
+      items: [
+        { name: "Dashboards e BI", start: false, standart: true, pro: true },
+        { name: "API de conversões", start: false, standart: true, pro: true },
+        { name: "Integração com IXC / MK / SGP / Hubsoft", start: false, standart: false, pro: true },
+        { name: "Webhook e API aberta", start: false, standart: "Limitada", pro: true },
+      ],
+    },
+    {
+      category: "Suporte e operação",
+      items: [
+        { name: "Implantação", start: "Grátis", standart: "Grátis", pro: "R$ 2.500" },
+        { name: "Consultoria de especialistas", start: true, standart: true, pro: true },
+        { name: "Acompanhamento por WhatsApp", start: true, standart: true, pro: true },
+        { name: "SLA de resposta do suporte", start: "48h", standart: "24h", pro: "4h" },
+        { name: "Gerente de contas dedicado", start: false, standart: false, pro: true },
+        { name: "Auditoria mensal de conversas", start: false, standart: false, pro: true },
+      ],
+    },
+  ];
+
+  const plans = ["START", "STANDART", "PRO"];
+
+  const renderCell = (value: boolean | string) => {
+    if (value === true) {
+      return (
+        <div className="flex items-center justify-center">
+          <div className="grid h-6 w-6 place-items-center rounded-full bg-primary/20">
+            <Check className="h-3.5 w-3.5 text-primary" strokeWidth={3} />
+          </div>
+        </div>
+      );
+    }
+    if (value === false) {
+      return (
+        <div className="flex items-center justify-center">
+          <X className="h-4 w-4 text-surface-dark-muted/50" />
+        </div>
+      );
+    }
+    return <span className="text-sm font-medium text-surface-dark-foreground">{value}</span>;
+  };
+
+  return (
+    <section className="relative overflow-hidden bg-surface-dark py-20 text-surface-dark-foreground">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
+      </div>
+
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+          <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-surface-dark-border bg-surface-dark-foreground/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-surface-dark-muted">
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
+            Comparativo detalhado
+          </p>
+          <h2 className="text-3xl font-bold sm:text-4xl">
+            Tudo que cada plano entrega
+          </h2>
+          <p className="mt-4 text-lg text-surface-dark-muted">
+            Compare funcionalidades e escolha o plano ideal para a sua operação. A maioria dos
+            recursos já está disponível; alguns estão em rollout e serão liberados em breve.
+          </p>
+        </RevealOnScroll>
+
+        <RevealOnScroll delay={100} className="mt-12 overflow-hidden rounded-2xl border border-surface-dark-border bg-surface-dark/80 backdrop-blur">
+          <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-surface-dark-border bg-surface-dark-foreground/5">
+            <div className="px-4 py-4 text-sm font-semibold text-surface-dark-muted sm:px-6">Funcionalidade</div>
+            {plans.map((p) => (
+              <div key={p} className="px-4 py-4 text-center sm:px-6">
+                <span className="font-display text-sm font-bold sm:text-base">{p}</span>
+              </div>
+            ))}
+          </div>
+
+          {features.map((group) => (
+            <div key={group.category}>
+              <div className="border-b border-surface-dark-border bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-primary sm:px-6">
+                {group.category}
+              </div>
+              {group.items.map((item) => (
+                <div
+                  key={item.name}
+                  className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-surface-dark-border/60 last:border-b-0"
+                >
+                  <div className="px-4 py-3.5 text-sm text-surface-dark-muted sm:px-6">{item.name}</div>
+                  <div className="grid place-items-center border-l border-surface-dark-border/60 px-4 py-3.5 sm:px-6">
+                    {renderCell(item.start)}
+                  </div>
+                  <div className="grid place-items-center border-l border-surface-dark-border/60 px-4 py-3.5 sm:px-6">
+                    {renderCell(item.standart)}
+                  </div>
+                  <div className="grid place-items-center border-l border-surface-dark-border/60 px-4 py-3.5 sm:px-6">
+                    {renderCell(item.pro)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </RevealOnScroll>
+
+        <RevealOnScroll delay={150} className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a href="#formulario" className="btn-primary">
+            Quero um diagnóstico gratuito
+            <ArrowRight className="h-4 w-4" />
+          </a>
+          <button
+            onClick={onClose}
+            className="btn-ghost-dark"
+          >
+            Fechar comparativo
+          </button>
+        </RevealOnScroll>
+      </div>
+    </section>
+  );
+}
+
 function Plans() {
   const plans = [
     {
@@ -587,71 +746,77 @@ function Plans() {
     },
   ];
 
+  const [showFeatures, setShowFeatures] = useState(false);
+
   return (
-    <section id="planos" className="py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Planos que se pagam no primeiro mês</h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Um atendente humano custa de R$ 1.200 a R$ 4.900/mês e trabalha 8h por dia. A Conexi
-            começa em <strong className="text-foreground">R$ 347,90</strong> — trabalhando 24/7.
-          </p>
-        </RevealOnScroll>
+    <>
+      <section id="planos" className="py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <RevealOnScroll className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold sm:text-4xl">Planos que se pagam no primeiro mês</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Um atendente humano custa de R$ 1.200 a R$ 4.900/mês e trabalha 8h por dia. A Conexi
+              começa em <strong className="text-foreground">R$ 347,90</strong> — trabalhando 24/7.
+            </p>
+          </RevealOnScroll>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {plans.map((p, i) => (
-            <RevealOnScroll
-              key={p.name}
-              delay={i * 80}
-              className={`card-lift relative flex flex-col rounded-2xl border p-6 ${
-                p.highlight
-                  ? "border-primary bg-card shadow-[0_20px_50px_-20px_color-mix(in_oklab,var(--color-primary)_50%,transparent)]"
-                  : "border-border bg-card"
-              }`}
-            >
-              {p.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                  ⭐ {p.badge}
-                </span>
-              )}
-              <div className="flex items-baseline gap-2">
-                <h3 className="font-display text-2xl font-bold">{p.name}</h3>
-              </div>
-              <p className="mt-1 text-sm text-muted-foreground">{p.tag}</p>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="font-display text-4xl font-bold">{p.price}</span>
-                <span className="text-sm text-muted-foreground">/mês</span>
-              </div>
-
-              <ul className="mt-6 space-y-2.5">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-sm">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
-                    <span className="text-foreground">{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href={p.href}
-                className={`mt-8 ${p.highlight ? "btn-primary" : "btn-ghost-light"} w-full`}
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            {plans.map((p, i) => (
+              <RevealOnScroll
+                key={p.name}
+                delay={i * 80}
+                className={`card-lift relative flex flex-col rounded-2xl border p-6 ${
+                  p.highlight
+                    ? "border-primary bg-card shadow-[0_20px_50px_-20px_color-mix(in_oklab,var(--color-primary)_50%,transparent)]"
+                    : "border-border bg-card"
+                }`}
               >
-                {p.cta}
-              </a>
-            </RevealOnScroll>
-          ))}
-        </div>
+                {p.badge && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
+                    ⭐ {p.badge}
+                  </span>
+                )}
+                <div className="flex items-baseline gap-2">
+                  <h3 className="font-display text-2xl font-bold">{p.name}</h3>
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">{p.tag}</p>
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span className="font-display text-4xl font-bold">{p.price}</span>
+                  <span className="text-sm text-muted-foreground">/mês</span>
+                </div>
 
-        <RevealOnScroll className="mt-8 text-center">
-          <a
-            href="#planos"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
-          >
-            Ver comparativo completo de funcionalidades <ArrowRight className="h-4 w-4" />
-          </a>
-        </RevealOnScroll>
-      </div>
-    </section>
+                <ul className="mt-6 space-y-2.5">
+                  {p.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2.5 text-sm">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
+                      <span className="text-foreground">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={p.href}
+                  className={`mt-8 ${p.highlight ? "btn-primary" : "btn-ghost-light"} w-full`}
+                >
+                  {p.cta}
+                </a>
+              </RevealOnScroll>
+            ))}
+          </div>
+
+          <RevealOnScroll className="mt-8 text-center">
+            <button
+              onClick={() => setShowFeatures(true)}
+              className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+            >
+              Ver comparativo completo de funcionalidades <ArrowRight className="h-4 w-4" />
+            </button>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      {showFeatures && <PlanFeatures onClose={() => setShowFeatures(false)} />}
+    </>
   );
 }
 
