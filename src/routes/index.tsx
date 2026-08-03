@@ -722,7 +722,7 @@ function Plans() {
       badge: "Mais escolhido",
     },
     {
-      name: "PRO",
+      name: "PRO +",
       price: "R$ 997,90",
       tag: "Para provedores de internet e alto volume",
       features: [
