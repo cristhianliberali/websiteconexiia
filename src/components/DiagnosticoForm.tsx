@@ -54,15 +54,34 @@ function readTracking(): Record<string, string> {
   return merged;
 }
 
-async function sendWebhook(payload: Record<string, unknown>) {
+type WebhookResult = { ok: boolean; mensagem: string };
+
+const FALLBACK_ERRO =
+  "Não foi possível enviar seus dados agora. Tente novamente em instantes.";
+
+async function sendWebhook(payload: Record<string, unknown>): Promise<WebhookResult> {
   try {
-    await fetch(WEBHOOK_URL, {
+    const res = await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload),
     });
+
+    let data: { status?: string; mensagem_usuario?: string } = {};
+    try {
+      const raw = await res.text();
+      data = raw ? JSON.parse(raw) : {};
+    } catch {
+      data = {};
+    }
+
+    const ok = res.ok && data.status !== "erro";
+    return {
+      ok,
+      mensagem: data.mensagem_usuario || (ok ? "" : FALLBACK_ERRO),
+    };
   } catch {
-    // não bloqueia o usuário caso o webhook falhe
+    return { ok: false, mensagem: FALLBACK_ERRO };
   }
 }
 
