@@ -789,11 +789,19 @@ function Plans() {
                 </ul>
 
                 <a
-                  href={p.href}
+                  href="#formulario"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent("conexi:plano-selecionado", {
+                        detail: { plano: p.name, preco: p.price },
+                      }),
+                    )
+                  }
                   className={`mt-8 ${p.highlight ? "btn-primary" : "btn-ghost-light"} w-full`}
                 >
                   {p.cta}
                 </a>
+
               </RevealOnScroll>
             ))}
           </div>
