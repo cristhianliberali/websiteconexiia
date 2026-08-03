@@ -79,6 +79,11 @@ export function DiagnosticoForm() {
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [plano, setPlano] = useState<{ plano: string; preco: string } | null>(null);
+  const [tracking, setTracking] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    setTracking(readTracking());
+  }, []);
 
   useEffect(() => {
     function onPlano(ev: Event) {
