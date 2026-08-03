@@ -318,6 +318,15 @@ export function DiagnosticoForm() {
         )}
       </div>
 
+      {serverError && (
+        <div
+          role="alert"
+          className="mt-6 rounded-xl border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
+        >
+          {serverError}
+        </div>
+      )}
+
       <button type="submit" disabled={sending} className="btn-primary mt-8 w-full py-4 text-base disabled:opacity-60">
         {sending ? "Enviando..." : step === 1 ? "Continuar" : "Quero meu diagnóstico gratuito"}
       </button>
