@@ -159,9 +159,21 @@ export function DiagnosticoForm() {
         </div>
       </div>
 
+      {step === 1 && plano && (
+        <div className="rounded-xl border border-primary/40 bg-primary/10 px-4 py-3">
+          <span className="block text-xs font-semibold uppercase tracking-wide text-surface-dark-muted">
+            Plano desejado
+          </span>
+          <span className="mt-0.5 block font-semibold text-surface-dark-foreground">
+            {plano.plano} - {plano.preco}
+          </span>
+        </div>
+      )}
+
       <div className="grid gap-4 sm:grid-cols-2">
         {step === 1 ? (
           <>
+
             <Field label="Nome" error={errors.nome}>
               <input
                 type="text"
