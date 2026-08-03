@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { CheckCircle2 } from "lucide-react";
 
 const WEBHOOK_URL = "https://n8n.scnet.com.br/webhook/conexiia/formulario-leads";
@@ -48,6 +48,20 @@ export function DiagnosticoForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [plano, setPlano] = useState<{ plano: string; preco: string } | null>(null);
+
+  useEffect(() => {
+    function onPlano(ev: Event) {
+      const detail = (ev as CustomEvent<{ plano: string; preco: string }>).detail;
+      if (detail?.plano) {
+        setPlano(detail);
+        setStep(1);
+      }
+    }
+    window.addEventListener("conexi:plano-selecionado", onPlano);
+    return () => window.removeEventListener("conexi:plano-selecionado", onPlano);
+  }, []);
+
 
   function set<K extends keyof typeof form>(k: K, v: string) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -83,7 +97,10 @@ export function DiagnosticoForm() {
         nome: form.nome.trim(),
         whatsapp: form.whatsapp,
         whatsapp_digits: form.whatsapp.replace(/\D/g, ""),
+        plano: plano?.plano ?? "",
+        preco: plano?.preco ?? "",
         enviado_em: new Date().toISOString(),
+
       });
       setSending(false);
       setErrors({});
@@ -101,7 +118,10 @@ export function DiagnosticoForm() {
       empresa: form.empresa.trim(),
       segmento: form.segmento,
       atendentes: form.atendentes,
+      plano: plano?.plano ?? "",
+      preco: plano?.preco ?? "",
       enviado_em: new Date().toISOString(),
+
     });
     setSending(false);
     setSubmitted(true);
@@ -139,9 +159,21 @@ export function DiagnosticoForm() {
         </div>
       </div>
 
+      {step === 1 && plano && (
+        <div className="rounded-xl border border-primary/40 bg-primary/10 px-4 py-3">
+          <span className="block text-xs font-semibold uppercase tracking-wide text-surface-dark-muted">
+            Plano desejado
+          </span>
+          <span className="mt-0.5 block font-semibold text-surface-dark-foreground">
+            {plano.plano} - {plano.preco}
+          </span>
+        </div>
+      )}
+
       <div className="grid gap-4 sm:grid-cols-2">
         {step === 1 ? (
           <>
+
             <Field label="Nome" error={errors.nome}>
               <input
                 type="text"
