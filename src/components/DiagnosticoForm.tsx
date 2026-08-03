@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { CheckCircle2 } from "lucide-react";
 
 const WEBHOOK_URL = "https://n8n.scnet.com.br/webhook/conexiia/formulario-leads";
