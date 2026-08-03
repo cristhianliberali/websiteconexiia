@@ -675,17 +675,11 @@ function PlanFeatures({ onClose }: { onClose: () => void }) {
           ))}
         </RevealOnScroll>
 
-        <RevealOnScroll delay={150} className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <RevealOnScroll delay={150} className="mt-8 flex justify-center">
           <a href="#formulario" className="btn-primary">
             Quero um diagnóstico gratuito
             <ArrowRight className="h-4 w-4" />
           </a>
-          <button
-            onClick={onClose}
-            className="btn-ghost-dark"
-          >
-            Fechar comparativo
-          </button>
         </RevealOnScroll>
       </div>
     </section>
