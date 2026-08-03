@@ -97,6 +97,8 @@ export function DiagnosticoForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [plano, setPlano] = useState<{ plano: string; preco: string } | null>(null);
   const [tracking, setTracking] = useState<Record<string, string>>({});
 
