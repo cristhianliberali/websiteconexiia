@@ -610,11 +610,11 @@ function PlanFeatures({ onClose }: { onClose: () => void }) {
     if (value === false) {
       return (
         <div className="flex items-center justify-center">
-          <X className="h-4 w-4 text-muted-foreground/40" />
+          <X className="h-4 w-4 text-surface-dark-muted/50" />
         </div>
       );
     }
-    return <span className="text-sm font-medium text-foreground">{value}</span>;
+    return <span className="text-sm font-medium text-surface-dark-foreground">{value}</span>;
   };
 
   return (
