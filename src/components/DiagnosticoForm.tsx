@@ -124,6 +124,14 @@ export function DiagnosticoForm() {
     ev.preventDefault();
     if (sending) return;
 
+    const utms = { ...tracking, ...readTracking() };
+    const contexto = {
+      ...utms,
+      utms,
+      page_url: typeof window !== "undefined" ? window.location.href : "",
+      referrer: typeof document !== "undefined" ? document.referrer : "",
+    };
+
     if (step === 1) {
       if (!validateStep1()) return;
       setSending(true);
@@ -135,7 +143,7 @@ export function DiagnosticoForm() {
         plano: plano?.plano ?? "",
         preco: plano?.preco ?? "",
         enviado_em: new Date().toISOString(),
-
+        ...contexto,
       });
       setSending(false);
       setErrors({});
@@ -156,7 +164,7 @@ export function DiagnosticoForm() {
       plano: plano?.plano ?? "",
       preco: plano?.preco ?? "",
       enviado_em: new Date().toISOString(),
-
+      ...contexto,
     });
     setSending(false);
     setSubmitted(true);
