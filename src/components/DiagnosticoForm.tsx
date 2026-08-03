@@ -97,7 +97,10 @@ export function DiagnosticoForm() {
         nome: form.nome.trim(),
         whatsapp: form.whatsapp,
         whatsapp_digits: form.whatsapp.replace(/\D/g, ""),
+        plano: plano?.plano ?? "",
+        preco: plano?.preco ?? "",
         enviado_em: new Date().toISOString(),
+
       });
       setSending(false);
       setErrors({});
