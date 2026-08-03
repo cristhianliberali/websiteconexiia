@@ -533,7 +533,7 @@ function Comparison() {
 }
 
 /* SESSÃO 9 — PLANOS */
-function PlanFeatures({ onClose }: { onClose: () => void }) {
+function PlanFeatures() {
   const features = [
     {
       category: "Canais de atendimento",
@@ -809,7 +809,7 @@ function Plans() {
         </div>
       </section>
 
-      {showFeatures && <PlanFeatures onClose={() => setShowFeatures(false)} />}
+      {showFeatures && <PlanFeatures />}
     </>
   );
 }
