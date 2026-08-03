@@ -54,15 +54,34 @@ function readTracking(): Record<string, string> {
   return merged;
 }
 
-async function sendWebhook(payload: Record<string, unknown>) {
+type WebhookResult = { ok: boolean; mensagem: string };
+
+const FALLBACK_ERRO =
+  "Não foi possível enviar seus dados agora. Tente novamente em instantes.";
+
+async function sendWebhook(payload: Record<string, unknown>): Promise<WebhookResult> {
   try {
-    await fetch(WEBHOOK_URL, {
+    const res = await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload),
     });
+
+    let data: { status?: string; mensagem_usuario?: string } = {};
+    try {
+      const raw = await res.text();
+      data = raw ? JSON.parse(raw) : {};
+    } catch {
+      data = {};
+    }
+
+    const ok = res.ok && data.status !== "erro";
+    return {
+      ok,
+      mensagem: data.mensagem_usuario || (ok ? "" : FALLBACK_ERRO),
+    };
   } catch {
-    // não bloqueia o usuário caso o webhook falhe
+    return { ok: false, mensagem: FALLBACK_ERRO };
   }
 }
 
@@ -78,6 +97,8 @@ export function DiagnosticoForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [plano, setPlano] = useState<{ plano: string; preco: string } | null>(null);
   const [tracking, setTracking] = useState<Record<string, string>>({});
 
@@ -123,6 +144,7 @@ export function DiagnosticoForm() {
   async function onSubmit(ev: FormEvent) {
     ev.preventDefault();
     if (sending) return;
+    setServerError("");
 
     const utms = { ...tracking, ...readTracking() };
     const contexto = {
@@ -135,7 +157,7 @@ export function DiagnosticoForm() {
     if (step === 1) {
       if (!validateStep1()) return;
       setSending(true);
-      await sendWebhook({
+      const res = await sendWebhook({
         etapa: 1,
         nome: form.nome.trim(),
         whatsapp: form.whatsapp,
@@ -146,6 +168,10 @@ export function DiagnosticoForm() {
         ...contexto,
       });
       setSending(false);
+      if (!res.ok) {
+        setServerError(res.mensagem || FALLBACK_ERRO);
+        return;
+      }
       setErrors({});
       setStep(2);
       return;
@@ -153,7 +179,7 @@ export function DiagnosticoForm() {
 
     if (!validateStep2()) return;
     setSending(true);
-    await sendWebhook({
+    const res = await sendWebhook({
       etapa: 2,
       nome: form.nome.trim(),
       whatsapp: form.whatsapp,
@@ -167,6 +193,11 @@ export function DiagnosticoForm() {
       ...contexto,
     });
     setSending(false);
+    if (!res.ok) {
+      setServerError(res.mensagem || FALLBACK_ERRO);
+      return;
+    }
+    setSuccessMsg(res.mensagem);
     setSubmitted(true);
   }
 
@@ -178,8 +209,8 @@ export function DiagnosticoForm() {
         </div>
         <h3 className="text-2xl font-bold text-surface-dark-foreground">Recebido!</h3>
         <p className="mt-3 text-surface-dark-muted">
-          Em instantes você recebe uma mensagem no seu WhatsApp. Fique de olho: a velocidade da
-          nossa resposta já é a primeira demonstração do produto.
+          {successMsg ||
+            "Em instantes você recebe uma mensagem no seu WhatsApp. Fique de olho: a velocidade da nossa resposta já é a primeira demonstração do produto."}
         </p>
       </div>
     );
@@ -286,6 +317,15 @@ export function DiagnosticoForm() {
           </>
         )}
       </div>
+
+      {serverError && (
+        <div
+          role="alert"
+          className="mt-6 rounded-xl border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
+        >
+          {serverError}
+        </div>
+      )}
 
       <button type="submit" disabled={sending} className="btn-primary mt-8 w-full py-4 text-base disabled:opacity-60">
         {sending ? "Enviando..." : step === 1 ? "Continuar" : "Quero meu diagnóstico gratuito"}
