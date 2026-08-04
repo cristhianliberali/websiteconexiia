@@ -25,6 +25,7 @@ import { useState } from "react";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { WhatsAppMockup } from "@/components/WhatsAppMockup";
 import { DiagnosticoForm } from "@/components/DiagnosticoForm";
+import { Logo, Footer } from "@/components/SiteChrome";
 import logoGray from "@/assets/conexi-logo-gray.webp";
 
 const SITE_URL = import.meta.env.VITE_SITE_URL || "https://lp.conexiia.com.br";
@@ -32,18 +33,6 @@ const SITE_URL = import.meta.env.VITE_SITE_URL || "https://lp.conexiia.com.br";
 export const Route = createFileRoute("/")({
   component: LandingPage,
 });
-
-function Logo() {
-  return (
-    <img
-      src={logoGray}
-      alt="Conexi IA"
-      className="h-7 w-auto sm:h-8"
-      loading="eager"
-      decoding="async"
-    />
-  );
-}
 
 function Header() {
   return (
@@ -988,17 +977,6 @@ function FinalForm() {
         </RevealOnScroll>
       </div>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-background">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:px-6">
-        <Logo />
-        <p>© {new Date().getFullYear()} Conexi IA. Todos os direitos reservados.</p>
-      </div>
-    </footer>
   );
 }
 
