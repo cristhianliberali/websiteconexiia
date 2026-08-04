@@ -32,6 +32,7 @@ const submitLeadSchema = z
     empresa: z.string().max(200).optional(),
     segmento: z.string().max(100).optional(),
     atendentes: z.string().max(50).optional(),
+    cargo: z.string().max(100).optional(),
     plano: z.string().max(100).optional(),
     preco: z.string().max(100).optional(),
     enviado_em: z.string().max(50),

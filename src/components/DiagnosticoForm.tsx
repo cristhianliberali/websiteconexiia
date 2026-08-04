@@ -5,17 +5,47 @@ import { getRecaptchaToken } from "@/lib/recaptcha";
 import { submitDiagnosticoLead } from "@/lib/server-functions";
 
 const SEGMENTOS = [
-  "Provedor de internet",
-  "Clínica ou consultório",
-  "Clínica de estética",
-  "Imobiliária",
-  "Agência de viagens",
+  "Clínica ou Consultório",
+  "Educação e Cursos",
+  "Advocacia e Serviços Jurídicos",
+  "Contabilidade",
+  "Agência de Marketing",
+  "Consultoria",
+  "Varejo e Lojas Físicas",
+  "E-commerce e Vendas Online",
+  "Alimentação e Food Service",
+  "Moda e Beleza",
+  "Imobiliárias e Construtoras",
   "Revenda de veículos",
-  "Loja e varejo",
+  "Concessionária",
+  "Turismo e Hotelaria",
+  "Energia Solar",
+  "Planos de Saúde e Seguros",
+  "Indústria",
+  "Tecnologia e Software",
+  "Logística e Transportes",
+  "Agronegócio",
+  "Provedor de Internet",
   "Outro",
 ];
 
-const ATENDENTES = ["1", "2 a 5", "6 a 15", "16 ou mais"];
+const ATENDENTES = [
+  "Apenas 1",
+  "2 a 3 atendentes",
+  "4 a 10 atendentes",
+  "11 a 20 atendentes",
+  "21 ou mais",
+];
+
+const CARGOS = [
+  "Sócio(a) ou Proprietário(a)",
+  "Gerente Comercial",
+  "Gerente de Marketing",
+  "Coordenador(a) / Supervisor(a)",
+  "Consultor(a) comercial",
+  "Autônomo(a) / Profissional Liberal",
+  "Outro",
+];
 
 function maskWhatsapp(v: string) {
   const d = v.replace(/\D/g, "").slice(0, 11);
@@ -117,6 +147,7 @@ export function DiagnosticoForm() {
     empresa: "",
     segmento: "",
     atendentes: "",
+    cargo: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
@@ -162,6 +193,7 @@ export function DiagnosticoForm() {
     if (!form.segmento) e.segmento = "Selecione o segmento.";
     if (form.empresa.trim().length < 2) e.empresa = "Informe a empresa.";
     if (!form.atendentes) e.atendentes = "Selecione uma opção.";
+    if (!form.cargo) e.cargo = "Selecione seu cargo.";
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -218,6 +250,7 @@ export function DiagnosticoForm() {
         empresa: form.empresa.trim(),
         segmento: form.segmento,
         atendentes: form.atendentes,
+        cargo: form.cargo,
         plano: plano?.plano ?? "",
         preco: plano?.preco ?? "",
         enviado_em: new Date().toISOString(),
@@ -309,22 +342,6 @@ export function DiagnosticoForm() {
           </>
         ) : (
           <>
-            <Field label="Segmento" error={errors.segmento}>
-              <select
-                value={form.segmento}
-                onChange={(e) => set("segmento", e.target.value)}
-                className={inputCls}
-              >
-                <option value="" className="bg-surface-dark">
-                  Selecione
-                </option>
-                {SEGMENTOS.map((s) => (
-                  <option key={s} value={s} className="bg-surface-dark">
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </Field>
             <Field label="Empresa" error={errors.empresa}>
               <input
                 type="text"
@@ -335,7 +352,7 @@ export function DiagnosticoForm() {
                 autoComplete="organization"
               />
             </Field>
-            <Field label="Quantos atendentes você tem?" error={errors.atendentes}>
+            <Field label="Quantos atendentes?" error={errors.atendentes}>
               <select
                 value={form.atendentes}
                 onChange={(e) => set("atendentes", e.target.value)}
@@ -345,6 +362,38 @@ export function DiagnosticoForm() {
                   Selecione
                 </option>
                 {ATENDENTES.map((s) => (
+                  <option key={s} value={s} className="bg-surface-dark">
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Qual é o seu cargo?" error={errors.cargo}>
+              <select
+                value={form.cargo}
+                onChange={(e) => set("cargo", e.target.value)}
+                className={inputCls}
+              >
+                <option value="" className="bg-surface-dark">
+                  Selecione
+                </option>
+                {CARGOS.map((s) => (
+                  <option key={s} value={s} className="bg-surface-dark">
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Qual o segmento?" error={errors.segmento}>
+              <select
+                value={form.segmento}
+                onChange={(e) => set("segmento", e.target.value)}
+                className={inputCls}
+              >
+                <option value="" className="bg-surface-dark">
+                  Selecione
+                </option>
+                {SEGMENTOS.map((s) => (
                   <option key={s} value={s} className="bg-surface-dark">
                     {s}
                   </option>
