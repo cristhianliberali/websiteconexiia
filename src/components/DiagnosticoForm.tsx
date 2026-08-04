@@ -26,6 +26,7 @@ const SEGMENTOS = [
   "Logística e Transportes",
   "Agronegócio",
   "Provedor de Internet",
+  "Projetos Sob Medida (planejados, esquadrias, gesso, stands)",
   "Outro",
 ];
 
