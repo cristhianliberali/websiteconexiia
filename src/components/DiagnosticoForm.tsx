@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, ChevronDown } from "lucide-react";
 import { generateEventId, trackPixelEvent } from "@/lib/meta-pixel";
 import { getRecaptchaToken } from "@/lib/recaptcha";
 import { submitDiagnosticoLead } from "@/lib/server-functions";
@@ -47,6 +47,9 @@ const CARGOS = [
   "Autônomo(a) / Profissional Liberal",
   "Outro",
 ];
+
+const inputCls =
+  "w-full rounded-xl border border-surface-dark-border bg-white/5 px-4 py-3 text-surface-dark-foreground placeholder:text-surface-dark-muted/70 outline-none transition focus:border-primary focus:bg-white/10";
 
 function maskWhatsapp(v: string) {
   const d = v.replace(/\D/g, "").slice(0, 11);
@@ -287,9 +290,6 @@ export function DiagnosticoForm() {
     );
   }
 
-  const inputCls =
-    "w-full rounded-xl border border-surface-dark-border bg-white/5 px-4 py-3 text-surface-dark-foreground placeholder:text-surface-dark-muted/70 outline-none transition focus:border-primary focus:bg-white/10";
-
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-4">
       <div className="flex items-center gap-3">
@@ -353,54 +353,27 @@ export function DiagnosticoForm() {
                 autoComplete="organization"
               />
             </Field>
-            <Field label="Quantos atendentes?" error={errors.atendentes}>
-              <select
-                value={form.atendentes}
-                onChange={(e) => set("atendentes", e.target.value)}
-                className={inputCls}
-              >
-                <option value="" className="bg-surface-dark">
-                  Selecione
-                </option>
-                {ATENDENTES.map((s) => (
-                  <option key={s} value={s} className="bg-surface-dark">
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Qual é o seu cargo?" error={errors.cargo}>
-              <select
-                value={form.cargo}
-                onChange={(e) => set("cargo", e.target.value)}
-                className={inputCls}
-              >
-                <option value="" className="bg-surface-dark">
-                  Selecione
-                </option>
-                {CARGOS.map((s) => (
-                  <option key={s} value={s} className="bg-surface-dark">
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Qual o segmento?" error={errors.segmento}>
-              <select
-                value={form.segmento}
-                onChange={(e) => set("segmento", e.target.value)}
-                className={inputCls}
-              >
-                <option value="" className="bg-surface-dark">
-                  Selecione
-                </option>
-                {SEGMENTOS.map((s) => (
-                  <option key={s} value={s} className="bg-surface-dark">
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </Field>
+            <SelectField
+              label="Quantos atendentes?"
+              error={errors.atendentes}
+              value={form.atendentes}
+              onChange={(v) => set("atendentes", v)}
+              options={ATENDENTES}
+            />
+            <SelectField
+              label="Qual é o seu cargo?"
+              error={errors.cargo}
+              value={form.cargo}
+              onChange={(v) => set("cargo", v)}
+              options={CARGOS}
+            />
+            <SelectField
+              label="Qual o segmento?"
+              error={errors.segmento}
+              value={form.segmento}
+              onChange={(v) => set("segmento", v)}
+              options={SEGMENTOS}
+            />
           </>
         )}
       </div>
@@ -441,5 +414,41 @@ function Field({
       {children}
       {error && <span className="mt-1 block text-xs text-destructive">{error}</span>}
     </label>
+  );
+}
+
+function SelectField({
+  label,
+  error,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  error?: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: readonly string[];
+}) {
+  return (
+    <Field label={label} error={error}>
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${inputCls} appearance-none pr-10`}
+        >
+          <option value="" className="bg-surface-dark">
+            Selecione
+          </option>
+          {options.map((o) => (
+            <option key={o} value={o} className="bg-surface-dark">
+              {o}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-surface-dark-muted" />
+      </div>
+    </Field>
   );
 }
