@@ -27,6 +27,8 @@ import { WhatsAppMockup } from "@/components/WhatsAppMockup";
 import { DiagnosticoForm } from "@/components/DiagnosticoForm";
 import logoGray from "@/assets/conexi-logo-gray.webp";
 
+const SITE_URL = import.meta.env.VITE_SITE_URL || "https://lp.conexiia.com.br";
+
 export const Route = createFileRoute("/")({
   component: LandingPage,
 });
@@ -686,59 +688,61 @@ function PlanFeatures() {
   );
 }
 
+const PLANS = [
+  {
+    name: "START",
+    price: "R$ 347,90",
+    tag: "Para validar a IA na sua operação",
+    features: [
+      "2 agentes de IA",
+      "500 respostas de IA/mês",
+      "WhatsApp + Instagram",
+      "3 usuários",
+      "Implantação grátis",
+    ],
+    cta: "Começar com o START",
+    href: "#checkout-start",
+    highlight: false,
+  },
+  {
+    name: "STANDART",
+    price: "R$ 597,90",
+    tag: "Para empresas em crescimento com tráfego pago ativo",
+    features: [
+      "5 agentes de IA",
+      "1.000 respostas/mês",
+      "+ Facebook e webchat",
+      "Dashboards e BI",
+      "API de conversões",
+      "Use sua própria chave de IA (OpenAI, Anthropic, Gemini, Groq)",
+      "10 usuários",
+    ],
+    cta: "Assinar o STANDART",
+    href: "#checkout-standart",
+    highlight: true,
+    badge: "Mais escolhido",
+  },
+  {
+    name: "PRO +",
+    price: "R$ 997,90",
+    tag: "Para provedores de internet e alto volume",
+    features: [
+      "10 agentes de IA",
+      "Integração com IXC, MK, SGP e Hubsoft",
+      "Fluxos prontos (desbloqueio, 2ª via de boleto, status de conexão)",
+      "SLA + auditoria",
+      "Gerente de contas",
+      "30 usuários",
+      "Implantação R$ 2.500",
+    ],
+    cta: "Falar com um especialista",
+    href: "#formulario",
+    highlight: false,
+  },
+];
+
 function Plans() {
-  const plans = [
-    {
-      name: "START",
-      price: "R$ 347,90",
-      tag: "Para validar a IA na sua operação",
-      features: [
-        "2 agentes de IA",
-        "500 respostas de IA/mês",
-        "WhatsApp + Instagram",
-        "3 usuários",
-        "Implantação grátis",
-      ],
-      cta: "Começar com o START",
-      href: "#checkout-start",
-      highlight: false,
-    },
-    {
-      name: "STANDART",
-      price: "R$ 597,90",
-      tag: "Para empresas em crescimento com tráfego pago ativo",
-      features: [
-        "5 agentes de IA",
-        "1.000 respostas/mês",
-        "+ Facebook e webchat",
-        "Dashboards e BI",
-        "API de conversões",
-        "Use sua própria chave de IA (OpenAI, Anthropic, Gemini, Groq)",
-        "10 usuários",
-      ],
-      cta: "Assinar o STANDART",
-      href: "#checkout-standart",
-      highlight: true,
-      badge: "Mais escolhido",
-    },
-    {
-      name: "PRO +",
-      price: "R$ 997,90",
-      tag: "Para provedores de internet e alto volume",
-      features: [
-        "10 agentes de IA",
-        "Integração com IXC, MK, SGP e Hubsoft",
-        "Fluxos prontos (desbloqueio, 2ª via de boleto, status de conexão)",
-        "SLA + auditoria",
-        "Gerente de contas",
-        "30 usuários",
-        "Implantação R$ 2.500",
-      ],
-      cta: "Falar com um especialista",
-      href: "#formulario",
-      highlight: false,
-    },
-  ];
+  const plans = PLANS;
 
   const [showFeatures, setShowFeatures] = useState(false);
 
@@ -872,37 +876,39 @@ function ForWho() {
 }
 
 /* SESSÃO 12 — FAQ (sessão 11 oculta conforme copy) */
+const FAQ_ITEMS = [
+  {
+    q: "Meus clientes vão perceber que é uma IA?",
+    a: "Na maioria dos casos, não. A IA foi otimizada para simular um atendimento humano de alta conexão: ritmo natural de resposta, personalidade própria e conhecimento profundo da sua empresa. E quando a conversa exige, ela transfere para o seu time com todo o contexto.",
+  },
+  {
+    q: "Em quanto tempo fica pronto?",
+    a: "De 3 a 7 dias: 1h de diagnóstico via Meet, 4h de implementação guiada com sua equipe e acompanhamento contínuo pelo WhatsApp.",
+  },
+  {
+    q: "Preciso saber configurar IA?",
+    a: "Não. Nossos especialistas em engenharia de prompt criam os agentes junto com você na consultoria de implantação.",
+  },
+  {
+    q: "E se a IA não souber responder?",
+    a: 'Ela transfere para um atendente humano do seu time, com atribuição automática e todo o histórico. Travas de segurança garantem que ela não "invente" respostas fora do conhecimento aprovado.',
+  },
+  {
+    q: "Já tentei chatbot e não funcionou. Qual a diferença?",
+    a: "Chatbot de menu só entende botão. Os agentes da Conexi entendem linguagem natural, conhecem sua empresa a fundo e conduzem a venda — criados com você por especialistas, não por tentativa e erro.",
+  },
+  {
+    q: "Funciona com meu ERP de provedor?",
+    a: "Sim. No plano PRO há integração com IXC, MK, SGP e Hubsoft, com fluxos prontos de desbloqueio, 2ª via de boleto e status de conexão.",
+  },
+  {
+    q: "Vou precisar demitir minha equipe?",
+    a: "Não é esse o objetivo. A IA absorve o volume repetitivo e o fora de horário; seu time foca nas conversas de maior valor. Você escala sem precisar contratar.",
+  },
+];
+
 function FAQ() {
-  const items = [
-    {
-      q: "Meus clientes vão perceber que é uma IA?",
-      a: "Na maioria dos casos, não. A IA foi otimizada para simular um atendimento humano de alta conexão: ritmo natural de resposta, personalidade própria e conhecimento profundo da sua empresa. E quando a conversa exige, ela transfere para o seu time com todo o contexto.",
-    },
-    {
-      q: "Em quanto tempo fica pronto?",
-      a: "De 3 a 7 dias: 1h de diagnóstico via Meet, 4h de implementação guiada com sua equipe e acompanhamento contínuo pelo WhatsApp.",
-    },
-    {
-      q: "Preciso saber configurar IA?",
-      a: "Não. Nossos especialistas em engenharia de prompt criam os agentes junto com você na consultoria de implantação.",
-    },
-    {
-      q: "E se a IA não souber responder?",
-      a: 'Ela transfere para um atendente humano do seu time, com atribuição automática e todo o histórico. Travas de segurança garantem que ela não "invente" respostas fora do conhecimento aprovado.',
-    },
-    {
-      q: "Já tentei chatbot e não funcionou. Qual a diferença?",
-      a: "Chatbot de menu só entende botão. Os agentes da Conexi entendem linguagem natural, conhecem sua empresa a fundo e conduzem a venda — criados com você por especialistas, não por tentativa e erro.",
-    },
-    {
-      q: "Funciona com meu ERP de provedor?",
-      a: "Sim. No plano PRO há integração com IXC, MK, SGP e Hubsoft, com fluxos prontos de desbloqueio, 2ª via de boleto e status de conexão.",
-    },
-    {
-      q: "Vou precisar demitir minha equipe?",
-      a: "Não é esse o objetivo. A IA absorve o volume repetitivo e o fora de horário; seu time foca nas conversas de maior valor. Você escala sem precisar contratar.",
-    },
-  ];
+  const items = FAQ_ITEMS;
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section className="py-20">
@@ -996,9 +1002,74 @@ function Footer() {
   );
 }
 
+function parsePriceBRL(price: string): string {
+  return price.replace(/[^\d,]/g, "").replace(",", ".");
+}
+
+/** JSON-LD (Organization + WebSite + Service/Offers + FAQPage) para SEO e para bots de IA entenderem a página. */
+function StructuredData() {
+  const pageUrl = `${SITE_URL}/`;
+  const logoUrl = `${SITE_URL}${logoGray}`;
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${pageUrl}#organization`,
+        name: "Conexi IA",
+        url: pageUrl,
+        logo: logoUrl,
+        description:
+          "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site.",
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${pageUrl}#website`,
+        url: pageUrl,
+        name: "Conexi IA",
+        inLanguage: "pt-BR",
+        publisher: { "@id": `${pageUrl}#organization` },
+      },
+      {
+        "@type": "Service",
+        "@id": `${pageUrl}#service`,
+        name: "Atendimento e vendas com agentes de IA para WhatsApp, Instagram e Facebook",
+        description:
+          "Agentes de IA que atendem, qualificam leads e vendem 24 horas por dia no WhatsApp, Instagram, Facebook e site.",
+        provider: { "@id": `${pageUrl}#organization` },
+        areaServed: "BR",
+        url: `${pageUrl}#planos`,
+        offers: PLANS.map((plan) => ({
+          "@type": "Offer",
+          name: `Plano ${plan.name}`,
+          price: parsePriceBRL(plan.price),
+          priceCurrency: "BRL",
+          description: plan.tag,
+          url: `${pageUrl}#planos`,
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: FAQ_ITEMS.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      },
+    ],
+  };
+
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+  );
+}
+
 function LandingPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <StructuredData />
       <Header />
       <Hero />
       <StatsBar />
