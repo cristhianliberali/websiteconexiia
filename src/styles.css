@@ -37,8 +37,8 @@
   --color-surface-dark-border: var(--surface-dark-border);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-sans: "Titillium Web", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Titillium Web", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
