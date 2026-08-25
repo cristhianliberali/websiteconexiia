@@ -28,7 +28,7 @@ export function Footer() {
             <Logo />
             <div className="text-sm text-muted-foreground">
               <p>Operado por Conexi IA</p>
-              <p>CNPJ: 45.852.101/0001-29</p>
+              <p>CNPJ: 62.506.786/0001-70</p>
               <p>
                 E-mail:{" "}
                 <a href="mailto:contato@conexiia.com.br" className="hover:text-foreground">
