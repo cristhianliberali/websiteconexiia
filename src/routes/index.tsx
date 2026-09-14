@@ -14,10 +14,12 @@ import {
   LineChart,
   MessageCircle,
   Moon,
+  SlidersHorizontal,
   Sparkles,
   Star,
   TrendingUp,
   Users,
+  Video,
   X,
   Zap,
 } from "lucide-react";
@@ -347,49 +349,99 @@ function OmnichannelInbox() {
   );
 }
 
-/* SESSÃO 6 — COMO FUNCIONA */
+/* SESSÃO 6 — COMO FUNCIONA (IMPLANTAÇÃO) */
 function HowItWorks() {
   const steps = [
     {
+      icon: Video,
+      badge: "Estratégia & Prompt",
       t: "Diagnóstico (1h via Meet)",
       d: "Entendemos sua operação e criamos os agentes de IA junto com você, aplicando nossa expertise em engenharia de prompt e comportamento de IA.",
     },
     {
+      icon: SlidersHorizontal,
+      badge: "Canais & Processo",
       t: "Implantação guiada (4h)",
       d: "Ao lado da sua equipe, conectamos os canais, criamos os acessos e desenhamos seu processo comercial dentro da plataforma.",
     },
     {
+      icon: Headphones,
+      badge: "Otimização constante",
       t: "Acompanhamento contínuo",
       d: "Suporte próximo via WhatsApp para ajustar, otimizar e escalar os resultados. No plano PRO, gerente de contas dedicado.",
     },
   ];
   return (
-    <section className="bg-muted/40 py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section
+      id="implantacao"
+      className="relative overflow-hidden bg-surface-dark py-20 text-surface-dark-foreground"
+    >
+      {/* Glows suaves nos cantos */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-success/10 blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <RevealOnScroll className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">
-            Do zero ao ar em até 7 dias — de mãos dadas com nosso time.
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
+            <Clock className="h-3.5 w-3.5" />
+            Agilidade sem fricção
+          </span>
+          <h2 className="mt-5 text-3xl font-bold sm:text-4xl lg:text-5xl">
+            Do zero ao ar em <span className="text-primary">até 3 dias</span> — de mãos dadas com
+            nosso time.
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 text-lg text-surface-dark-muted">
             Você não configura nada sozinho. A consultoria faz parte da solução.
           </p>
         </RevealOnScroll>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="relative mt-12 grid gap-6 md:grid-cols-3">
+          {/* Linha conectora (desktop) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/4 right-1/4 top-14 hidden h-px bg-gradient-to-r from-primary/40 via-primary/20 to-success/40 md:block"
+          />
+
           {steps.map((s, i) => (
             <RevealOnScroll
               key={s.t}
               delay={i * 100}
-              className="card-lift rounded-2xl border border-border bg-card p-6"
+              className="card-lift group relative flex flex-col justify-between rounded-2xl border border-surface-dark-border bg-white/5 p-6 backdrop-blur"
             >
-              <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-primary text-primary-foreground font-display text-lg font-bold">
-                {i + 1}
+              <div>
+                <div className="mb-5 flex items-center justify-between">
+                  <div className="grid h-12 w-12 place-items-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-transform duration-300 group-hover:scale-110">
+                    <s.icon className="h-5 w-5" />
+                  </div>
+                  <span className="font-display text-3xl font-bold text-surface-dark-border transition-colors duration-300 group-hover:text-primary">
+                    0{i + 1}
+                  </span>
+                </div>
+
+                <span className="inline-block rounded-md bg-primary/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary">
+                  {s.badge}
+                </span>
+
+                <h3 className="mt-3 font-display text-lg font-semibold">{s.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-surface-dark-muted">{s.d}</p>
               </div>
-              <h3 className="font-display text-lg font-semibold">{s.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.d}</p>
+
+              <div className="mt-6 flex items-center gap-2 border-t border-surface-dark-border pt-4 text-xs font-semibold text-success">
+                <Check className="h-4 w-4" />
+                Incluso no serviço
+              </div>
             </RevealOnScroll>
           ))}
         </div>
+
+        <RevealOnScroll delay={300} className="mt-12 text-center">
+          <a href="#formulario" className="btn-primary">
+            Quero implantar em até 3 dias
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </RevealOnScroll>
       </div>
     </section>
   );
