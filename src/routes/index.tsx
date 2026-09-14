@@ -400,42 +400,71 @@ function Benefits() {
   const items = [
     {
       icon: TrendingUp,
+      metric: "+39%",
+      label: "na conversão dos mesmos leads",
       t: "Mais vendas com o mesmo tráfego",
-      d: "Resposta instantânea + qualificação automática = até +39% na conversão dos leads que você já paga para atrair.",
+      d: "Resposta instantânea + qualificação automática: você vende mais para os leads que já paga para atrair.",
     },
     {
       icon: DollarSign,
-      t: "Custo até 70% menor",
+      metric: "-70%",
+      label: "no custo por atendimento",
+      t: "Custo muito menor",
       d: "Um agente de IA custa uma fração de um atendente humano — e trabalha 24/7, sem férias, sem turnover.",
     },
     {
       icon: Zap,
+      metric: "2x",
+      label: "volume, zero contratações",
       t: "Escala sem contratar",
       d: "Dobre o volume de atendimento sem abrir uma vaga. A IA absorve os picos; sua estrutura continua enxuta.",
     },
     {
       icon: Users,
+      metric: "100%",
+      label: "do time nas conversas de valor",
       t: "Time focado no que importa",
-      d: "A IA resolve o repetitivo e o fora de horário; seus humanos entram apenas nas conversas de maior valor.",
+      d: "A IA resolve o repetitivo e o fora de horário; seus humanos entram apenas onde fazem diferença.",
     },
     {
       icon: MessageCircle,
+      metric: "24/7",
+      label: "com ritmo de pessoa",
       t: "Atendimento que parece humano",
       d: "Ritmo natural de resposta, personalidade própria e conhecimento profundo do negócio: a maioria nem percebe que é IA.",
     },
     {
       icon: BarChart3,
+      metric: "Ponta a ponta",
+      label: 'do primeiro "oi" ao fechamento',
       t: "Previsibilidade total",
-      d: "Dashboards, BI e rastreamento de conversões: do primeiro \"oi\" ao fechamento, seu funil inteiro em números.",
+      d: "Dashboards, BI e rastreamento de conversões: seu funil inteiro em números, sem achismo.",
     },
   ];
   return (
-    <section className="py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section className="relative overflow-hidden py-20">
+      {/* Glow verde suave no topo da sessão */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[520px]"
+        style={{
+          background:
+            "radial-gradient(60% 70% at 50% 0%, color-mix(in oklab, var(--color-success) 16%, transparent), transparent 75%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <RevealOnScroll className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">
-            O que muda na sua operação com a Conexi IA
+          <span className="inline-flex items-center gap-2 rounded-full border border-success/40 bg-success/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-success-strong">
+            <Sparkles className="h-3.5 w-3.5" />
+            Resultados reais
+          </span>
+          <h2 className="mt-5 text-3xl font-bold sm:text-4xl">
+            O que muda na sua operação com a <span className="text-success-strong">Conexi IA</span>
           </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Menos problema, mais venda. Isso é o que sua operação ganha desde o primeiro mês.
+          </p>
         </RevealOnScroll>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -443,18 +472,45 @@ function Benefits() {
             <RevealOnScroll
               key={it.t}
               delay={i * 60}
-              className="card-lift rounded-2xl border border-border bg-card p-6"
+              className="benefit-card group rounded-2xl border border-border bg-card p-6"
             >
-              <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/15 text-primary">
-                <it.icon className="h-5 w-5" />
+              <div className="flex items-start justify-between gap-4">
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-success/15 text-success-strong ring-1 ring-success/30 ring-inset transition-colors duration-300 group-hover:bg-success-strong group-hover:text-white group-hover:ring-success-strong">
+                  <it.icon className="h-5 w-5" strokeWidth={2.25} />
+                </div>
+                <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-success/15 text-success-strong">
+                  <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                </span>
               </div>
-              <h3 className="font-display text-lg font-semibold">{it.t}</h3>
+
+              <div className="mt-5">
+                <div className="font-display text-3xl font-bold leading-none tracking-tight text-success-strong">
+                  {it.metric}
+                </div>
+                <div className="mt-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  {it.label}
+                </div>
+              </div>
+
+              <h3 className="mt-4 font-display text-lg font-semibold">{it.t}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{it.d}</p>
             </RevealOnScroll>
           ))}
         </div>
 
-        <RevealOnScroll className="mt-12 text-center">
+        <RevealOnScroll className="mx-auto mt-12 max-w-3xl">
+          <div className="flex flex-col items-center gap-5 rounded-2xl border border-success/30 bg-success/10 p-6 text-center sm:flex-row sm:text-left">
+            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-success-strong text-white shadow-lg shadow-success/40">
+              <TrendingUp className="h-6 w-6" strokeWidth={2.5} />
+            </div>
+            <p className="text-base text-foreground sm:text-lg">
+              Somando tudo: <strong>mais receita com o mesmo investimento</strong> em tráfego — e
+              uma operação que cresce sem depender de contratar.
+            </p>
+          </div>
+        </RevealOnScroll>
+
+        <RevealOnScroll className="mt-10 text-center">
           <a href="#formulario" className="btn-primary">
             Quero esses resultados na minha empresa
             <ArrowRight className="h-4 w-4" />
