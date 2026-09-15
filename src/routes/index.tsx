@@ -226,8 +226,8 @@ function Agitation() {
             cliente que <strong className="text-surface-dark-foreground">você pagou para atrair</strong>.
           </p>
           <div className="mt-8">
-            <a href="#formulario" className="btn-primary">
-              Quero parar de perder leads
+            <a href="#planos" className="btn-primary">
+              Ver planos
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>
@@ -337,8 +337,8 @@ function LeadArrived() {
         </RevealOnScroll>
 
         <RevealOnScroll className="mt-10 text-center">
-          <a href="#formulario" className="btn-primary">
-            Quero responder todos os meus leads
+          <a href="#planos" className="btn-primary">
+            Ver planos
             <ArrowRight className="h-4 w-4" />
           </a>
         </RevealOnScroll>
@@ -549,8 +549,8 @@ function HowItWorks() {
         </div>
 
         <RevealOnScroll delay={300} className="mt-12 text-center">
-          <a href="#formulario" className="btn-primary">
-            Quero implantar em até 3 dias
+          <a href="#planos" className="btn-primary">
+            Ver planos
             <ArrowRight className="h-4 w-4" />
           </a>
         </RevealOnScroll>
@@ -675,8 +675,8 @@ function Benefits() {
         </RevealOnScroll>
 
         <RevealOnScroll className="mt-10 text-center">
-          <a href="#formulario" className="btn-primary">
-            Quero esses resultados na minha empresa
+          <a href="#planos" className="btn-primary">
+            Ver planos
             <ArrowRight className="h-4 w-4" />
           </a>
         </RevealOnScroll>

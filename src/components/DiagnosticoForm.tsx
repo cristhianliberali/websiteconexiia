@@ -388,7 +388,7 @@ export function DiagnosticoForm() {
       )}
 
       <button type="submit" disabled={sending} className="btn-primary mt-8 w-full py-4 text-base disabled:opacity-60">
-        {sending ? "Enviando..." : step === 1 ? "Continuar" : "Quero meu diagnóstico gratuito"}
+        {sending ? "Enviando..." : step === 1 ? "Continuar" : "Solicitar uma demonstração"}
       </button>
       <p className="text-center text-sm text-surface-dark-muted">
         Resposta em minutos, no horário que for. Afinal, é isso que vendemos. 😉
