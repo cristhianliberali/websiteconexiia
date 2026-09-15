@@ -86,13 +86,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada em até 3 dias.",
+          "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada por especialistas.",
       },
       { property: "og:title", content: "Conexi IA — Sua melhor vendedora, 24 horas por dia" },
       {
         property: "og:description",
         content:
-          "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada em até 3 dias.",
+          "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada por especialistas.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/` },
@@ -101,7 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "robots", content: "index, follow" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Conexi IA — Sua melhor vendedora, 24 horas por dia" },
-      { name: "twitter:description", content: "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada em até 3 dias." },
+      { name: "twitter:description", content: "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada por especialistas." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1a3c0ac6-e943-4a00-8e5f-c7ab2e7d3259/id-preview-b5d42bb5--7ff0f72e-25b9-48db-8f61-0a8b7c3a2af7.lovable.app-1784911857309.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1a3c0ac6-e943-4a00-8e5f-c7ab2e7d3259/id-preview-b5d42bb5--7ff0f72e-25b9-48db-8f61-0a8b7c3a2af7.lovable.app-1784911857309.png" },
     ],

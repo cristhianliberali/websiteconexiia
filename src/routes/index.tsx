@@ -88,7 +88,7 @@ function Hero() {
 
           <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
             <li className="flex items-center gap-2">
-              <Check className="h-4 w-4 text-primary" /> Implantação guiada em até 3 dias
+              <Check className="h-4 w-4 text-primary" /> Implantação guiada pelo nosso time
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-4 w-4 text-primary" /> Consultoria de especialistas inclusa
@@ -226,8 +226,8 @@ function Agitation() {
             cliente que <strong className="text-surface-dark-foreground">você pagou para atrair</strong>.
           </p>
           <div className="mt-8">
-            <a href="#formulario" className="btn-primary">
-              Quero parar de perder leads
+            <a href="#planos" className="btn-primary">
+              Ver planos
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>
@@ -337,8 +337,8 @@ function LeadArrived() {
         </RevealOnScroll>
 
         <RevealOnScroll className="mt-10 text-center">
-          <a href="#formulario" className="btn-primary">
-            Quero responder todos os meus leads
+          <a href="#planos" className="btn-primary">
+            Ver planos
             <ArrowRight className="h-4 w-4" />
           </a>
         </RevealOnScroll>
@@ -501,8 +501,7 @@ function HowItWorks() {
             Agilidade sem fricção
           </span>
           <h2 className="mt-5 text-3xl font-bold sm:text-4xl lg:text-5xl">
-            Do zero ao ar em <span className="text-primary">até 3 dias</span> — de mãos dadas com
-            nosso time.
+            Do zero ao ar <span className="text-primary">de mãos dadas</span> com nosso time.
           </h2>
           <p className="mt-4 text-lg text-surface-dark-muted">
             Você não configura nada sozinho. A consultoria faz parte da solução.
@@ -549,8 +548,8 @@ function HowItWorks() {
         </div>
 
         <RevealOnScroll delay={300} className="mt-12 text-center">
-          <a href="#formulario" className="btn-primary">
-            Quero implantar em até 3 dias
+          <a href="#planos" className="btn-primary">
+            Ver planos
             <ArrowRight className="h-4 w-4" />
           </a>
         </RevealOnScroll>
@@ -675,8 +674,8 @@ function Benefits() {
         </RevealOnScroll>
 
         <RevealOnScroll className="mt-10 text-center">
-          <a href="#formulario" className="btn-primary">
-            Quero esses resultados na minha empresa
+          <a href="#planos" className="btn-primary">
+            Ver planos
             <ArrowRight className="h-4 w-4" />
           </a>
         </RevealOnScroll>
@@ -1109,7 +1108,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Em quanto tempo fica pronto?",
-    a: "Em até 3 dias: 1h de diagnóstico via Meet, 4h de implantação guiada com sua equipe e acompanhamento contínuo pelo WhatsApp.",
+    a: "Rápido e sem esforço do seu lado: 1h de diagnóstico via Meet, 4h de implantação guiada com sua equipe e acompanhamento contínuo pelo WhatsApp.",
   },
   {
     q: "Preciso saber configurar IA?",
