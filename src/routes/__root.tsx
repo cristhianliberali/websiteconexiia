@@ -82,17 +82,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Conexi IA — Seu melhor vendedor, 24 horas por dia" },
+      { title: "Conexi IA — Sua melhor vendedora, 24 horas por dia" },
       {
         name: "description",
         content:
-          "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente.",
+          "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada em até 3 dias.",
       },
-      { property: "og:title", content: "Conexi IA — Seu melhor vendedor, 24 horas por dia" },
+      { property: "og:title", content: "Conexi IA — Sua melhor vendedora, 24 horas por dia" },
       {
         property: "og:description",
         content:
-          "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente.",
+          "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada em até 3 dias.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/` },
@@ -100,8 +100,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Conexi IA" },
       { name: "robots", content: "index, follow" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Conexi IA — Seu melhor vendedor, 24 horas por dia" },
-      { name: "twitter:description", content: "Plataforma omnichannel com agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site — por até 70% menos que um atendente." },
+      { name: "twitter:title", content: "Conexi IA — Sua melhor vendedora, 24 horas por dia" },
+      { name: "twitter:description", content: "Agentes de IA que atendem, qualificam e vendem no WhatsApp, Instagram, Facebook e site, 24 horas por dia — por uma fração do custo de contratar. Implantação guiada em até 3 dias." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1a3c0ac6-e943-4a00-8e5f-c7ab2e7d3259/id-preview-b5d42bb5--7ff0f72e-25b9-48db-8f61-0a8b7c3a2af7.lovable.app-1784911857309.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1a3c0ac6-e943-4a00-8e5f-c7ab2e7d3259/id-preview-b5d42bb5--7ff0f72e-25b9-48db-8f61-0a8b7c3a2af7.lovable.app-1784911857309.png" },
     ],

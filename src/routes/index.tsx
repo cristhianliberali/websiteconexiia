@@ -6,6 +6,7 @@ import {
   Check,
   ChevronDown,
   Clock,
+  Coffee,
   DollarSign,
   Facebook,
   Globe,
@@ -16,7 +17,7 @@ import {
   Moon,
   SlidersHorizontal,
   Sparkles,
-  Star,
+  Sun,
   TrendingUp,
   Users,
   Video,
@@ -66,14 +67,13 @@ function Hero() {
             IA + atendimento omnichannel para tráfego pago
           </p>
           <h1 className="text-4xl font-bold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
-            Seu melhor vendedor,{" "}
+            Sua melhor vendedora,{" "}
             <span className="text-primary">24 horas por dia.</span>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-muted-foreground">
             A Conexi IA transforma seu WhatsApp, Instagram, Facebook e site em uma máquina de
             vendas: agentes de IA humanizados que respondem em segundos, qualificam e vendem —
-            por até <strong className="text-foreground">70% menos</strong> que o custo de um
-            atendente.
+            por <strong className="text-foreground">uma fração do custo de contratar</strong>.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
@@ -88,7 +88,7 @@ function Hero() {
 
           <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
             <li className="flex items-center gap-2">
-              <Check className="h-4 w-4 text-primary" /> Implantação guiada em até 7 dias
+              <Check className="h-4 w-4 text-primary" /> Implantação guiada em até 3 dias
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-4 w-4 text-primary" /> Consultoria de especialistas inclusa
@@ -108,7 +108,7 @@ function Hero() {
 /* SESSÃO 2 — BARRA DE PROVA */
 function StatsBar() {
   const stats = [
-    { n: "até -70%", l: "em custos com atendimento e folha de pagamento" },
+    { n: "-70%", l: "em comparação ao custo de um atendente humano" },
     { n: "até +39%", l: "na taxa de conversão de leads" },
     { n: "-95%", l: "no tempo médio de resposta no WhatsApp" },
     { n: "24/7", l: "100% dos leads respondidos, a qualquer hora" },
@@ -139,23 +139,23 @@ function Pains() {
   const pains = [
     {
       icon: Clock,
-      t: "Leads esfriando na fila",
-      d: "O lead chega quente do anúncio, espera 40 minutos por um \"oi\"… e compra do concorrente.",
+      t: "Rápido para você, lento para o cliente",
+      d: "Seu time responde em 20, 30 minutos e considera isso rápido. Só que o lead de anúncio manda a mesma pergunta para três concorrentes e fecha com o primeiro que responde — em segundos.",
     },
     {
       icon: Moon,
-      t: "Ninguém responde à noite",
-      d: "Boa parte dos seus leads chega fora do horário comercial. Hoje, todos ficam sem resposta até o dia seguinte.",
+      t: "Depois do expediente, ninguém responde",
+      d: "Boa parte dos seus leads chega à noite, no fim de semana e no feriado — justamente quando não tem ninguém do outro lado. Até o dia seguinte, ele já foi atendido por outra empresa.",
     },
     {
       icon: Users,
       t: "Equipe sobrecarregada",
-      d: "Seu time apaga incêndio o dia inteiro e, mesmo assim, o SLA estoura e o cliente reclama.",
+      d: "Enquanto atende presencialmente, resolve um problema ou fecha uma venda, seu time deixa outras conversas esperando. O SLA estoura sem ninguém perceber — e o cliente reclama.",
     },
     {
       icon: DollarSign,
       t: "Folha de pagamento pesada",
-      d: "Escalar atendimento contratando gente custa de R$ 1.200 a R$ 4.900 por pessoa/mês — e bons vendedores são raros.",
+      d: "Escalar o atendimento contratando gente custa de R$ 2.200 a R$ 4.300 por pessoa/mês — e bons vendedores são raros.",
     },
     {
       icon: LineChart,
@@ -173,11 +173,13 @@ function Pains() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <RevealOnScroll className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-            Quantas vendas você perdeu essa semana por demora na resposta?
+            Será que o seu time responde o cliente no tempo que ele precisa?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Se você investe em tráfego pago e atende pelo WhatsApp, provavelmente vive isso todos
-            os dias:
+            No horário comercial, talvez sim. Mas o lead que vem do anúncio chega a qualquer hora,
+            fala com mais de uma empresa ao mesmo tempo e fecha com quem responde primeiro. Se você
+            investe em tráfego pago e atende pelo WhatsApp, provavelmente reconhece pelo menos uma
+            dessas situações:
           </p>
         </RevealOnScroll>
 
@@ -216,10 +218,10 @@ function Agitation() {
         <RevealOnScroll>
           <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
             Cada hora sem resposta é{" "}
-            <span className="text-primary">dinheiro do seu tráfego</span> indo pro lixo.
+            <span className="text-primary">dinheiro do seu tráfego</span> indo embora.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-surface-dark-muted">
-            Você paga caro pelo clique. Quando o lead espera, o timing da venda morre: o CAC
+            Você paga caro pelo clique. Quando o lead espera, o timing da venda passa: o CAC
             sobe, a verba de anúncio rende menos e o concorrente que respondeu primeiro leva o
             cliente que <strong className="text-surface-dark-foreground">você pagou para atrair</strong>.
           </p>
@@ -229,6 +231,116 @@ function Agitation() {
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>
+        </RevealOnScroll>
+      </div>
+    </section>
+  );
+}
+
+/* SESSÃO 4B — SEU LEAD CHEGOU ÀS 22H47 */
+function LeadArrived() {
+  const moments = [
+    {
+      icon: Moon,
+      when: "Sexta, 22h47",
+      msg: "Vi o anúncio de vocês. Ainda consigo horário essa semana?",
+      without: "respondido na segunda, às 9h12. O lead já tinha agendado com outra empresa.",
+      with: "respondido às 22h47, qualificado e agendado para terça, às 14h.",
+    },
+    {
+      icon: Sun,
+      when: "Domingo, 10h20",
+      msg: "Quanto fica o plano completo? Tem desconto pra fechar hoje?",
+      without: "fica sem resposta até segunda. Na segunda, o lead nem lembra mais do anúncio.",
+      with: "proposta enviada em segundos, dúvidas respondidas e follow-up marcado para o dia seguinte.",
+    },
+    {
+      icon: Coffee,
+      when: "Terça, 12h35",
+      msg: "Vocês atendem na minha região? Como funciona?",
+      without: "time no almoço. Resposta às 14h — para um lead que já falou com três concorrentes.",
+      with: "respondido na hora, dúvidas resolvidas e conversa entregue ao seu time pronta para fechar.",
+    },
+  ];
+  return (
+    <section className="py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
+            Fora do horário, dentro da venda
+          </p>
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+            Seu lead chegou às 22h47. <span className="text-primary">Quem respondeu?</span>
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            A Conexi IA responde em segundos, a qualquer hora, com agentes de IA treinados na sua
+            empresa que qualificam e conduzem a venda no WhatsApp, Instagram, Facebook e site.
+            Nenhum lead do seu tráfego pago fica sem resposta.
+          </p>
+        </RevealOnScroll>
+
+        <RevealOnScroll className="mt-12 text-center">
+          <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+            O mesmo lead, em três momentos em que o seu time não está. Veja o que muda.
+          </p>
+        </RevealOnScroll>
+
+        <div className="mt-6 grid gap-5 md:grid-cols-3">
+          {moments.map((m, i) => (
+            <RevealOnScroll
+              key={m.when}
+              delay={i * 80}
+              className="card-lift flex flex-col rounded-2xl border border-border bg-card p-6"
+            >
+              <div className="flex items-center gap-3">
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                  <m.icon className="h-5 w-5" />
+                </div>
+                <h3 className="font-display text-lg font-semibold">{m.when}</h3>
+              </div>
+
+              <div className="mt-4 rounded-2xl rounded-tl-sm bg-muted px-4 py-3 text-sm text-foreground">
+                <span className="mb-1 block text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Mensagem do lead
+                </span>
+                "{m.msg}"
+              </div>
+
+              <div className="mt-5 space-y-4 text-sm leading-relaxed">
+                <div className="flex items-start gap-2.5">
+                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-destructive/10 text-destructive">
+                    <X className="h-3 w-3" strokeWidth={3} />
+                  </span>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Sem a Conexi:</strong> {m.without}
+                  </p>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
+                    <Check className="h-3 w-3" strokeWidth={3} />
+                  </span>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Com a Conexi:</strong> {m.with}
+                  </p>
+                </div>
+              </div>
+            </RevealOnScroll>
+          ))}
+        </div>
+
+        <RevealOnScroll className="mx-auto mt-12 max-w-3xl rounded-2xl border border-primary/30 bg-primary/5 p-6 text-center">
+          <p className="text-base text-foreground sm:text-lg">
+            Não importa se é madrugada, domingo ou hora do almoço: quem chega pelo seu anúncio é
+            atendido em segundos, com o tom de voz da sua marca —{" "}
+            <strong>e o seu time só entra quando a venda está pronta para fechar.</strong>
+          </p>
+        </RevealOnScroll>
+
+        <RevealOnScroll className="mt-10 text-center">
+          <a href="#formulario" className="btn-primary">
+            Quero responder todos os meus leads
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </RevealOnScroll>
       </div>
     </section>
@@ -460,9 +572,9 @@ function Benefits() {
     {
       icon: DollarSign,
       metric: "-70%",
-      label: "no custo por atendimento",
+      label: "em comparação ao custo de um atendente humano",
       t: "Custo muito menor",
-      d: "Um agente de IA custa uma fração de um atendente humano — e trabalha 24/7, sem férias, sem turnover.",
+      d: "Um agente de IA custa até 70% menos que um atendente humano — e trabalha 24/7, sem férias, sem turnover.",
     },
     {
       icon: Zap,
@@ -476,7 +588,7 @@ function Benefits() {
       metric: "100%",
       label: "do time nas conversas de valor",
       t: "Time focado no que importa",
-      d: "A IA resolve o repetitivo e o fora de horário; seus humanos entram apenas onde fazem diferença.",
+      d: "A IA resolve o repetitivo e o fora de horário; seu time entra só onde faz diferença.",
     },
     {
       icon: MessageCircle,
@@ -820,13 +932,13 @@ const PLANS = [
     badge: "Mais escolhido",
   },
   {
-    name: "PRO +",
+    name: "PRO",
     price: "R$ 997,90",
-    tag: "Para provedores de internet e alto volume",
+    tag: "Para operações de alto volume e integração com ERP",
     features: [
       "10 agentes de IA",
-      "Integração com IXC, MK, SGP e Hubsoft",
-      "Fluxos prontos (desbloqueio, 2ª via de boleto, status de conexão)",
+      "Integração com ERP (IXC, MK, SGP e Hubsoft)",
+      "Fluxos prontos de suporte (desbloqueio, 2ª via de boleto, status de conexão)",
       "SLA + auditoria",
       "Gerente de contas",
       "30 usuários",
@@ -850,7 +962,7 @@ function Plans() {
           <RevealOnScroll className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold sm:text-4xl">Planos que se pagam no primeiro mês</h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Um atendente humano custa de R$ 1.200 a R$ 4.900/mês e trabalha 8h por dia. A Conexi
+              Um atendente humano custa de R$ 2.200 a R$ 4.300/mês e trabalha 8h por dia. A Conexi
               começa em <strong className="text-foreground">R$ 347,90</strong> — trabalhando 24/7.
             </p>
           </RevealOnScroll>
@@ -926,14 +1038,22 @@ function Plans() {
 /* SESSÃO 10 — PARA QUEM É */
 function ForWho() {
   const chips = [
-    { t: "Provedores de internet", star: true },
-    { t: "Clínicas e consultórios" },
-    { t: "Clínicas de estética" },
-    { t: "Imobiliárias" },
-    { t: "Agências de viagens" },
-    { t: "Revendas de veículos" },
-    { t: "Lojas e varejo consultivo" },
-    { t: "Operações de suporte" },
+    { t: "Clínicas médicas e odontológicas" },
+    { t: "Clínicas de estética e beleza" },
+    { t: "Imobiliárias e construtoras" },
+    { t: "Concessionárias e revendas de veículos" },
+    { t: "Agências de viagens e turismo" },
+    { t: "Escolas, cursos e faculdades" },
+    { t: "Academias e estúdios" },
+    { t: "Corretoras de seguros e planos de saúde" },
+    { t: "Empresas de energia solar" },
+    { t: "Escritórios de advocacia e contabilidade" },
+    { t: "Lojas, e-commerce e varejo consultivo" },
+    { t: "Salões, pet shops e serviços com agendamento" },
+    { t: "Assistência técnica e serviços a domicílio" },
+    { t: "Franquias e redes de lojas" },
+    { t: "Provedores de internet e telecom" },
+    { t: "Operações de suporte e SAC" },
   ];
   return (
     <section className="bg-muted/40 py-20">
@@ -943,7 +1063,7 @@ function ForWho() {
             Feita para empresas que vivem de atendimento
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Se sua empresa recebe leads de tráfego pago ou tem alto volume de atendimento no
+            Se a sua empresa anuncia, recebe leads todos os dias e fala com o cliente pelo
             WhatsApp, a Conexi foi feita para você.
           </p>
         </RevealOnScroll>
@@ -954,7 +1074,6 @@ function ForWho() {
               key={c.t}
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground shadow-sm"
             >
-              {c.star && <Star className="h-3.5 w-3.5 fill-primary text-primary" />}
               {c.t}
             </span>
           ))}
@@ -962,9 +1081,19 @@ function ForWho() {
 
         <RevealOnScroll className="mx-auto mt-10 max-w-3xl rounded-2xl border-l-4 border-primary bg-card p-6 shadow-sm">
           <p className="text-foreground">
-            <strong className="text-primary">Provedor de internet?</strong> O plano PRO integra
-            com IXC, MK, SGP e Hubsoft e traz fluxos prontos: desbloqueio de confiança, 2ª via
-            de boleto e status de conexão resolvidos pela IA.
+            <strong className="text-primary">Feita para quem vive de atendimento.</strong> Para
+            quem anuncia em tráfego pago e recebe leads todos os dias. Para quem tem agenda para
+            preencher, orçamento para enviar e follow-up para fazer. Para quem já tentou
+            automatizar e o cliente não gostou. Para quem usa o WhatsApp, o Instagram e outros
+            canais para falar com o cliente — e sabe que cada conversa sem resposta é uma venda
+            que vai para o concorrente.
+          </p>
+          <p className="mt-3 text-foreground">
+            Se você se reconheceu em pelo menos uma dessas frases,{" "}
+            <a href="#formulario" className="font-semibold text-primary hover:underline">
+              peça seu diagnóstico gratuito
+            </a>
+            .
           </p>
         </RevealOnScroll>
       </div>
@@ -980,7 +1109,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Em quanto tempo fica pronto?",
-    a: "De 3 a 7 dias: 1h de diagnóstico via Meet, 4h de implementação guiada com sua equipe e acompanhamento contínuo pelo WhatsApp.",
+    a: "Em até 3 dias: 1h de diagnóstico via Meet, 4h de implantação guiada com sua equipe e acompanhamento contínuo pelo WhatsApp.",
   },
   {
     q: "Preciso saber configurar IA?",
@@ -995,12 +1124,12 @@ const FAQ_ITEMS = [
     a: "Chatbot de menu só entende botão. Os agentes da Conexi entendem linguagem natural, conhecem sua empresa a fundo e conduzem a venda — criados com você por especialistas, não por tentativa e erro.",
   },
   {
-    q: "Funciona com meu ERP de provedor?",
-    a: "Sim. No plano PRO há integração com IXC, MK, SGP e Hubsoft, com fluxos prontos de desbloqueio, 2ª via de boleto e status de conexão.",
+    q: "Integra com o sistema que eu já uso?",
+    a: "Sim. Nos planos STANDART e PRO você conta com webhook e API Rest para conectar a Conexi ao seu CRM, ERP ou sistema interno. No PRO, há integração nativa com os ERPs IXC, MK, SGP e Hubsoft, com fluxos de suporte prontos.",
   },
   {
-    q: "Vou precisar demitir minha equipe?",
-    a: "Não é esse o objetivo. A IA absorve o volume repetitivo e o fora de horário; seu time foca nas conversas de maior valor. Você escala sem precisar contratar.",
+    q: "Como funcionam os créditos de IA?",
+    a: "1 crédito = 1 resposta da IA. Os planos incluem créditos mensais (500 no START, 1.000 no STANDART e no PRO) e você pode adicionar pacotes de 100 respostas por R$ 7,90, com recarga automática opcional. Nos planos STANDART e PRO, também dá para conectar sua própria chave de IA (OpenAI, Anthropic, Gemini ou Groq) e ter controle total do custo.",
   },
 ];
 
@@ -1068,15 +1197,15 @@ function FinalForm() {
       <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6">
         <RevealOnScroll className="text-center">
           <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
-            Descubra quanto sua empresa está{" "}
-            <span className="text-primary">deixando na mesa</span>
+            Onde a sua empresa perde vendas hoje?{" "}
+            <span className="text-primary">Vamos mapear juntos.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-surface-dark-muted">
             Preencha abaixo e receba um <strong className="text-surface-dark-foreground">
               diagnóstico gratuito
             </strong>{" "}
-            da sua operação de atendimento. Nosso time entra em contato para mapear onde você
-            perde vendas hoje — sem compromisso.
+            da sua operação de atendimento. Nosso time entra em contato, entende como você atende
+            hoje e mostra onde estão as vendas que escapam — sem compromisso.
           </p>
         </RevealOnScroll>
 
@@ -1161,6 +1290,7 @@ function LandingPage() {
       <StatsBar />
       <Pains />
       <Agitation />
+      <LeadArrived />
       <Solution />
       <HowItWorks />
       <Benefits />
