@@ -415,7 +415,7 @@ function OmnichannelInbox() {
       icon: Facebook,
       color: "text-blue-600 bg-blue-100",
       name: "Carlos S. · Messenger",
-      msg: "Quero o plano PRO, como faço?",
+      msg: "Quero o plano PRO +, como faço?",
       time: "5 min",
       tag: "Alta intenção",
     },
@@ -480,7 +480,7 @@ function HowItWorks() {
       icon: Headphones,
       badge: "Otimização constante",
       t: "Acompanhamento contínuo",
-      d: "Suporte próximo via WhatsApp para ajustar, otimizar e escalar os resultados. No plano PRO, gerente de contas dedicado.",
+      d: "Suporte próximo via WhatsApp para ajustar, otimizar e escalar os resultados. No plano PRO +, gerente de conta dedicado.",
     },
   ];
   return (
@@ -743,69 +743,127 @@ function Comparison() {
 }
 
 /* SESSÃO 9 — PLANOS */
+type BillingCycle = "mensal" | "anual";
+
+const ANNUAL_DISCOUNT_LABEL = "20% OFF";
+
+const brl = (value: number) =>
+  value.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2 });
+
 function PlanFeatures() {
   const features = [
     {
-      category: "Canais de atendimento",
+      category: "Preço e estrutura",
       items: [
-        { name: "WhatsApp Oficial", start: true, standart: true, pro: true },
-        { name: "Instagram Direct", start: true, standart: true, pro: true },
-        { name: "Facebook Messenger", start: false, standart: true, pro: true },
-        { name: "Webchat no site", start: false, standart: true, pro: true },
-        { name: "Telegram", start: false, standart: "Em breve", pro: "Em breve" },
+        { name: "Usuários inclusos", start: "2", plus: "8", pro: "30" },
+        { name: "Usuários adicionais", start: "—", plus: "—", pro: "Consulte" },
+        { name: "Caixas de entrada", start: "2", plus: "8", pro: "30" },
+        { name: "Caixas de entrada adicionais", start: "—", plus: "—", pro: "Consulte" },
+        { name: "Agentes de IA", start: "Ilimitado", plus: "Ilimitado", pro: "Ilimitado" },
+        {
+          name: "Implantação no plano mensal (opcional)",
+          start: "R$ 5.000",
+          plus: "R$ 5.000",
+          pro: "R$ 5.000",
+        },
+        {
+          name: "Implantação no plano anual (opcional)",
+          start: "R$ 5.000",
+          plus: "Gratuita",
+          pro: "Gratuita",
+        },
       ],
     },
     {
-      category: "Agentes de IA",
+      category: "Inteligência Artificial",
       items: [
-        { name: "Agentes inclusos", start: "2", standart: "5", pro: "10" },
-        { name: "Agentes extras", start: "—", standart: "R$ 97/un.", pro: "R$ 97/un." },
-        { name: "Treinamento customizado", start: true, standart: true, pro: true },
-        { name: "Personalidade de voz da marca", start: false, standart: true, pro: true },
+        {
+          name: "Modelo de consumo de tokens",
+          start: "IA integrada",
+          plus: "IA integrada ou chave própria",
+          pro: "IA integrada ou chave própria",
+        },
+        {
+          name: "Créditos de IA",
+          start: "R$ 7,90 / 100 créditos",
+          plus: "R$ 7,90 / 100 créditos",
+          pro: "R$ 7,90 / 100 créditos",
+        },
+        { name: "Assistência e análise com IA (copilot)", start: false, plus: true, pro: true },
       ],
     },
     {
-      category: "Volume e usuários",
+      category: "Canais",
       items: [
-        { name: "Respostas de IA/mês", start: "500", standart: "1.000", pro: "2.000" },
-        { name: "Respostas extras", start: "—", standart: "R$ 0,12", pro: "R$ 0,10" },
-        { name: "Usuários da plataforma", start: "3", standart: "10", pro: "30" },
-        { name: "Usuários extras", start: "—", standart: "R$ 47/un.", pro: "R$ 47/un." },
+        { name: "WhatsApp", start: true, plus: true, pro: true },
+        { name: "Instagram", start: true, plus: true, pro: true },
+        { name: "Webchat ao vivo", start: false, plus: true, pro: true },
+        { name: "Facebook", start: false, plus: true, pro: true },
       ],
     },
     {
-      category: "Inteligência e automação",
+      category: "Gestão, dados e integrações",
       items: [
-        { name: "IA generativa de linguagem natural", start: true, standart: true, pro: true },
-        { name: "Escolha de modelo de IA (OpenAI, Anthropic, Gemini, Groq)", start: false, standart: true, pro: true },
-        { name: "Fluxos de qualificação de leads", start: true, standart: true, pro: true },
-        { name: "Fluxos de recuperação de vendas", start: false, standart: true, pro: true },
-        { name: "Fluxos prontos para provedores", start: false, standart: false, pro: true },
+        {
+          name: "Dashboards e BI (relatório de atendimentos)",
+          start: true,
+          plus: true,
+          pro: true,
+        },
+        { name: "API de conversões / traqueamento", start: true, plus: true, pro: true },
+        { name: "Webhook e API Rest", start: false, plus: true, pro: true },
+        { name: "SLA de atendimento", start: false, plus: false, pro: true },
+        { name: "Auditoria de logs", start: false, plus: false, pro: true },
       ],
     },
     {
-      category: "Dados e integrações",
+      category: "CRM — em breve",
       items: [
-        { name: "Dashboards e BI", start: false, standart: true, pro: true },
-        { name: "API de conversões", start: false, standart: true, pro: true },
-        { name: "Integração com IXC / MK / SGP / Hubsoft", start: false, standart: false, pro: true },
-        { name: "Webhook e API aberta", start: false, standart: "Limitada", pro: true },
+        { name: "Visualização Kanban", start: false, plus: true, pro: true },
+        { name: "Pipelines", start: "—", plus: "3", pro: "Ilimitado" },
+        {
+          name: "Automações do CRM (follow-up, webhooks, discador, etc.)",
+          start: false,
+          plus: true,
+          pro: true,
+        },
       ],
     },
     {
-      category: "Suporte e operação",
+      category: "Operação",
       items: [
-        { name: "Implantação", start: "Grátis", standart: "Grátis", pro: "R$ 2.500" },
-        { name: "Consultoria de especialistas", start: true, standart: true, pro: true },
-        { name: "Acompanhamento por WhatsApp", start: true, standart: true, pro: true },
-        { name: "SLA de resposta do suporte", start: "48h", standart: "24h", pro: "4h" },
-        { name: "Gerente de contas dedicado", start: false, standart: false, pro: true },
-        { name: "Auditoria mensal de conversas", start: false, standart: false, pro: true },
+        { name: "Agendamento de mensagens", start: false, plus: true, pro: true },
+        {
+          name: "Automações, respostas prontas, macros e etiquetas",
+          start: true,
+          plus: true,
+          pro: true,
+        },
+        { name: "Fluxo de conversas por time", start: true, plus: true, pro: true },
+        {
+          name: "Times, atribuição automática e capacidade do atendente",
+          start: true,
+          plus: true,
+          pro: true,
+        },
+        { name: "Central de ajuda personalizada", start: true, plus: true, pro: true },
+      ],
+    },
+    {
+      category: "Suporte",
+      items: [
+        { name: "Gerente de conta", start: false, plus: false, pro: true },
+        {
+          name: "Canais de suporte",
+          start: "Chat",
+          plus: "Chat ou WhatsApp",
+          pro: "Chat ou WhatsApp",
+        },
       ],
     },
   ];
 
-  const plans = ["START", "STANDART", "PRO"];
+  const plans = PLANS.map((p) => p.name);
 
   const renderCell = (value: boolean | string) => {
     if (value === true) {
@@ -824,7 +882,9 @@ function PlanFeatures() {
         </div>
       );
     }
-    return <span className="text-sm font-medium text-surface-dark-foreground">{value}</span>;
+    return (
+      <span className="text-center text-sm font-medium text-surface-dark-foreground">{value}</span>
+    );
   };
 
   return (
@@ -874,7 +934,7 @@ function PlanFeatures() {
                     {renderCell(item.start)}
                   </div>
                   <div className="grid place-items-center border-l border-surface-dark-border/60 px-4 py-3.5 sm:px-6">
-                    {renderCell(item.standart)}
+                    {renderCell(item.plus)}
                   </div>
                   <div className="grid place-items-center border-l border-surface-dark-border/60 px-4 py-3.5 sm:px-6">
                     {renderCell(item.pro)}
@@ -883,6 +943,18 @@ function PlanFeatures() {
               ))}
             </div>
           ))}
+        </RevealOnScroll>
+
+        <RevealOnScroll delay={120} className="mx-auto mt-8 max-w-3xl rounded-2xl border border-surface-dark-border bg-surface-dark-foreground/5 p-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            O que inclui a implantação
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-surface-dark-muted">
+            Implementação guiada com nossa equipe: criação de usuários, configuração da política de
+            acesso, migração/criação de canais e engenharia de prompt para os agentes de IA. Inclui
+            reunião de briefing e elaboração da base de conhecimento e das ferramentas da IA.
+            Integração entre sistemas mediante avaliação.
+          </p>
         </RevealOnScroll>
 
         <RevealOnScroll delay={150} className="mt-8 flex justify-center">
@@ -899,60 +971,134 @@ function PlanFeatures() {
 const PLANS = [
   {
     name: "START",
-    price: "R$ 347,90",
+    monthlyPrice: 347.9,
+    annualTotal: 3339.84,
     tag: "Para validar a IA na sua operação",
     features: [
-      "2 agentes de IA",
-      "500 respostas de IA/mês",
+      "2 usuários",
+      "2 caixas de entrada",
+      "Agentes de IA ilimitados",
       "WhatsApp + Instagram",
-      "3 usuários",
-      "Implantação grátis",
+      "IA integrada (créditos a R$ 7,90 / 100)",
+      "Dashboards, BI e API de conversões",
+      "Automações, respostas prontas, macros e etiquetas",
+      "Suporte por chat",
     ],
+    setup: {
+      mensal: "Implantação opcional: R$ 5.000",
+      anual: "Implantação opcional: R$ 5.000",
+    },
     cta: "Começar com o START",
-    href: "#checkout-start",
     highlight: false,
   },
   {
-    name: "STANDART",
-    price: "R$ 597,90",
+    name: "PLUS",
+    monthlyPrice: 597.8,
+    annualTotal: 5738.88,
     tag: "Para empresas em crescimento com tráfego pago ativo",
     features: [
-      "5 agentes de IA",
-      "1.000 respostas/mês",
-      "+ Facebook e webchat",
-      "Dashboards e BI",
-      "API de conversões",
-      "Use sua própria chave de IA (OpenAI, Anthropic, Gemini, Groq)",
-      "10 usuários",
+      "8 usuários",
+      "8 caixas de entrada",
+      "Agentes de IA ilimitados",
+      "+ Facebook e webchat ao vivo",
+      "IA integrada ou sua própria chave (OpenAI, Anthropic, etc.)",
+      "Assistência e análise com IA (copilot)",
+      "Webhook e API Rest",
+      "CRM com Kanban, 3 pipelines e automações (em breve)",
+      "Agendamento de mensagens",
+      "Suporte por chat ou WhatsApp",
     ],
-    cta: "Assinar o STANDART",
-    href: "#checkout-standart",
+    setup: {
+      mensal: "Implantação opcional: R$ 5.000",
+      anual: "Implantação gratuita no plano anual",
+    },
+    cta: "Assinar o PLUS",
     highlight: true,
     badge: "Mais escolhido",
   },
   {
-    name: "PRO",
-    price: "R$ 997,90",
-    tag: "Para operações de alto volume e integração com ERP",
+    name: "PRO +",
+    monthlyPrice: 998.7,
+    annualTotal: 9587.52,
+    tag: "Para operações de alto volume que precisam de SLA e governança",
     features: [
-      "10 agentes de IA",
-      "Integração com ERP (IXC, MK, SGP e Hubsoft)",
-      "Fluxos prontos de suporte (desbloqueio, 2ª via de boleto, status de conexão)",
-      "SLA + auditoria",
-      "Gerente de contas",
-      "30 usuários",
-      "Implantação R$ 2.500",
+      "30 usuários (adicionais sob consulta)",
+      "30 caixas de entrada (adicionais sob consulta)",
+      "Agentes de IA ilimitados",
+      "Todos os canais: WhatsApp, Instagram, Facebook e webchat",
+      "CRM com pipelines ilimitados (em breve)",
+      "SLA de atendimento",
+      "Auditoria de logs",
+      "Gerente de conta dedicado",
     ],
+    setup: {
+      mensal: "Implantação opcional: R$ 5.000",
+      anual: "Implantação gratuita no plano anual",
+    },
     cta: "Falar com um especialista",
-    href: "#formulario",
     highlight: false,
   },
 ];
 
+function BillingToggle({
+  cycle,
+  onChange,
+}: {
+  cycle: BillingCycle;
+  onChange: (cycle: BillingCycle) => void;
+}) {
+  const options: { value: BillingCycle; label: string }[] = [
+    { value: "mensal", label: "Mensal" },
+    { value: "anual", label: "Anual" },
+  ];
+
+  return (
+    <div
+      role="group"
+      aria-label="Ciclo de cobrança"
+      className="inline-flex items-center gap-1 rounded-full border border-border bg-card p-1 shadow-sm"
+    >
+      {options.map((option) => {
+        const isActive = cycle === option.value;
+        return (
+          <button
+            key={option.value}
+            type="button"
+            onClick={() => onChange(option.value)}
+            aria-pressed={isActive}
+            className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition ${
+              isActive
+                ? "bg-primary text-primary-foreground shadow"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {option.label}
+            {option.value === "anual" && (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
+                  isActive ? "bg-primary-foreground/20" : "bg-primary/15 text-primary"
+                }`}
+              >
+                {ANNUAL_DISCOUNT_LABEL}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 function Plans() {
   const plans = PLANS;
 
+  const [cycle, setCycle] = useState<BillingCycle>("anual");
   const [showFeatures, setShowFeatures] = useState(false);
+
+  const isAnnual = cycle === "anual";
+  const startingPrice = brl(
+    isAnnual ? PLANS[0].annualTotal / 12 : PLANS[0].monthlyPrice,
+  );
 
   return (
     <>
@@ -962,60 +1108,94 @@ function Plans() {
             <h2 className="text-3xl font-bold sm:text-4xl">Planos que se pagam no primeiro mês</h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Um atendente humano custa de R$ 2.200 a R$ 4.300/mês e trabalha 8h por dia. A Conexi
-              começa em <strong className="text-foreground">R$ 347,90</strong> — trabalhando 24/7.
+              começa em <strong className="text-foreground">{startingPrice}</strong> por mês —
+              trabalhando 24/7.
             </p>
           </RevealOnScroll>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {plans.map((p, i) => (
-              <RevealOnScroll
-                key={p.name}
-                delay={i * 80}
-                className={`card-lift relative flex flex-col rounded-2xl border p-6 ${
-                  p.highlight
-                    ? "border-primary bg-card shadow-[0_20px_50px_-20px_color-mix(in_oklab,var(--color-primary)_50%,transparent)]"
-                    : "border-border bg-card"
-                }`}
-              >
-                {p.badge && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                    ⭐ {p.badge}
-                  </span>
-                )}
-                <div className="flex items-baseline gap-2">
-                  <h3 className="font-display text-2xl font-bold">{p.name}</h3>
-                </div>
-                <p className="mt-1 text-sm text-muted-foreground">{p.tag}</p>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="font-display text-4xl font-bold">{p.price}</span>
-                  <span className="text-sm text-muted-foreground">/mês</span>
-                </div>
+          <RevealOnScroll delay={60} className="mt-8 flex flex-col items-center gap-3">
+            <BillingToggle cycle={cycle} onChange={setCycle} />
+            <p className="text-sm text-muted-foreground">
+              {isAnnual
+                ? "Você está vendo os preços do plano anual, com 20% de desconto."
+                : "Assine no anual e economize 20%."}
+            </p>
+          </RevealOnScroll>
 
-                <ul className="mt-6 space-y-2.5">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
-                      <span className="text-foreground">{f}</span>
-                    </li>
-                  ))}
-                </ul>
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {plans.map((p, i) => {
+              const monthlyEquivalent = isAnnual ? p.annualTotal / 12 : p.monthlyPrice;
+              const displayPrice = brl(monthlyEquivalent);
 
-                <a
-                  href="#formulario"
-                  onClick={() =>
-                    window.dispatchEvent(
-                      new CustomEvent("conexi:plano-selecionado", {
-                        detail: { plano: p.name, preco: p.price },
-                      }),
-                    )
-                  }
-                  className={`mt-8 ${p.highlight ? "btn-primary" : "btn-ghost-light"} w-full`}
+              return (
+                <RevealOnScroll
+                  key={p.name}
+                  delay={i * 80}
+                  className={`card-lift relative flex flex-col rounded-2xl border p-6 ${
+                    p.highlight
+                      ? "border-primary bg-card shadow-[0_20px_50px_-20px_color-mix(in_oklab,var(--color-primary)_50%,transparent)]"
+                      : "border-border bg-card"
+                  }`}
                 >
-                  {p.cta}
-                </a>
+                  {p.badge && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
+                      ⭐ {p.badge}
+                    </span>
+                  )}
+                  <div className="flex items-baseline gap-2">
+                    <h3 className="font-display text-2xl font-bold">{p.name}</h3>
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">{p.tag}</p>
+                  <div className="mt-4 flex items-baseline gap-1">
+                    <span className="font-display text-4xl font-bold">{displayPrice}</span>
+                    <span className="text-sm text-muted-foreground">/mês</span>
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {isAnnual ? (
+                      <>
+                        <span className="line-through">{brl(p.monthlyPrice)}</span>{" "}
+                        <span className="font-semibold text-primary">
+                          {brl(p.annualTotal)} por ano
+                        </span>
+                      </>
+                    ) : (
+                      "Cobrança mensal, sem fidelidade"
+                    )}
+                  </p>
 
-              </RevealOnScroll>
-            ))}
+                  <ul className="mt-6 space-y-2.5">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2.5 text-sm">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
+                        <span className="text-foreground">{f}</span>
+                      </li>
+                    ))}
+                    <li className="flex items-start gap-2.5 text-sm">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
+                      <span className="text-foreground">{p.setup[cycle]}</span>
+                    </li>
+                  </ul>
+
+                  <a
+                    href="#formulario"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent("conexi:plano-selecionado", {
+                          detail: {
+                            plano: p.name,
+                            preco: `${displayPrice}/mês (${cycle})`,
+                          },
+                        }),
+                      )
+                    }
+                    className={`mt-8 ${p.highlight ? "btn-primary" : "btn-ghost-light"} w-full`}
+                  >
+                    {p.cta}
+                  </a>
+
+                </RevealOnScroll>
+              );
+            })}
           </div>
 
           <RevealOnScroll className="mt-8 text-center">
@@ -1124,11 +1304,11 @@ const FAQ_ITEMS = [
   },
   {
     q: "Integra com o sistema que eu já uso?",
-    a: "Sim. Nos planos STANDART e PRO você conta com webhook e API Rest para conectar a Conexi ao seu CRM, ERP ou sistema interno. No PRO, há integração nativa com os ERPs IXC, MK, SGP e Hubsoft, com fluxos de suporte prontos.",
+    a: "Sim. Nos planos PLUS e PRO + você conta com webhook e API Rest para conectar a Conexi ao seu CRM, ERP ou sistema interno. Integrações entre sistemas são avaliadas caso a caso na implantação, junto com o nosso time.",
   },
   {
     q: "Como funcionam os créditos de IA?",
-    a: "1 crédito = 1 resposta da IA. Os planos incluem créditos mensais (500 no START, 1.000 no STANDART e no PRO) e você pode adicionar pacotes de 100 respostas por R$ 7,90, com recarga automática opcional. Nos planos STANDART e PRO, também dá para conectar sua própria chave de IA (OpenAI, Anthropic, Gemini ou Groq) e ter controle total do custo.",
+    a: "1 crédito = 1 resposta da IA. Você adiciona pacotes de 100 créditos por R$ 7,90, com recarga automática opcional, e usa quantos agentes de IA precisar — não há limite de agentes em nenhum plano. Nos planos PLUS e PRO +, também dá para conectar sua própria chave de IA (OpenAI, Anthropic, etc.) e ter controle total do custo.",
   },
 ];
 
@@ -1216,10 +1396,6 @@ function FinalForm() {
   );
 }
 
-function parsePriceBRL(price: string): string {
-  return price.replace(/[^\d,]/g, "").replace(",", ".");
-}
-
 /** JSON-LD (Organization + WebSite + Service/Offers + FAQPage) para SEO e para bots de IA entenderem a página. */
 function StructuredData() {
   const pageUrl = `${SITE_URL}/`;
@@ -1254,14 +1430,24 @@ function StructuredData() {
         provider: { "@id": `${pageUrl}#organization` },
         areaServed: "BR",
         url: `${pageUrl}#planos`,
-        offers: PLANS.map((plan) => ({
-          "@type": "Offer",
-          name: `Plano ${plan.name}`,
-          price: parsePriceBRL(plan.price),
-          priceCurrency: "BRL",
-          description: plan.tag,
-          url: `${pageUrl}#planos`,
-        })),
+        offers: PLANS.flatMap((plan) => [
+          {
+            "@type": "Offer",
+            name: `Plano ${plan.name} (mensal)`,
+            price: plan.monthlyPrice.toFixed(2),
+            priceCurrency: "BRL",
+            description: plan.tag,
+            url: `${pageUrl}#planos`,
+          },
+          {
+            "@type": "Offer",
+            name: `Plano ${plan.name} (anual, 20% de desconto)`,
+            price: plan.annualTotal.toFixed(2),
+            priceCurrency: "BRL",
+            description: plan.tag,
+            url: `${pageUrl}#planos`,
+          },
+        ]),
       },
       {
         "@type": "FAQPage",
