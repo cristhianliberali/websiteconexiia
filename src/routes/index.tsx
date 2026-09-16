@@ -759,7 +759,6 @@ function PlanFeatures() {
         { name: "Usuários adicionais", start: "—", plus: "—", pro: "Consulte" },
         { name: "Caixas de entrada", start: "2", plus: "8", pro: "30" },
         { name: "Caixas de entrada adicionais", start: "—", plus: "—", pro: "Consulte" },
-        { name: "Agentes de IA", start: "Ilimitado", plus: "Ilimitado", pro: "Ilimitado" },
         {
           name: "Implantação no plano mensal (opcional)",
           start: "R$ 5.000",
@@ -977,7 +976,6 @@ const PLANS = [
     features: [
       "2 usuários",
       "2 caixas de entrada",
-      "Agentes de IA ilimitados",
       "WhatsApp + Instagram",
       "IA integrada (créditos a R$ 7,90 / 100)",
       "Dashboards, BI e API de conversões",
@@ -999,7 +997,6 @@ const PLANS = [
     features: [
       "8 usuários",
       "8 caixas de entrada",
-      "Agentes de IA ilimitados",
       "+ Facebook e webchat ao vivo",
       "IA integrada ou sua própria chave (OpenAI, Anthropic, etc.)",
       "Assistência e análise com IA (copilot)",
@@ -1024,7 +1021,6 @@ const PLANS = [
     features: [
       "30 usuários (adicionais sob consulta)",
       "30 caixas de entrada (adicionais sob consulta)",
-      "Agentes de IA ilimitados",
       "Todos os canais: WhatsApp, Instagram, Facebook e webchat",
       "CRM com pipelines ilimitados (em breve)",
       "SLA de atendimento",
