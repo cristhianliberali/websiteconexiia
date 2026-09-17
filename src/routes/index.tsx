@@ -976,7 +976,7 @@ const PLANS = [
     tag: "Para validar a IA na sua operação",
     features: [
       "2 usuários",
-      "2 caixas de entrada",
+      "3 caixas de entrada",
       "Agentes de IA ilimitados",
       "WhatsApp + Instagram",
       "IA integrada (créditos a R$ 7,90 / 100)",
@@ -996,10 +996,10 @@ const PLANS = [
     monthlyPrice: 597.8,
     annualTotal: 5738.88,
     tag: "Para empresas em crescimento com tráfego pago ativo",
+    inherits: "Tudo do START, mais:",
     features: [
-      "8 usuários",
-      "8 caixas de entrada",
-      "Agentes de IA ilimitados",
+      "6 usuários",
+      "5 caixas de entrada",
       "+ Facebook e webchat ao vivo",
       "IA integrada ou sua própria chave (OpenAI, Anthropic, etc.)",
       "Assistência e análise com IA (copilot)",
@@ -1021,10 +1021,10 @@ const PLANS = [
     monthlyPrice: 998.7,
     annualTotal: 9587.52,
     tag: "Para operações de alto volume que precisam de SLA e governança",
+    inherits: "Tudo do PLUS, mais:",
     features: [
-      "30 usuários (adicionais sob consulta)",
-      "30 caixas de entrada (adicionais sob consulta)",
-      "Agentes de IA ilimitados",
+      "20 usuários (adicionais sob consulta)",
+      "20 caixas de entrada (adicionais sob consulta)",
       "Todos os canais: WhatsApp, Instagram, Facebook e webchat",
       "CRM com pipelines ilimitados (em breve)",
       "SLA de atendimento",
@@ -1163,7 +1163,11 @@ function Plans() {
                     )}
                   </p>
 
-                  <ul className="mt-6 space-y-2.5">
+                  {p.inherits && (
+                    <p className="mt-6 text-sm font-semibold text-foreground">{p.inherits}</p>
+                  )}
+
+                  <ul className={`${p.inherits ? "mt-3" : "mt-6"} space-y-2.5`}>
                     {p.features.map((f) => (
                       <li key={f} className="flex items-start gap-2.5 text-sm">
                         <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
