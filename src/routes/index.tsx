@@ -969,8 +969,8 @@ function PlanFeatures() {
 const PLANS = [
   {
     name: "START",
-    monthlyPrice: 417.48,
-    annualTotal: 4174.8,
+    monthlyPrice: 372.38,
+    annualTotal: 3574.8,
     tag: "Para validar a IA na sua operação",
     features: [
       "2 usuários",
@@ -991,8 +991,8 @@ const PLANS = [
   },
   {
     name: "PLUS",
-    monthlyPrice: 717.36,
-    annualTotal: 7173.6,
+    monthlyPrice: 872.38,
+    annualTotal: 8374.8,
     tag: "Para empresas em crescimento com tráfego pago ativo",
     inherits: "Tudo do START, mais:",
     features: [
@@ -1016,8 +1016,8 @@ const PLANS = [
   },
   {
     name: "PRO +",
-    monthlyPrice: 1198.44,
-    annualTotal: 11984.4,
+    monthlyPrice: 1248.63,
+    annualTotal: 11986.8,
     tag: "Para operações de alto volume que precisam de SLA e governança",
     inherits: "Tudo do PLUS, mais:",
     features: [
