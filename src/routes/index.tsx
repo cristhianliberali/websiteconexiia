@@ -753,9 +753,9 @@ function PlanFeatures() {
     {
       category: "Preço e estrutura",
       items: [
-        { name: "Usuários inclusos", start: "2", plus: "8", pro: "12" },
+        { name: "Usuários inclusos", start: "2", plus: "6", pro: "12" },
         { name: "Usuários adicionais", start: "—", plus: "—", pro: "Consulte" },
-        { name: "Caixas de entrada", start: "2", plus: "8", pro: "30" },
+        { name: "Caixas de entrada", start: "3", plus: "5", pro: "20" },
         { name: "Caixas de entrada adicionais", start: "—", plus: "—", pro: "Consulte" },
         { name: "Agentes de IA", start: "Ilimitado", plus: "Ilimitado", pro: "Ilimitado" },
         {
