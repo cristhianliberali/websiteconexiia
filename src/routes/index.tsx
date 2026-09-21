@@ -745,8 +745,6 @@ function Comparison() {
 /* SESSÃO 9 — PLANOS */
 type BillingCycle = "mensal" | "anual";
 
-const ANNUAL_DISCOUNT_LABEL = "20% OFF";
-
 const brl = (value: number) =>
   value.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2 });
 
@@ -755,7 +753,7 @@ function PlanFeatures() {
     {
       category: "Preço e estrutura",
       items: [
-        { name: "Usuários inclusos", start: "2", plus: "8", pro: "30" },
+        { name: "Usuários inclusos", start: "2", plus: "8", pro: "12" },
         { name: "Usuários adicionais", start: "—", plus: "—", pro: "Consulte" },
         { name: "Caixas de entrada", start: "2", plus: "8", pro: "30" },
         { name: "Caixas de entrada adicionais", start: "—", plus: "—", pro: "Consulte" },
@@ -971,8 +969,8 @@ function PlanFeatures() {
 const PLANS = [
   {
     name: "START",
-    monthlyPrice: 347.9,
-    annualTotal: 3339.84,
+    monthlyPrice: 372.38,
+    annualTotal: 3574.8,
     tag: "Para validar a IA na sua operação",
     features: [
       "2 usuários",
@@ -993,8 +991,8 @@ const PLANS = [
   },
   {
     name: "PLUS",
-    monthlyPrice: 597.8,
-    annualTotal: 5738.88,
+    monthlyPrice: 872.38,
+    annualTotal: 8374.8,
     tag: "Para empresas em crescimento com tráfego pago ativo",
     inherits: "Tudo do START, mais:",
     features: [
@@ -1018,12 +1016,12 @@ const PLANS = [
   },
   {
     name: "PRO +",
-    monthlyPrice: 998.7,
-    annualTotal: 9587.52,
+    monthlyPrice: 1248.63,
+    annualTotal: 11986.8,
     tag: "Para operações de alto volume que precisam de SLA e governança",
     inherits: "Tudo do PLUS, mais:",
     features: [
-      "20 usuários (adicionais sob consulta)",
+      "12 usuários (adicionais sob consulta)",
       "20 caixas de entrada (adicionais sob consulta)",
       "Todos os canais: WhatsApp, Instagram, Facebook e webchat",
       "CRM com pipelines ilimitados (em breve)",
@@ -1039,6 +1037,12 @@ const PLANS = [
     highlight: false,
   },
 ];
+
+const ANNUAL_DISCOUNT_PERCENT = Math.round(
+  (1 - PLANS[0].annualTotal / 12 / PLANS[0].monthlyPrice) * 100,
+);
+
+const ANNUAL_DISCOUNT_LABEL = `${ANNUAL_DISCOUNT_PERCENT}% OFF`;
 
 function BillingToggle({
   cycle,
@@ -1117,8 +1121,8 @@ function Plans() {
             <BillingToggle cycle={cycle} onChange={setCycle} />
             <p className="text-sm text-muted-foreground">
               {isAnnual
-                ? "Você está vendo os preços do plano anual, com 20% de desconto."
-                : "Assine no anual e economize 20%."}
+                ? `Você está vendo os preços do plano anual, com ${ANNUAL_DISCOUNT_PERCENT}% de desconto.`
+                : `Assine no anual e economize ${ANNUAL_DISCOUNT_PERCENT}%.`}
             </p>
           </RevealOnScroll>
 
@@ -1445,7 +1449,7 @@ function StructuredData() {
           },
           {
             "@type": "Offer",
-            name: `Plano ${plan.name} (anual, 20% de desconto)`,
+            name: `Plano ${plan.name} (anual, ${ANNUAL_DISCOUNT_PERCENT}% de desconto)`,
             price: plan.annualTotal.toFixed(2),
             priceCurrency: "BRL",
             description: plan.tag,
