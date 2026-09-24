@@ -57,9 +57,10 @@ function renderInline(text: string, keyPrefix = "i"): ReactNode[] {
       // Pontuação final não faz parte da URL.
       const trailing = /[.,;:]+$/.exec(token)?.[0] ?? "";
       const href = token.slice(0, token.length - trailing.length);
+      // O texto exibido omite o protocolo (https://); o link continua completo.
       nodes.push(
         <a key={key} href={href} className={linkClass} {...linkProps(href)}>
-          {href}
+          {href.replace(/^https?:\/\//, "")}
         </a>,
       );
       if (trailing) nodes.push(trailing);

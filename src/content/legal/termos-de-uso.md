@@ -4,7 +4,7 @@
 **Última atualização:** 24/09/2026
 **Versão vigente publicada em:** https://conexiia.com.br/termos/
 
-Estes Termos e Condições Gerais de Uso ("Termos") regulam o acesso e a utilização da plataforma **Conexi IA**, disponibilizada por **[RAZÃO SOCIAL COMPLETA]**, pessoa jurídica de direito privado inscrita no CNPJ sob o nº **62.506.786/0001-70**, com sede em **[ENDEREÇO COMPLETO — CIDADE/UF]** ("Conexi IA", "Conexi", "nós"), e são aplicáveis a todas as pessoas físicas ou jurídicas que contratem, acessem ou utilizem a Plataforma ("Cliente", "você").
+Estes Termos e Condições Gerais de Uso ("Termos") regulam o acesso e a utilização da plataforma **Conexi IA**, disponibilizada por **62.506.786 POLIANA DE VARGAS - ME**, pessoa jurídica de direito privado inscrita no CNPJ sob o nº **62.506.786/0001-70**, com sede em **Av. 7 de Setembro, 662, Centro, Maravilha/SC, CEP 89874-000** ("Conexi IA", "Conexi", "nós"), e são aplicáveis a todas as pessoas físicas ou jurídicas que contratem, acessem ou utilizem a Plataforma ("Cliente", "você").
 
 **Ao criar uma conta, assinar um plano ou utilizar a Plataforma, você declara que leu, compreendeu e concorda integralmente com estes Termos, com a [Política de Privacidade](https://conexiia.com.br/privacidade/) e com as [Instruções de Exclusão de Dados](https://conexiia.com.br/exclusao-dados/). Se você não concorda, não utilize a Plataforma.**
 
@@ -226,7 +226,7 @@ A Conexi IA poderá suspender ou limitar, total ou parcialmente, o acesso à Con
 
 13.1. Estes Termos são regidos pelas leis da República Federativa do Brasil.
 
-13.2. Fica eleito o foro da Comarca de **[CIDADE/UF DA SEDE]** para dirimir quaisquer controvérsias, com renúncia a qualquer outro, por mais privilegiado que seja, ressalvado o foro do domicílio do Cliente nas hipóteses em que se aplique o Código de Defesa do Consumidor.
+13.2. Fica eleito o foro da Comarca de **Maravilha/SC** para dirimir quaisquer controvérsias, com renúncia a qualquer outro, por mais privilegiado que seja, ressalvado o foro do domicílio do Cliente nas hipóteses em que se aplique o Código de Defesa do Consumidor.
 
 ---
 

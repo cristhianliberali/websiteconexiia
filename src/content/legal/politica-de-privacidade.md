@@ -4,7 +4,7 @@
 **Última atualização:** 24/09/2026
 **Versão vigente publicada em:** https://conexiia.com.br/privacidade/
 
-A **Conexi IA** ("Conexi IA", "nós"), operada por **[RAZÃO SOCIAL COMPLETA]**, inscrita no CNPJ sob o nº **62.506.786/0001-70**, valoriza a privacidade e a proteção de dados pessoais e atua em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018 – "LGPD"), com o Marco Civil da Internet (Lei nº 12.965/2014) e com as políticas das plataformas com as quais nos integramos, incluindo os *Meta Platform Terms* e as *Developer Policies* da Meta.
+A **Conexi IA** ("Conexi IA", "nós"), operada por **62.506.786 POLIANA DE VARGAS - ME**, inscrita no CNPJ sob o nº **62.506.786/0001-70**, valoriza a privacidade e a proteção de dados pessoais e atua em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018 – "LGPD"), com o Marco Civil da Internet (Lei nº 12.965/2014) e com as políticas das plataformas com as quais nos integramos, incluindo os *Meta Platform Terms* e as *Developer Policies* da Meta.
 
 Esta Política explica **quais dados pessoais coletamos, como os utilizamos, com quem os compartilhamos, por quanto tempo os guardamos e como você pode exercer seus direitos**, incluindo o de solicitar a exclusão dos seus dados.
 
@@ -255,7 +255,7 @@ O Site e a Plataforma podem conter links para sites e serviços de terceiros (Me
 **Encarregado (DPO):** [NOME DO ENCARREGADO]
 **E-mail para privacidade e LGPD:** contato@conexiia.com.br
 **Suporte geral:** contato@conexiia.com.br
-**Endereço:** [ENDEREÇO COMPLETO — CIDADE/UF]
+**Endereço:** Av. 7 de Setembro, 662, Centro, Maravilha/SC, CEP 89874-000
 
 ---
 
