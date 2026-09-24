@@ -22,7 +22,7 @@ export function LegalPage({
   updatedAt,
   children,
 }: {
-  title: string;
+  title?: string;
   updatedAt?: string;
   children: ReactNode;
 }) {
@@ -30,22 +30,13 @@ export function LegalPage({
     <main className="min-h-screen bg-background text-foreground">
       <LegalHeader />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-        <h1 className="text-3xl font-bold sm:text-4xl">{title}</h1>
+        {title && <h1 className="text-3xl font-bold sm:text-4xl">{title}</h1>}
         {updatedAt && (
           <p className="mt-2 text-sm text-muted-foreground">Última atualização: {updatedAt}</p>
         )}
-        <div className="mt-8 space-y-8">{children}</div>
+        <div className={title ? "mt-8 space-y-8" : "space-y-8"}>{children}</div>
       </article>
       <Footer />
     </main>
-  );
-}
-
-export function LegalSection({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section>
-      <h2 className="text-lg font-semibold text-foreground">{title}</h2>
-      <div className="mt-2 space-y-3 leading-relaxed text-muted-foreground">{children}</div>
-    </section>
   );
 }
