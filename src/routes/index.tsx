@@ -12,6 +12,7 @@ import {
   Facebook,
   Globe,
   Headphones,
+  Info,
   Instagram,
   LineChart,
   MessageCircle,
@@ -26,9 +27,11 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import type React from "react";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { WhatsAppMockup } from "@/components/WhatsAppMockup";
 import { DiagnosticoForm } from "@/components/DiagnosticoForm";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Logo, Footer } from "@/components/SiteChrome";
 import logoGray from "@/assets/conexi-logo-gray.webp";
 
@@ -755,6 +758,32 @@ const selectPlan = (plano: string, preco: string) =>
 const planPriceLabel = (plan: (typeof PLANS)[number], cycle: BillingCycle) =>
   `${brl(cycle === "anual" ? plan.annualTotal / 12 : plan.monthlyPrice)}/mês (${cycle})`;
 
+function InfoHint({ label, children }: { label: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const isMouse = (e: React.PointerEvent) => e.pointerType === "mouse";
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger
+        aria-label={label}
+        onPointerEnter={(e) => isMouse(e) && setOpen(true)}
+        onPointerLeave={(e) => isMouse(e) && setOpen(false)}
+        className="ml-1.5 inline-flex translate-y-0.5 rounded-full text-surface-dark-muted transition hover:text-primary focus-visible:text-primary focus-visible:outline-none"
+      >
+        <Info className="h-4 w-4" />
+      </PopoverTrigger>
+      <PopoverContent
+        side="top"
+        collisionPadding={16}
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="w-72 max-w-[calc(100vw-2rem)] border-surface-dark-border bg-surface-dark p-3 text-xs leading-relaxed text-surface-dark-foreground sm:text-sm"
+      >
+        {children}
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
   const features = [
     {
@@ -790,6 +819,7 @@ function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
         },
         {
           name: "Créditos de IA",
+          info: "Para responder seus clientes, a IA consome créditos, que você recarrega direto na sua conta sempre que precisar. Em média, 1 crédito equivale a 1 resposta gerada — o consumo varia conforme o tamanho da base de conhecimento e das instruções do agente.",
           start: "R$ 7,90 / 100 créditos",
           plus: "R$ 7,90 / 100 créditos",
           pro: "R$ 7,90 / 100 créditos",
@@ -934,7 +964,10 @@ function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
                   key={item.name}
                   className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-surface-dark-border/60 last:border-b-0"
                 >
-                  <div className="px-4 py-3.5 text-sm text-surface-dark-muted sm:px-6">{item.name}</div>
+                  <div className="px-4 py-3.5 text-sm text-surface-dark-muted sm:px-6">
+                    {item.name}
+                    {item.info && <InfoHint label={`Sobre ${item.name}`}>{item.info}</InfoHint>}
+                  </div>
                   <div className="grid place-items-center border-l border-surface-dark-border/60 px-4 py-3.5 sm:px-6">
                     {renderCell(item.start)}
                   </div>
