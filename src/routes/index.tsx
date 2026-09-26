@@ -749,7 +749,13 @@ type BillingCycle = "mensal" | "anual";
 const brl = (value: number) =>
   value.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2 });
 
-function PlanFeatures() {
+const selectPlan = (plano: string, preco: string) =>
+  window.dispatchEvent(new CustomEvent("conexi:plano-selecionado", { detail: { plano, preco } }));
+
+const planPriceLabel = (plan: (typeof PLANS)[number], cycle: BillingCycle) =>
+  `${brl(cycle === "anual" ? plan.annualTotal / 12 : plan.monthlyPrice)}/mês (${cycle})`;
+
+function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
   const features = [
     {
       category: "Preço e estrutura",
@@ -942,6 +948,24 @@ function PlanFeatures() {
               ))}
             </div>
           ))}
+
+          <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-t border-surface-dark-border">
+            <div />
+            {PLANS.map((p) => (
+              <div
+                key={p.name}
+                className="grid place-items-center border-l border-surface-dark-border/60 px-2 py-4 sm:px-6"
+              >
+                <a
+                  href="#formulario"
+                  onClick={() => selectPlan(p.name, planPriceLabel(p, cycle))}
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-2 py-2.5 text-center text-xs font-semibold text-primary-foreground transition hover:bg-primary-hover sm:text-sm"
+                >
+                  Escolher o {p.name.replace(/\s+/g, "")}
+                </a>
+              </div>
+            ))}
+          </div>
         </RevealOnScroll>
 
         <RevealOnScroll delay={120} className="mx-auto mt-8 max-w-3xl rounded-2xl border border-surface-dark-border bg-surface-dark-foreground/5 p-6">
@@ -954,13 +978,6 @@ function PlanFeatures() {
             reunião de briefing e elaboração da base de conhecimento e das ferramentas da IA.
             Integração entre sistemas mediante avaliação.
           </p>
-        </RevealOnScroll>
-
-        <RevealOnScroll delay={150} className="mt-8 flex justify-center">
-          <a href="#formulario" className="btn-primary">
-            Quero um diagnóstico gratuito
-            <ArrowRight className="h-4 w-4" />
-          </a>
         </RevealOnScroll>
       </div>
     </section>
@@ -1133,13 +1150,7 @@ function EnterprisePlan() {
 
         <a
           href="#formulario"
-          onClick={() =>
-            window.dispatchEvent(
-              new CustomEvent("conexi:plano-selecionado", {
-                detail: { plano: "Enterprise", preco: "Proposta sob medida" },
-              }),
-            )
-          }
+          onClick={() => selectPlan("Enterprise", "Proposta sob medida")}
           className="btn-primary w-full lg:w-fit lg:justify-self-start"
         >
           Solicitar proposta enterprise
@@ -1243,16 +1254,7 @@ function Plans() {
 
                   <a
                     href="#formulario"
-                    onClick={() =>
-                      window.dispatchEvent(
-                        new CustomEvent("conexi:plano-selecionado", {
-                          detail: {
-                            plano: p.name,
-                            preco: `${displayPrice}/mês (${cycle})`,
-                          },
-                        }),
-                      )
-                    }
+                    onClick={() => selectPlan(p.name, planPriceLabel(p, cycle))}
                     className={`mt-8 ${p.highlight ? "btn-primary" : "btn-ghost-light"} w-full`}
                   >
                     {p.cta}
@@ -1276,7 +1278,7 @@ function Plans() {
         </div>
       </section>
 
-      {showFeatures && <PlanFeatures />}
+      {showFeatures && <PlanFeatures cycle={cycle} />}
     </>
   );
 }
