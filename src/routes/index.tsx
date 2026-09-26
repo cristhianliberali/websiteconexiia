@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
   BarChart3,
+  Building2,
   Bot,
   Check,
   ChevronDown,
@@ -753,9 +754,9 @@ function PlanFeatures() {
     {
       category: "Preço e estrutura",
       items: [
-        { name: "Usuários inclusos", start: "2", plus: "6", pro: "12" },
+        { name: "Usuários inclusos", start: "2", plus: "5", pro: "10" },
         { name: "Usuários adicionais", start: "—", plus: "—", pro: "Consulte" },
-        { name: "Caixas de entrada", start: "3", plus: "5", pro: "20" },
+        { name: "Caixas de entrada", start: "3", plus: "6", pro: "16" },
         { name: "Caixas de entrada adicionais", start: "—", plus: "—", pro: "Consulte" },
         { name: "Agentes de IA", start: "Ilimitado", plus: "Ilimitado", pro: "Ilimitado" },
         {
@@ -996,8 +997,8 @@ const PLANS = [
     tag: "Para empresas em crescimento com tráfego pago ativo",
     inherits: "Tudo do START, mais:",
     features: [
-      "6 usuários",
-      "5 caixas de entrada",
+      "5 usuários",
+      "6 caixas de entrada",
       "+ Facebook e webchat ao vivo",
       "IA integrada ou sua própria chave (OpenAI, Anthropic, etc.)",
       "Assistência e análise com IA (copilot)",
@@ -1021,8 +1022,8 @@ const PLANS = [
     tag: "Para operações de alto volume que precisam de SLA e governança",
     inherits: "Tudo do PLUS, mais:",
     features: [
-      "12 usuários (adicionais sob consulta)",
-      "20 caixas de entrada (adicionais sob consulta)",
+      "10 usuários (adicionais sob consulta)",
+      "16 caixas de entrada (adicionais sob consulta)",
       "Todos os canais: WhatsApp, Instagram, Facebook e webchat",
       "CRM com pipelines ilimitados (em breve)",
       "SLA de atendimento",
@@ -1090,6 +1091,62 @@ function BillingToggle({
         );
       })}
     </div>
+  );
+}
+
+const ENTERPRISE_FEATURES = [
+  "Usuários, caixas de entrada e créditos de IA dimensionados para o seu volume",
+  "Integração com ERP, CRM e sistemas internos via API",
+  "SLA, auditoria de logs e gerente de contas dedicado",
+  "Implantação e treinamento conduzidos pelo nosso time",
+];
+
+function EnterprisePlan() {
+  return (
+    <RevealOnScroll
+      delay={80}
+      className="card-lift mt-6 rounded-2xl border border-border bg-card p-6 sm:p-8"
+    >
+      <div className="grid gap-6 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-6">
+        <div>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary">
+            <Building2 className="h-3.5 w-3.5" />
+            Enterprise
+          </span>
+          <h3 className="mt-4 font-display text-2xl font-bold">
+            Enterprise: para operações que já passaram do PRO+
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            Muitos atendentes, várias unidades, alto volume de conversas? A gente monta o plano na
+            medida da sua operação.
+          </p>
+        </div>
+
+        <ul className="space-y-3 lg:row-span-2 lg:self-center">
+          {ENTERPRISE_FEATURES.map((f) => (
+            <li key={f} className="flex items-start gap-2.5 text-sm">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
+              <span className="text-foreground">{f}</span>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="#formulario"
+          onClick={() =>
+            window.dispatchEvent(
+              new CustomEvent("conexi:plano-selecionado", {
+                detail: { plano: "Enterprise", preco: "Proposta sob medida" },
+              }),
+            )
+          }
+          className="btn-primary w-full lg:w-fit lg:justify-self-start"
+        >
+          Solicitar proposta enterprise
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+    </RevealOnScroll>
   );
 }
 
@@ -1205,6 +1262,8 @@ function Plans() {
               );
             })}
           </div>
+
+          <EnterprisePlan />
 
           <RevealOnScroll className="mt-8 text-center">
             <button
