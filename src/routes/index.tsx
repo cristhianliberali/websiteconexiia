@@ -25,8 +25,9 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
+import { CountUp } from "@/components/CountUp";
 import { WhatsAppMockup } from "@/components/WhatsAppMockup";
 import { DiagnosticoForm } from "@/components/DiagnosticoForm";
 import { Logo, Footer } from "@/components/SiteChrome";
@@ -39,16 +40,82 @@ export const Route = createFileRoute("/")({
 });
 
 function Header() {
+  const progressRef = useRef<HTMLDivElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Barra de progresso de leitura + sombra do header após rolar a página.
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`;
+      setScrolled(window.scrollY > 12);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+    <header
+      className={`sticky top-0 z-40 border-b bg-background/80 backdrop-blur transition-[box-shadow,border-color] duration-300 ${
+        scrolled ? "border-border shadow-[0_8px_30px_-18px_rgba(5,8,32,0.35)]" : "border-border/60"
+      }`}
+    >
+      <div className="intro mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <Logo />
         <a href="#formulario" className="btn-primary text-sm sm:text-base">
           Diagnóstico gratuito
           <ArrowRight className="h-4 w-4" />
         </a>
       </div>
+      <div
+        ref={progressRef}
+        aria-hidden
+        className="absolute inset-x-0 -bottom-px h-0.5 origin-left scale-x-0 bg-gradient-to-r from-primary via-primary to-primary/40"
+      />
     </header>
+  );
+}
+
+/** Divide o texto em palavras que entram uma a uma (animação CSS no carregamento). */
+function IntroWords({
+  text,
+  start = 0,
+  step = 55,
+  className = "",
+}: {
+  text: string;
+  start?: number;
+  step?: number;
+  className?: string;
+}) {
+  const words = text.split(" ");
+  return (
+    <>
+      {words.map((word, i) => (
+        <span key={i}>
+          <span
+            className={`intro-word ${className}`}
+            style={{ "--intro-delay": `${start + i * step}ms` } as CSSProperties}
+          >
+            {word}
+          </span>
+          {i < words.length - 1 ? " " : null}
+        </span>
+      ))}
+    </>
   );
 }
 
@@ -57,27 +124,42 @@ function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -left-24 top-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
-        <div className="absolute -right-16 top-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+        <div className="blob-float absolute -left-24 top-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
+        <div className="blob-float-slow absolute -right-16 top-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+        <div className="blob-float absolute left-1/2 top-[70%] h-64 w-64 -translate-x-1/2 rounded-full bg-success/10 blur-3xl [animation-delay:-7s]" />
       </div>
 
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-24">
-        <RevealOnScroll>
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-24">
+        <div>
+          <p
+            className="intro mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+            style={{ "--intro-delay": "0ms" } as CSSProperties}
+          >
             <Sparkles className="h-3.5 w-3.5 text-primary" />
             IA + atendimento omnichannel para tráfego pago
           </p>
           <h1 className="text-4xl font-bold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
-            Sua melhor vendedora,{" "}
-            <span className="text-primary">24 horas por dia.</span>
+            <IntroWords text="Sua melhor vendedora," start={120} />{" "}
+            <span
+              className="intro-phrase text-shine"
+              style={{ "--intro-delay": "320ms" } as CSSProperties}
+            >
+              24 horas por dia.
+            </span>
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-muted-foreground">
+          <p
+            className="intro mt-5 max-w-xl text-lg text-muted-foreground"
+            style={{ "--intro-delay": "520ms" } as CSSProperties}
+          >
             A Conexi IA transforma seu WhatsApp, Instagram, Facebook e site em uma máquina de
-            vendas: agentes de IA humanizados que respondem em segundos, qualificam e vendem —
-            por <strong className="text-foreground">uma fração do custo de contratar</strong>.
+            vendas: agentes de IA humanizados que respondem em segundos, qualificam e vendem — por{" "}
+            <strong className="text-foreground">uma fração do custo de contratar</strong>.
           </p>
 
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div
+            className="intro mt-7 flex flex-wrap gap-3"
+            style={{ "--intro-delay": "680ms" } as CSSProperties}
+          >
             <a href="#formulario" className="btn-primary">
               Quero meu diagnóstico gratuito
               <ArrowRight className="h-4 w-4" />
@@ -87,7 +169,10 @@ function Hero() {
             </a>
           </div>
 
-          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          <ul
+            className="intro mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground"
+            style={{ "--intro-delay": "820ms" } as CSSProperties}
+          >
             <li className="flex items-center gap-2">
               <Check className="h-4 w-4 text-primary" /> Implantação guiada pelo nosso time
             </li>
@@ -95,12 +180,12 @@ function Hero() {
               <Check className="h-4 w-4 text-primary" /> Consultoria de especialistas inclusa
             </li>
           </ul>
-        </RevealOnScroll>
+        </div>
 
-        <RevealOnScroll delay={150} className="relative">
-          <div className="absolute -inset-4 -z-10 rounded-[3rem] bg-gradient-to-br from-primary/20 via-transparent to-transparent blur-2xl" />
+        <div className="intro relative" style={{ "--intro-delay": "350ms" } as CSSProperties}>
+          <div className="glow-pulse absolute -inset-4 -z-10 rounded-[3rem] bg-gradient-to-br from-primary/25 via-transparent to-transparent blur-2xl" />
           <WhatsAppMockup />
-        </RevealOnScroll>
+        </div>
       </div>
     </section>
   );
@@ -117,14 +202,23 @@ function StatsBar() {
   return (
     <section className="border-y border-border bg-muted/40">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <p className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+        <RevealOnScroll
+          as="div"
+          variant="fade"
+          className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+        >
           Resultados dos nossos clientes
-        </p>
+        </RevealOnScroll>
         <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
           {stats.map((s, i) => (
-            <RevealOnScroll key={s.n} delay={i * 80} className="text-center">
+            <RevealOnScroll
+              key={s.n}
+              delay={i * 100}
+              variant="scale"
+              className="text-center lg:border-l lg:border-border lg:first:border-l-0"
+            >
               <div className="font-display text-3xl font-bold text-primary sm:text-4xl">
-                {s.n}
+                <CountUp value={s.n} />
               </div>
               <p className="mt-2 text-sm text-muted-foreground">{s.l}</p>
             </RevealOnScroll>
@@ -172,7 +266,7 @@ function Pains() {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+        <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
             Será que o seu time responde o cliente no tempo que ele precisa?
           </h2>
@@ -189,9 +283,9 @@ function Pains() {
             <RevealOnScroll
               key={p.t}
               delay={i * 60}
-              className="card-lift rounded-2xl border border-border bg-card p-6"
+              className="card-lift group rounded-2xl border border-border bg-card p-6"
             >
-              <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-destructive/10 text-destructive">
+              <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-destructive/10 text-destructive transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
                 <p.icon className="h-5 w-5" />
               </div>
               <h3 className="font-display text-lg font-semibold">{p.t}</h3>
@@ -200,7 +294,10 @@ function Pains() {
           ))}
         </div>
 
-        <RevealOnScroll className="mx-auto mt-12 max-w-2xl rounded-2xl border border-primary/30 bg-primary/5 p-6 text-center">
+        <RevealOnScroll
+          variant="scale"
+          className="mx-auto mt-12 max-w-2xl rounded-2xl border border-primary/30 bg-primary/5 p-6 text-center"
+        >
           <p className="text-base text-foreground sm:text-lg">
             A boa notícia: nenhum desses problemas é falta de esforço do seu time.{" "}
             <strong>É falta da ferramenta certa.</strong>
@@ -214,17 +311,22 @@ function Pains() {
 /* SESSÃO 4 — AGITAÇÃO */
 function Agitation() {
   return (
-    <section className="bg-surface-dark text-surface-dark-foreground">
-      <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6">
-        <RevealOnScroll>
+    <section className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="bg-dots-dark absolute inset-0" />
+        <div className="blob-float absolute -left-20 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-primary/20 blur-3xl" />
+        <div className="blob-float-slow absolute -right-20 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+      </div>
+      <div className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6">
+        <RevealOnScroll variant="blur">
           <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
-            Cada hora sem resposta é{" "}
-            <span className="text-primary">dinheiro do seu tráfego</span> indo embora.
+            Cada hora sem resposta é <span className="text-shine">dinheiro do seu tráfego</span>{" "}
+            indo embora.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-surface-dark-muted">
-            Você paga caro pelo clique. Quando o lead espera, o timing da venda passa: o CAC
-            sobe, a verba de anúncio rende menos e o concorrente que respondeu primeiro leva o
-            cliente que <strong className="text-surface-dark-foreground">você pagou para atrair</strong>.
+            Você paga caro pelo clique. Quando o lead espera, o timing da venda passa: o CAC sobe, a
+            verba de anúncio rende menos e o concorrente que respondeu primeiro leva o cliente que{" "}
+            <strong className="text-surface-dark-foreground">você pagou para atrair</strong>.
           </p>
           <div className="mt-8">
             <a href="#planos" className="btn-primary">
@@ -266,7 +368,7 @@ function LeadArrived() {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+        <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
             Fora do horário, dentro da venda
           </p>
@@ -290,7 +392,8 @@ function LeadArrived() {
           {moments.map((m, i) => (
             <RevealOnScroll
               key={m.when}
-              delay={i * 80}
+              delay={i * 110}
+              variant={i === 0 ? "left" : i === 2 ? "right" : "up"}
               className="card-lift flex flex-col rounded-2xl border border-border bg-card p-6"
             >
               <div className="flex items-center gap-3">
@@ -329,7 +432,10 @@ function LeadArrived() {
           ))}
         </div>
 
-        <RevealOnScroll className="mx-auto mt-12 max-w-3xl rounded-2xl border border-primary/30 bg-primary/5 p-6 text-center">
+        <RevealOnScroll
+          variant="scale"
+          className="mx-auto mt-12 max-w-3xl rounded-2xl border border-primary/30 bg-primary/5 p-6 text-center"
+        >
           <p className="text-base text-foreground sm:text-lg">
             Não importa se é madrugada, domingo ou hora do almoço: quem chega pelo seu anúncio é
             atendido em segundos, com o tom de voz da sua marca —{" "}
@@ -360,8 +466,8 @@ function Solution() {
   ];
   return (
     <section className="py-20">
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center">
-        <RevealOnScroll>
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center">
+        <RevealOnScroll variant="left">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
             Apresentando a Conexi IA
           </p>
@@ -369,12 +475,11 @@ function Solution() {
             Não é chatbot. É um time de vendedores de IA treinado na sua empresa.
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
-            A Conexi IA combina uma plataforma omnichannel com agentes de Inteligência
-            Artificial criados sob medida para o seu negócio — com conhecimento profundo da
-            empresa, ritmo de conversa natural e capacidade de conduzir a venda do primeiro
-            "oi" ao fechamento.
+            A Conexi IA combina uma plataforma omnichannel com agentes de Inteligência Artificial
+            criados sob medida para o seu negócio — com conhecimento profundo da empresa, ritmo de
+            conversa natural e capacidade de conduzir a venda do primeiro "oi" ao fechamento.
           </p>
-          <ul className="mt-6 space-y-3">
+          <ul className="reveal-stagger mt-6 space-y-3">
             {caps.map((c) => (
               <li key={c} className="flex items-start gap-3">
                 <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
@@ -386,7 +491,7 @@ function Solution() {
           </ul>
         </RevealOnScroll>
 
-        <RevealOnScroll delay={120}>
+        <RevealOnScroll variant="right" delay={120}>
           <OmnichannelInbox />
         </RevealOnScroll>
       </div>
@@ -439,16 +544,27 @@ function OmnichannelInbox() {
           4 canais · 1 lugar
         </span>
       </div>
-      <div className="divide-y divide-border overflow-hidden rounded-xl border border-border">
-        {rows.map((r) => (
-          <div key={r.name} className="flex items-center gap-3 bg-card p-3 hover:bg-muted/50">
+      <div className="reveal-stagger divide-y divide-border overflow-hidden rounded-xl border border-border">
+        {rows.map((r, i) => (
+          <div
+            key={r.name}
+            className="flex items-center gap-3 bg-card p-3 transition-colors hover:bg-muted/50"
+          >
             <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${r.color}`}>
               <r.icon className="h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-baseline justify-between gap-2">
                 <p className="truncate text-sm font-semibold">{r.name}</p>
-                <span className="shrink-0 text-[11px] text-muted-foreground">{r.time}</span>
+                <span className="flex shrink-0 items-center gap-1.5 text-[11px] text-muted-foreground">
+                  {i === 0 && (
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+                    </span>
+                  )}
+                  {r.time}
+                </span>
               </div>
               <p className="truncate text-sm text-muted-foreground">{r.msg}</p>
             </div>
@@ -491,12 +607,13 @@ function HowItWorks() {
     >
       {/* Glows suaves nos cantos */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-success/10 blur-3xl" />
+        <div className="bg-dots-dark absolute inset-0" />
+        <div className="blob-float absolute -right-24 -top-24 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />
+        <div className="blob-float-slow absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-success/10 blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+        <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
             <Clock className="h-3.5 w-3.5" />
             Agilidade sem fricção
@@ -511,15 +628,17 @@ function HowItWorks() {
 
         <div className="relative mt-12 grid gap-6 md:grid-cols-3">
           {/* Linha conectora (desktop) */}
-          <div
-            aria-hidden
+          <RevealOnScroll
+            variant="line"
+            delay={200}
             className="pointer-events-none absolute left-1/4 right-1/4 top-14 hidden h-px bg-gradient-to-r from-primary/40 via-primary/20 to-success/40 md:block"
           />
 
           {steps.map((s, i) => (
             <RevealOnScroll
               key={s.t}
-              delay={i * 100}
+              delay={i * 140}
+              variant="scale"
               className="card-lift group relative flex flex-col justify-between rounded-2xl border border-surface-dark-border bg-white/5 p-6 backdrop-blur"
             >
               <div>
@@ -618,7 +737,7 @@ function Benefits() {
       />
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+        <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-success/40 bg-success/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-success-strong">
             <Sparkles className="h-3.5 w-3.5" />
             Resultados reais
@@ -635,7 +754,8 @@ function Benefits() {
           {items.map((it, i) => (
             <RevealOnScroll
               key={it.t}
-              delay={i * 60}
+              delay={i * 70}
+              variant="scale"
               className="benefit-card group rounded-2xl border border-border bg-card p-6"
             >
               <div className="flex items-start justify-between gap-4">
@@ -662,7 +782,7 @@ function Benefits() {
           ))}
         </div>
 
-        <RevealOnScroll className="mx-auto mt-12 max-w-3xl">
+        <RevealOnScroll variant="scale" className="mx-auto mt-12 max-w-3xl">
           <div className="flex flex-col items-center gap-5 rounded-2xl border border-success/30 bg-success/10 p-6 text-center sm:flex-row sm:text-left">
             <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-success-strong text-white shadow-lg shadow-success/40">
               <TrendingUp className="h-6 w-6" strokeWidth={2.5} />
@@ -704,9 +824,12 @@ function Comparison() {
     ],
   ];
   return (
-    <section className="bg-surface-dark text-surface-dark-foreground">
-      <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+    <section className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="blob-float-slow absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+      </div>
+      <div className="relative mx-auto max-w-5xl px-4 py-20 sm:px-6">
+        <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">
             Chatbot trava. <span className="text-primary">Vendedor de IA conversa.</span>
           </h2>
@@ -716,7 +839,10 @@ function Comparison() {
           </p>
         </RevealOnScroll>
 
-        <RevealOnScroll className="mt-10 overflow-hidden rounded-2xl border border-surface-dark-border">
+        <RevealOnScroll
+          variant="scale"
+          className="mt-10 overflow-hidden rounded-2xl border border-surface-dark-border"
+        >
           <div className="grid grid-cols-2 divide-x divide-surface-dark-border text-sm font-semibold uppercase tracking-wider">
             <div className="bg-white/5 px-4 py-3 text-surface-dark-muted">
               <span className="inline-flex items-center gap-2">
@@ -729,9 +855,12 @@ function Comparison() {
               </span>
             </div>
           </div>
-          <div className="divide-y divide-surface-dark-border">
+          <div className="reveal-stagger divide-y divide-surface-dark-border">
             {rows.map(([a, b]) => (
-              <div key={a} className="grid grid-cols-2 divide-x divide-surface-dark-border">
+              <div
+                key={a}
+                className="grid grid-cols-2 divide-x divide-surface-dark-border transition-colors hover:bg-white/[0.03]"
+              >
                 <div className="px-4 py-4 text-surface-dark-muted">{a}</div>
                 <div className="px-4 py-4 text-surface-dark-foreground">{b}</div>
               </div>
@@ -900,23 +1029,26 @@ function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
       </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+        <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
           <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-surface-dark-border bg-surface-dark-foreground/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-surface-dark-muted">
             <Sparkles className="h-3.5 w-3.5 text-primary" />
             Comparativo detalhado
           </p>
-          <h2 className="text-3xl font-bold sm:text-4xl">
-            Tudo que cada plano entrega
-          </h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">Tudo que cada plano entrega</h2>
           <p className="mt-4 text-lg text-surface-dark-muted">
             Compare funcionalidades e escolha o plano ideal para a sua operação. A maioria dos
             recursos já está disponível; alguns estão em rollout e serão liberados em breve.
           </p>
         </RevealOnScroll>
 
-        <RevealOnScroll delay={100} className="mt-12 overflow-hidden rounded-2xl border border-surface-dark-border bg-surface-dark/80 backdrop-blur">
+        <RevealOnScroll
+          delay={100}
+          className="mt-12 overflow-hidden rounded-2xl border border-surface-dark-border bg-surface-dark/80 backdrop-blur"
+        >
           <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-surface-dark-border bg-surface-dark-foreground/5">
-            <div className="px-4 py-4 text-sm font-semibold text-surface-dark-muted sm:px-6">Funcionalidade</div>
+            <div className="px-4 py-4 text-sm font-semibold text-surface-dark-muted sm:px-6">
+              Funcionalidade
+            </div>
             {plans.map((p) => (
               <div key={p} className="px-4 py-4 text-center sm:px-6">
                 <span className="font-display text-sm font-bold sm:text-base">{p}</span>
@@ -932,9 +1064,11 @@ function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
               {group.items.map((item) => (
                 <div
                   key={item.name}
-                  className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-surface-dark-border/60 last:border-b-0"
+                  className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-surface-dark-border/60 transition-colors last:border-b-0 hover:bg-white/[0.03]"
                 >
-                  <div className="px-4 py-3.5 text-sm text-surface-dark-muted sm:px-6">{item.name}</div>
+                  <div className="px-4 py-3.5 text-sm text-surface-dark-muted sm:px-6">
+                    {item.name}
+                  </div>
                   <div className="grid place-items-center border-l border-surface-dark-border/60 px-4 py-3.5 sm:px-6">
                     {renderCell(item.start)}
                   </div>
@@ -968,7 +1102,10 @@ function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
           </div>
         </RevealOnScroll>
 
-        <RevealOnScroll delay={120} className="mx-auto mt-8 max-w-3xl rounded-2xl border border-surface-dark-border bg-surface-dark-foreground/5 p-6">
+        <RevealOnScroll
+          delay={120}
+          className="mx-auto mt-8 max-w-3xl rounded-2xl border border-surface-dark-border bg-surface-dark-foreground/5 p-6"
+        >
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
             O que inclui a implantação
           </p>
@@ -1122,6 +1259,7 @@ function EnterprisePlan() {
   return (
     <RevealOnScroll
       delay={80}
+      variant="scale"
       className="card-lift mt-6 rounded-2xl border border-border bg-card p-6 sm:p-8"
     >
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-6">
@@ -1168,15 +1306,13 @@ function Plans() {
   const [showFeatures, setShowFeatures] = useState(false);
 
   const isAnnual = cycle === "anual";
-  const startingPrice = brl(
-    isAnnual ? PLANS[0].annualTotal / 12 : PLANS[0].monthlyPrice,
-  );
+  const startingPrice = brl(isAnnual ? PLANS[0].annualTotal / 12 : PLANS[0].monthlyPrice);
 
   return (
     <>
       <section id="planos" className="py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <RevealOnScroll className="mx-auto max-w-3xl text-center">
+          <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold sm:text-4xl">Planos que se pagam no primeiro mês</h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Um atendente humano custa de R$ 2.200 a R$ 4.300/mês e trabalha 8h por dia. A Conexi
@@ -1202,11 +1338,10 @@ function Plans() {
               return (
                 <RevealOnScroll
                   key={p.name}
-                  delay={i * 80}
+                  delay={i * 110}
+                  variant={p.highlight ? "scale" : "up"}
                   className={`card-lift relative flex flex-col rounded-2xl border p-6 ${
-                    p.highlight
-                      ? "border-primary bg-card shadow-[0_20px_50px_-20px_color-mix(in_oklab,var(--color-primary)_50%,transparent)]"
-                      : "border-border bg-card"
+                    p.highlight ? "plan-glow border-primary bg-card" : "border-border bg-card"
                   }`}
                 >
                   {p.badge && (
@@ -1259,7 +1394,6 @@ function Plans() {
                   >
                     {p.cta}
                   </a>
-
                 </RevealOnScroll>
               );
             })}
@@ -1284,6 +1418,27 @@ function Plans() {
 }
 
 /* SESSÃO 10 — PARA QUEM É */
+function ChipMarquee({ items, reverse = false }: { items: { t: string }[]; reverse?: boolean }) {
+  const chip = (c: { t: string }, duplicate: boolean) => (
+    <span
+      key={`${c.t}${duplicate ? "-dup" : ""}`}
+      aria-hidden={duplicate || undefined}
+      data-duplicate={duplicate || undefined}
+      className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground shadow-sm transition-colors hover:border-primary/40 hover:text-primary"
+    >
+      {c.t}
+    </span>
+  );
+  return (
+    <div className="marquee" data-reverse={reverse || undefined}>
+      <div className="marquee-track">
+        {items.map((c) => chip(c, false))}
+        {items.map((c) => chip(c, true))}
+      </div>
+    </div>
+  );
+}
+
 function ForWho() {
   const chips = [
     { t: "Clínicas médicas e odontológicas" },
@@ -1304,37 +1459,37 @@ function ForWho() {
     { t: "Operações de suporte e SAC" },
   ];
   return (
-    <section className="bg-muted/40 py-20">
+    <section className="overflow-hidden bg-muted/40 py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <RevealOnScroll className="mx-auto max-w-3xl text-center">
+        <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">
             Feita para empresas que vivem de atendimento
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Se a sua empresa anuncia, recebe leads todos os dias e fala com o cliente pelo
-            WhatsApp, a Conexi foi feita para você.
+            Se a sua empresa anuncia, recebe leads todos os dias e fala com o cliente pelo WhatsApp,
+            a Conexi foi feita para você.
           </p>
         </RevealOnScroll>
+      </div>
 
-        <RevealOnScroll className="mt-10 flex flex-wrap justify-center gap-2.5">
-          {chips.map((c) => (
-            <span
-              key={c.t}
-              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground shadow-sm"
-            >
-              {c.t}
-            </span>
-          ))}
-        </RevealOnScroll>
+      {/* Chips em esteira contínua (pausa ao passar o mouse) */}
+      <RevealOnScroll variant="fade" className="mt-10 space-y-3">
+        <ChipMarquee items={chips.slice(0, Math.ceil(chips.length / 2))} />
+        <ChipMarquee items={chips.slice(Math.ceil(chips.length / 2))} reverse />
+      </RevealOnScroll>
 
-        <RevealOnScroll className="mx-auto mt-10 max-w-3xl rounded-2xl border-l-4 border-primary bg-card p-6 shadow-sm">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <RevealOnScroll
+          variant="scale"
+          className="mx-auto mt-10 max-w-3xl rounded-2xl border-l-4 border-primary bg-card p-6 shadow-sm"
+        >
           <p className="text-foreground">
-            <strong className="text-primary">Feita para quem vive de atendimento.</strong> Para
-            quem anuncia em tráfego pago e recebe leads todos os dias. Para quem tem agenda para
-            preencher, orçamento para enviar e follow-up para fazer. Para quem já tentou
-            automatizar e o cliente não gostou. Para quem usa o WhatsApp, o Instagram e outros
-            canais para falar com o cliente — e sabe que cada conversa sem resposta é uma venda
-            que vai para o concorrente.
+            <strong className="text-primary">Feita para quem vive de atendimento.</strong> Para quem
+            anuncia em tráfego pago e recebe leads todos os dias. Para quem tem agenda para
+            preencher, orçamento para enviar e follow-up para fazer. Para quem já tentou automatizar
+            e o cliente não gostou. Para quem usa o WhatsApp, o Instagram e outros canais para falar
+            com o cliente — e sabe que cada conversa sem resposta é uma venda que vai para o
+            concorrente.
           </p>
           <p className="mt-3 text-foreground">
             Se você se reconheceu em pelo menos uma dessas frases,{" "}
@@ -1387,7 +1542,7 @@ function FAQ() {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <RevealOnScroll className="text-center">
+        <RevealOnScroll variant="blur" className="text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Perguntas frequentes</h2>
         </RevealOnScroll>
 
@@ -1397,8 +1552,12 @@ function FAQ() {
             return (
               <RevealOnScroll
                 key={it.q}
-                delay={i * 40}
-                className="overflow-hidden rounded-xl border border-border bg-card"
+                delay={i * 50}
+                className={`overflow-hidden rounded-xl border bg-card transition-[border-color,box-shadow] duration-300 ${
+                  isOpen
+                    ? "border-primary/40 shadow-[0_12px_30px_-20px_rgba(5,8,32,0.35)]"
+                    : "border-border"
+                }`}
               >
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
@@ -1440,24 +1599,24 @@ function FinalForm() {
       className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground"
     >
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-96 w-[600px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
+        <div className="bg-dots-dark absolute inset-0" />
+        <div className="glow-pulse absolute left-1/2 top-0 h-96 w-[600px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
       </div>
       <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6">
-        <RevealOnScroll className="text-center">
+        <RevealOnScroll variant="blur" className="text-center">
           <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
             Onde a sua empresa perde vendas hoje?{" "}
             <span className="text-primary">Vamos mapear juntos.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-surface-dark-muted">
-            Preencha abaixo e receba um <strong className="text-surface-dark-foreground">
-              diagnóstico gratuito
-            </strong>{" "}
-            da sua operação de atendimento. Nosso time entra em contato, entende como você atende
-            hoje e mostra onde estão as vendas que escapam — sem compromisso.
+            Preencha abaixo e receba um{" "}
+            <strong className="text-surface-dark-foreground">diagnóstico gratuito</strong> da sua
+            operação de atendimento. Nosso time entra em contato, entende como você atende hoje e
+            mostra onde estão as vendas que escapam — sem compromisso.
           </p>
         </RevealOnScroll>
 
-        <RevealOnScroll delay={120} className="mt-10">
+        <RevealOnScroll delay={120} variant="scale" once className="mt-10">
           <DiagnosticoForm />
         </RevealOnScroll>
       </div>
@@ -1531,13 +1690,16 @@ function StructuredData() {
   };
 
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
   );
 }
 
 function LandingPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen overflow-x-clip bg-background text-foreground">
       <StructuredData />
       <Header />
       <Hero />
