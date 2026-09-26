@@ -34,6 +34,11 @@ const READ_TIME: Record<Msg["from"], number> = { lead: 1100, ai: 1700 };
 const TYPING_TIME = 1300;
 /** Pausa com a conversa completa antes de reiniciar o loop. */
 const LOOP_PAUSE = 9000;
+/**
+ * Mensagens que já estão na tela quando a animação começa (metade da
+ * conversa). O "digitando…" entra a partir da 2ª resposta da IA.
+ */
+const INITIAL_SHOWN = 3;
 
 function TypingIndicator() {
   return (
@@ -52,13 +57,14 @@ function TypingIndicator() {
 }
 
 /**
- * Mockup de conversa no WhatsApp. Quando entra na tela, as mensagens vão
- * aparecendo uma a uma (com "digitando…" antes das respostas da IA), como
- * um atendimento real. Ao terminar, faz uma pausa e recomeça.
+ * Mockup de conversa no WhatsApp. Começa com metade da conversa visível e,
+ * ao entrar na tela, as mensagens seguintes vão aparecendo uma a uma (com
+ * "digitando…" antes das respostas da IA), como um atendimento real.
+ * Ao terminar, faz uma pausa e recomeça do mesmo ponto.
  */
 export function WhatsAppMockup() {
   const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(0);
+  const [shown, setShown] = useState(INITIAL_SHOWN);
   const [typing, setTyping] = useState(false);
   const [resetting, setResetting] = useState(false);
 
@@ -79,11 +85,12 @@ export function WhatsAppMockup() {
 
     const play = () => {
       setResetting(false);
-      setShown(0);
+      setShown(INITIAL_SHOWN);
       setTyping(false);
 
-      let t = 500;
-      MESSAGES.forEach((m, i) => {
+      let t = 700;
+      MESSAGES.slice(INITIAL_SHOWN).forEach((m, offset) => {
+        const i = INITIAL_SHOWN + offset;
         if (m.from === "ai") {
           at(t, () => setTyping(true));
           t += TYPING_TIME;
