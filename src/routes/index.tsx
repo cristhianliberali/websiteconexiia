@@ -76,7 +76,7 @@ function Header() {
       <div className="intro mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <Logo />
         <a href="#formulario" className="btn-primary text-sm sm:text-base">
-          Diagnóstico gratuito
+          Agendar demonstração
           <ArrowRight className="h-4 w-4" />
         </a>
       </div>
@@ -163,7 +163,7 @@ function Hero() {
             style={{ "--intro-delay": "680ms" } as CSSProperties}
           >
             <a href="#formulario" className="btn-primary btn-shimmer">
-              Quero meu diagnóstico gratuito
+              Agendar demonstração
               <ArrowRight className="h-4 w-4" />
             </a>
             <a href="#planos" className="btn-ghost-light">
