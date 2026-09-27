@@ -69,7 +69,7 @@ function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b bg-background/80 backdrop-blur transition-[box-shadow,border-color] duration-300 ${
+      className={`sticky top-0 z-40 border-b bg-background/75 backdrop-blur-md backdrop-saturate-150 transition-[box-shadow,border-color] duration-300 ${
         scrolled ? "border-border shadow-[0_8px_30px_-18px_rgba(5,8,32,0.35)]" : "border-border/60"
       }`}
     >
@@ -124,6 +124,8 @@ function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="bg-grid-light absolute inset-0" />
+        <div className="top-glow absolute inset-x-0 top-0 h-[560px]" />
         <div className="blob-float absolute -left-24 top-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
         <div className="blob-float-slow absolute -right-16 top-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
         <div className="blob-float absolute left-1/2 top-[70%] h-64 w-64 -translate-x-1/2 rounded-full bg-success/10 blur-3xl [animation-delay:-7s]" />
@@ -160,7 +162,7 @@ function Hero() {
             className="intro mt-7 flex flex-wrap gap-3"
             style={{ "--intro-delay": "680ms" } as CSSProperties}
           >
-            <a href="#formulario" className="btn-primary">
+            <a href="#formulario" className="btn-primary btn-shimmer">
               Quero meu diagnóstico gratuito
               <ArrowRight className="h-4 w-4" />
             </a>
@@ -313,13 +315,14 @@ function Agitation() {
   return (
     <section className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="bg-dots-dark absolute inset-0" />
+        <div className="bg-grid-dark absolute inset-0" />
+        <div className="top-glow-dark absolute inset-x-0 top-0 h-[420px]" />
         <div className="blob-float absolute -left-20 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-primary/20 blur-3xl" />
         <div className="blob-float-slow absolute -right-20 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
       </div>
       <div className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6">
         <RevealOnScroll variant="blur">
-          <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
+          <h2 className="text-gradient-light text-3xl font-bold sm:text-4xl lg:text-5xl">
             Cada hora sem resposta é <span className="text-shine">dinheiro do seu tráfego</span>{" "}
             indo embora.
           </h2>
@@ -454,6 +457,14 @@ function LeadArrived() {
   );
 }
 
+function SectionDivider() {
+  return (
+    <div aria-hidden className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="section-divider" />
+    </div>
+  );
+}
+
 /* SESSÃO 5 — SOLUÇÃO */
 function Solution() {
   const caps = [
@@ -535,44 +546,50 @@ function OmnichannelInbox() {
     },
   ];
   return (
-    <div className="rounded-2xl border border-border bg-card p-2 shadow-[0_25px_50px_-25px_rgba(15,23,42,0.25)]">
-      <div className="flex items-center justify-between px-3 py-2.5">
-        <div className="flex items-center gap-2 text-sm font-semibold">
-          <Headphones className="h-4 w-4 text-primary" /> Caixa de entrada omnichannel
-        </div>
-        <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[11px] font-semibold text-primary">
-          4 canais · 1 lugar
-        </span>
-      </div>
-      <div className="reveal-stagger divide-y divide-border overflow-hidden rounded-xl border border-border">
-        {rows.map((r, i) => (
-          <div
-            key={r.name}
-            className="flex items-center gap-3 bg-card p-3 transition-colors hover:bg-muted/50"
-          >
-            <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${r.color}`}>
-              <r.icon className="h-5 w-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-baseline justify-between gap-2">
-                <p className="truncate text-sm font-semibold">{r.name}</p>
-                <span className="flex shrink-0 items-center gap-1.5 text-[11px] text-muted-foreground">
-                  {i === 0 && (
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-                    </span>
-                  )}
-                  {r.time}
-                </span>
-              </div>
-              <p className="truncate text-sm text-muted-foreground">{r.msg}</p>
-            </div>
-            <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
-              {r.tag}
-            </span>
+    <div className="relative">
+      <div
+        aria-hidden
+        className="glow-pulse pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-primary/20 via-transparent to-success/10 blur-2xl"
+      />
+      <div className="rounded-2xl border border-border bg-card p-2 shadow-[0_25px_50px_-25px_rgba(15,23,42,0.25)]">
+        <div className="flex items-center justify-between px-3 py-2.5">
+          <div className="flex items-center gap-2 text-sm font-semibold">
+            <Headphones className="h-4 w-4 text-primary" /> Caixa de entrada omnichannel
           </div>
-        ))}
+          <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[11px] font-semibold text-primary">
+            4 canais · 1 lugar
+          </span>
+        </div>
+        <div className="reveal-stagger divide-y divide-border overflow-hidden rounded-xl border border-border">
+          {rows.map((r, i) => (
+            <div
+              key={r.name}
+              className="flex items-center gap-3 bg-card p-3 transition-colors hover:bg-muted/50"
+            >
+              <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${r.color}`}>
+                <r.icon className="h-5 w-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline justify-between gap-2">
+                  <p className="truncate text-sm font-semibold">{r.name}</p>
+                  <span className="flex shrink-0 items-center gap-1.5 text-[11px] text-muted-foreground">
+                    {i === 0 && (
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                        <span className="dot-glow relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+                      </span>
+                    )}
+                    {r.time}
+                  </span>
+                </div>
+                <p className="truncate text-sm text-muted-foreground">{r.msg}</p>
+              </div>
+              <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                {r.tag}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -618,7 +635,7 @@ function HowItWorks() {
             <Clock className="h-3.5 w-3.5" />
             Agilidade sem fricção
           </span>
-          <h2 className="mt-5 text-3xl font-bold sm:text-4xl lg:text-5xl">
+          <h2 className="text-gradient-light mt-5 text-3xl font-bold sm:text-4xl lg:text-5xl">
             Do zero ao ar <span className="text-primary">de mãos dadas</span> com nosso time.
           </h2>
           <p className="mt-4 text-lg text-surface-dark-muted">
@@ -631,7 +648,7 @@ function HowItWorks() {
           <RevealOnScroll
             variant="line"
             delay={200}
-            className="pointer-events-none absolute left-1/4 right-1/4 top-14 hidden h-px bg-gradient-to-r from-primary/40 via-primary/20 to-success/40 md:block"
+            className="line-glow pointer-events-none absolute left-1/4 right-1/4 top-14 hidden h-px bg-gradient-to-r from-primary/40 via-primary/20 to-success/40 md:block"
           />
 
           {steps.map((s, i) => (
@@ -639,16 +656,23 @@ function HowItWorks() {
               key={s.t}
               delay={i * 140}
               variant="scale"
-              className="card-lift group relative flex flex-col justify-between rounded-2xl border border-surface-dark-border bg-white/5 p-6 backdrop-blur"
+              className="glass-dark card-lift group flex flex-col justify-between overflow-hidden rounded-2xl p-6"
             >
+              <span aria-hidden className="card-watermark group-hover:text-primary/15">
+                0{i + 1}
+              </span>
               <div>
                 <div className="mb-5 flex items-center justify-between">
-                  <div className="grid h-12 w-12 place-items-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-transform duration-300 group-hover:scale-110">
-                    <s.icon className="h-5 w-5" />
+                  <div className="relative grid h-12 w-12 place-items-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-transform duration-300 group-hover:scale-110">
+                    <span
+                      aria-hidden
+                      className="glow-pulse absolute inset-0 -z-10 rounded-xl bg-primary/70 blur-md"
+                    />
+                    <s.icon
+                      className="icon-float h-5 w-5"
+                      style={{ animationDelay: `${i * 0.6}s` }}
+                    />
                   </div>
-                  <span className="font-display text-3xl font-bold text-surface-dark-border transition-colors duration-300 group-hover:text-primary">
-                    0{i + 1}
-                  </span>
                 </div>
 
                 <span className="inline-block rounded-md bg-primary/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary">
@@ -826,11 +850,12 @@ function Comparison() {
   return (
     <section className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground">
       <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="bg-grid-dark absolute inset-0" />
         <div className="blob-float-slow absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
       </div>
       <div className="relative mx-auto max-w-5xl px-4 py-20 sm:px-6">
         <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">
+          <h2 className="text-gradient-light text-3xl font-bold sm:text-4xl">
             Chatbot trava. <span className="text-primary">Vendedor de IA conversa.</span>
           </h2>
           <p className="mt-4 text-lg text-surface-dark-muted">
@@ -839,10 +864,7 @@ function Comparison() {
           </p>
         </RevealOnScroll>
 
-        <RevealOnScroll
-          variant="scale"
-          className="mt-10 overflow-hidden rounded-2xl border border-surface-dark-border"
-        >
+        <RevealOnScroll variant="scale" className="glass-dark mt-10 overflow-hidden rounded-2xl">
           <div className="grid grid-cols-2 divide-x divide-surface-dark-border text-sm font-semibold uppercase tracking-wider">
             <div className="bg-white/5 px-4 py-3 text-surface-dark-muted">
               <span className="inline-flex items-center gap-2">
@@ -1024,6 +1046,7 @@ function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
   return (
     <section className="relative overflow-hidden bg-surface-dark py-20 text-surface-dark-foreground">
       <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="bg-grid-dark absolute inset-0" />
         <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
         <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
       </div>
@@ -1041,10 +1064,7 @@ function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
           </p>
         </RevealOnScroll>
 
-        <RevealOnScroll
-          delay={100}
-          className="mt-12 overflow-hidden rounded-2xl border border-surface-dark-border bg-surface-dark/80 backdrop-blur"
-        >
+        <RevealOnScroll delay={100} className="glass-dark mt-12 overflow-hidden rounded-2xl">
           <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-surface-dark-border bg-surface-dark-foreground/5">
             <div className="px-4 py-4 text-sm font-semibold text-surface-dark-muted sm:px-6">
               Funcionalidade
@@ -1102,10 +1122,7 @@ function PlanFeatures({ cycle }: { cycle: BillingCycle }) {
           </div>
         </RevealOnScroll>
 
-        <RevealOnScroll
-          delay={120}
-          className="mx-auto mt-8 max-w-3xl rounded-2xl border border-surface-dark-border bg-surface-dark-foreground/5 p-6"
-        >
+        <RevealOnScroll delay={120} className="glass-dark mx-auto mt-8 max-w-3xl rounded-2xl p-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
             O que inclui a implantação
           </p>
@@ -1260,7 +1277,7 @@ function EnterprisePlan() {
     <RevealOnScroll
       delay={80}
       variant="scale"
-      className="card-lift mt-6 rounded-2xl border border-border bg-card p-6 sm:p-8"
+      className="glass-light card-lift mt-6 rounded-2xl p-6 sm:p-8"
     >
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-6">
         <div>
@@ -1277,7 +1294,7 @@ function EnterprisePlan() {
           </p>
         </div>
 
-        <ul className="space-y-3 lg:row-span-2 lg:self-center">
+        <ul className="reveal-stagger-x space-y-3 lg:row-span-2 lg:self-center">
           {ENTERPRISE_FEATURES.map((f) => (
             <li key={f} className="flex items-start gap-2.5 text-sm">
               <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
@@ -1310,7 +1327,11 @@ function Plans() {
 
   return (
     <>
-      <section id="planos" className="py-20">
+      <section id="planos" className="relative overflow-hidden py-20">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="bg-grid-light absolute inset-0" />
+          <div className="top-glow absolute inset-x-0 top-0 h-[480px]" />
+        </div>
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <RevealOnScroll variant="blur" className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold sm:text-4xl">Planos que se pagam no primeiro mês</h2>
@@ -1340,8 +1361,8 @@ function Plans() {
                   key={p.name}
                   delay={i * 110}
                   variant={p.highlight ? "scale" : "up"}
-                  className={`card-lift relative flex flex-col rounded-2xl border p-6 ${
-                    p.highlight ? "plan-glow border-primary bg-card" : "border-border bg-card"
+                  className={`glass-light card-lift relative flex flex-col rounded-2xl p-6 ${
+                    p.highlight ? "plan-glow card-topline border-primary" : ""
                   }`}
                 >
                   {p.badge && (
@@ -1354,7 +1375,11 @@ function Plans() {
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">{p.tag}</p>
                   <div className="mt-4 flex items-baseline gap-1">
-                    <span className="font-display text-4xl font-bold">{displayPrice}</span>
+                    <span
+                      className={`font-display text-4xl font-bold ${p.highlight ? "price-glow" : ""}`}
+                    >
+                      {displayPrice}
+                    </span>
                     <span className="text-sm text-muted-foreground">/mês</span>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">
@@ -1374,7 +1399,7 @@ function Plans() {
                     <p className="mt-6 text-sm font-semibold text-foreground">{p.inherits}</p>
                   )}
 
-                  <ul className={`${p.inherits ? "mt-3" : "mt-6"} space-y-2.5`}>
+                  <ul className={`reveal-stagger-x ${p.inherits ? "mt-3" : "mt-6"} space-y-2.5`}>
                     {p.features.map((f) => (
                       <li key={f} className="flex items-start gap-2.5 text-sm">
                         <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={3} />
@@ -1599,12 +1624,13 @@ function FinalForm() {
       className="relative overflow-hidden bg-surface-dark text-surface-dark-foreground"
     >
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="bg-dots-dark absolute inset-0" />
+        <div className="bg-grid-dark absolute inset-0" />
+        <div className="top-glow-dark absolute inset-x-0 top-0 h-[460px]" />
         <div className="glow-pulse absolute left-1/2 top-0 h-96 w-[600px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
       </div>
       <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6">
         <RevealOnScroll variant="blur" className="text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
+          <h2 className="text-gradient-light text-3xl font-bold sm:text-4xl lg:text-5xl">
             Onde a sua empresa perde vendas hoje?{" "}
             <span className="text-primary">Vamos mapear juntos.</span>
           </h2>
@@ -1616,7 +1642,12 @@ function FinalForm() {
           </p>
         </RevealOnScroll>
 
-        <RevealOnScroll delay={120} variant="scale" once className="mt-10">
+        <RevealOnScroll
+          delay={120}
+          variant="scale"
+          once
+          className="glass-dark mt-10 rounded-2xl p-5 sm:p-8"
+        >
           <DiagnosticoForm />
         </RevealOnScroll>
       </div>
@@ -1707,6 +1738,7 @@ function LandingPage() {
       <Pains />
       <Agitation />
       <LeadArrived />
+      <SectionDivider />
       <Solution />
       <HowItWorks />
       <Benefits />
