@@ -118,8 +118,7 @@ function readTracking(): Record<string, string> {
   return merged;
 }
 
-const FALLBACK_ERRO =
-  "Não foi possível enviar seus dados agora. Tente novamente em instantes.";
+const FALLBACK_ERRO = "Não foi possível enviar seus dados agora. Tente novamente em instantes.";
 
 type WebhookResult = { ok: boolean; mensagem: string };
 
@@ -177,7 +176,6 @@ export function DiagnosticoForm() {
     window.addEventListener("conexi:plano-selecionado", onPlano);
     return () => window.removeEventListener("conexi:plano-selecionado", onPlano);
   }, []);
-
 
   function set<K extends keyof typeof form>(k: K, v: string) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -277,7 +275,7 @@ export function DiagnosticoForm() {
 
   if (submitted) {
     return (
-      <div className="rounded-2xl border border-surface-dark-border bg-white/5 p-8 text-center backdrop-blur">
+      <div className="msg-in p-2 text-center sm:p-4">
         <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-primary/20 text-primary">
           <CheckCircle2 className="h-8 w-8" />
         </div>
@@ -318,7 +316,6 @@ export function DiagnosticoForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         {step === 1 ? (
           <>
-
             <Field label="Nome" error={errors.nome}>
               <input
                 type="text"
@@ -387,7 +384,11 @@ export function DiagnosticoForm() {
         </div>
       )}
 
-      <button type="submit" disabled={sending} className="btn-primary mt-8 w-full py-4 text-base disabled:opacity-60">
+      <button
+        type="submit"
+        disabled={sending}
+        className="btn-primary btn-shimmer mt-8 w-full py-4 text-base disabled:opacity-60"
+      >
         {sending ? "Enviando..." : step === 1 ? "Continuar" : "Solicitar uma demonstração"}
       </button>
       <p className="text-center text-sm text-surface-dark-muted">
@@ -397,20 +398,10 @@ export function DiagnosticoForm() {
   );
 }
 
-function Field({
-  label,
-  error,
-  children,
-}: {
-  label: string;
-  error?: string;
-  children: ReactNode;
-}) {
+function Field({ label, error, children }: { label: string; error?: string; children: ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-medium text-surface-dark-foreground">
-        {label}
-      </span>
+      <span className="mb-1.5 block text-sm font-medium text-surface-dark-foreground">{label}</span>
       {children}
       {error && <span className="mt-1 block text-xs text-destructive">{error}</span>}
     </label>

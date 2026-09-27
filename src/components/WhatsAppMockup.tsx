@@ -141,7 +141,7 @@ export function WhatsAppMockup() {
             <p className="flex items-center gap-1.5 truncate text-xs text-white/80">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+                <span className="dot-glow relative inline-flex h-2 w-2 rounded-full bg-success" />
               </span>
               {typing ? "digitando…" : "online agora"}
             </p>
