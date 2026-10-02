@@ -137,7 +137,7 @@ Compartilhamos dados apenas na medida necessária para prestar o serviço, cumpr
 
 | Categoria | Finalidade | Localização |
 |---|---|---|
-| Provedor de nuvem e hospedagem | Servidores, banco de dados, armazenamento de mídias e backups da Plataforma | Brasil |
+| Provedor de nuvem e hospedagem | Servidores, banco de dados, armazenamento de mídias e backups da Plataforma | EUA |
 | Provedores de modelos de IA (ex.: OpenAI, Anthropic e outros disponibilizados na Plataforma) | Processar o conteúdo das conversas e bases de conhecimento para gerar respostas dos agentes de IA. Utilizamos APIs empresariais cujos termos vedam o uso dos dados para treinamento dos modelos. Quando o Cliente usa chaves próprias, o provedor é contratado diretamente por ele. | EUA |
 | CDN, proxy reverso e proteção contra ataques | Entrega segura do tráfego, mitigação de DDoS | Global |
 | Serviços de e-mail transacional e notificações | Envio de e-mails de sistema (convites, redefinição de senha, avisos) | Brasil |
