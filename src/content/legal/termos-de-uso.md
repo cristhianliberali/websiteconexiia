@@ -96,7 +96,7 @@ Neste documento, **"Plataforma"** é o software Conexi IA, oferecido como servi�
 
 5.4. **Reajuste:** os preços poderão ser reajustados anualmente pelo IPCA/IBGE ou índice que o substitua, ou em razão de alteração relevante de custos (infraestrutura, provedores de IA, tributos), mediante aviso prévio de 30 (trinta) dias.
 
-5.5. **Créditos de IA:** vendidos em pacotes pré-pagos, com opção de recarga automática. Créditos não são reembolsáveis, não são conversíveis em dinheiro e expiram em **[12 meses]** a contar da compra ou no encerramento da Conta, o que ocorrer primeiro. O consumo por interação varia conforme o modelo de IA e o tamanho das mensagens/base de conhecimento.
+5.5. **Créditos de IA:** vendidos em pacotes pré-pagos, com opção de recarga automática. Créditos não são reembolsáveis, não são conversíveis em dinheiro e expiram em **12 meses** a contar da compra ou no encerramento da Conta, o que ocorrer primeiro. O consumo por interação varia conforme o modelo de IA e o tamanho das mensagens/base de conhecimento.
 
 5.6. **Direito de arrependimento:** nos termos do art. 49 do Código de Defesa do Consumidor, quando aplicável, o Cliente poderá desistir da contratação em até 7 (sete) dias corridos a contar da primeira contratação, com reembolso integral dos valores pagos. Esse direito não se aplica a renovações, a upgrades, a Créditos de IA já consumidos, nem a serviços de implantação já executados.
 
@@ -114,13 +114,13 @@ Neste documento, **"Plataforma"** é o software Conexi IA, oferecido como servi�
 
 6.1. **Canais de suporte:** chat na Plataforma e, conforme o Plano, WhatsApp e gerente de conta dedicado. E-mail: contato@conexiia.com.br.
 
-6.2. **Horário:** dias úteis, de segunda a sexta-feira, das **[08h às 18h]** (horário de Brasília), exceto feriados nacionais.
+6.2. **Horário:** dias úteis, de segunda a sexta-feira, das **08h às 18h** (horário de Brasília), exceto feriados nacionais.
 
-6.3. **Prazo de primeira resposta:** até **[1 (um) dia útil]** para os Planos START e PLUS; para o Plano PRO+, o SLA será o definido na proposta comercial.
+6.3. **Prazo de primeira resposta:** até **4 horas úteis** para os Planos START e PLUS; para o Plano PRO+, o SLA será o definido na proposta comercial.
 
 6.4. **Escopo do suporte:** esclarecimento de dúvidas sobre funcionalidades, auxílio em configurações da Plataforma, análise e correção de falhas de responsabilidade da Conexi IA. **Não estão incluídos:** desenvolvimento de integrações personalizadas, criação/ajuste de prompts fora do escopo da implantação, suporte a sistemas de terceiros, problemas de conectividade do Cliente, questões de conta, verificação ou banimento junto à Meta (cuja resolução depende exclusivamente da Meta), e treinamentos adicionais, que poderão ser contratados à parte.
 
-6.5. **Disponibilidade:** a Conexi IA envidará seus melhores esforços para manter disponibilidade mensal de **[99,5%]** da Plataforma, excluídas manutenções programadas (comunicadas com antecedência mínima de 24 horas), indisponibilidades de provedores terceiros (Meta, provedores de IA, nuvem, telecomunicações), casos fortuitos e força maior. A eventual compensação por descumprimento de disponibilidade limita-se a créditos proporcionais na mensalidade seguinte, mediante solicitação.
+6.5. **Disponibilidade:** a Conexi IA envidará seus melhores esforços para manter disponibilidade mensal de **99%** da Plataforma, excluídas manutenções programadas (comunicadas com antecedência mínima de 24 horas), indisponibilidades de provedores terceiros (Meta, provedores de IA, nuvem, telecomunicações), casos fortuitos e força maior. A eventual compensação por descumprimento de disponibilidade limita-se a créditos proporcionais na mensalidade seguinte, mediante solicitação.
 
 ---
 
