@@ -137,12 +137,12 @@ Compartilhamos dados apenas na medida necessária para prestar o serviço, cumpr
 
 | Categoria | Finalidade | Localização |
 |---|---|---|
-| Provedor de nuvem e hospedagem | Servidores, banco de dados, armazenamento de mídias e backups da Plataforma | **[país/região — ex.: Brasil / EUA]** |
+| Provedor de nuvem e hospedagem | Servidores, banco de dados, armazenamento de mídias e backups da Plataforma | EUA |
 | Provedores de modelos de IA (ex.: OpenAI, Anthropic e outros disponibilizados na Plataforma) | Processar o conteúdo das conversas e bases de conhecimento para gerar respostas dos agentes de IA. Utilizamos APIs empresariais cujos termos vedam o uso dos dados para treinamento dos modelos. Quando o Cliente usa chaves próprias, o provedor é contratado diretamente por ele. | EUA |
 | CDN, proxy reverso e proteção contra ataques | Entrega segura do tráfego, mitigação de DDoS | Global |
-| Serviços de e-mail transacional e notificações | Envio de e-mails de sistema (convites, redefinição de senha, avisos) | **[país]** |
-| Monitoramento e registro de erros | Diagnóstico de falhas e desempenho | **[país]** |
-| Suporte, CRM e e-mail marketing | Atendimento a Clientes e comunicação comercial | **[país]** |
+| Serviços de e-mail transacional e notificações | Envio de e-mails de sistema (convites, redefinição de senha, avisos) | Brasil |
+| Monitoramento e registro de erros | Diagnóstico de falhas e desempenho | Brasil |
+| Suporte, CRM e e-mail marketing | Atendimento a Clientes e comunicação comercial | Brasil |
 | Transcrição de áudio (quando ativado) | Converter mensagens de voz em texto para leitura e processamento pela IA | EUA |
 
 ### 6.2. Controladores independentes (parceiros)
@@ -252,7 +252,7 @@ O Site e a Plataforma podem conter links para sites e serviços de terceiros (Me
 
 ## 14. Encarregado de Proteção de Dados e contato
 
-**Encarregado (DPO):** [NOME DO ENCARREGADO]
+**Encarregado (DPO):** Poliana de Vargas
 **E-mail para privacidade e LGPD:** contato@conexiia.com.br
 **Suporte geral:** contato@conexiia.com.br
 **Endereço:** Av. 7 de Setembro, 662, Centro, Maravilha/SC, CEP 89874-000
