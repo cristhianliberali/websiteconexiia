@@ -12,7 +12,7 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
  */
 export type RevealVariant = "up" | "down" | "left" | "right" | "scale" | "blur" | "line" | "fade";
 
-type Entry = { delay: number; once: boolean };
+type Entry = { delay: number; once: boolean; setVisible: (v: boolean) => void };
 
 const observed = new Map<Element, Entry>();
 let observer: IntersectionObserver | null = null;
@@ -35,6 +35,7 @@ function getObserver() {
         if (e.isIntersecting) {
           el.style.transitionDelay = `${opts.delay}ms`;
           el.classList.add("is-visible");
+          opts.setVisible(true);
           if (opts.once) {
             observer?.unobserve(el);
             observed.delete(el);
@@ -43,6 +44,7 @@ function getObserver() {
           // Na saída não há atraso: o elemento some junto com o scroll.
           el.style.transitionDelay = "0ms";
           el.classList.remove("is-visible");
+          opts.setVisible(false);
         }
       }
     },
@@ -71,6 +73,10 @@ export function RevealOnScroll({
   style?: CSSProperties;
 }) {
   const ref = useRef<HTMLElement | null>(null);
+  // Espelha a classe `is-visible` (aplicada direto no DOM pelo observer) para
+  // que um re-render do React — ex.: `className` dinâmico de um card de FAQ ao
+  // abrir — não sobrescreva o className e esconda o elemento de novo.
+  const visibleRef = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -81,11 +87,18 @@ export function RevealOnScroll({
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
       el.classList.add("is-visible");
+      visibleRef.current = true;
       return;
     }
 
     const io = getObserver();
-    observed.set(el, { delay, once });
+    observed.set(el, {
+      delay,
+      once,
+      setVisible: (v) => {
+        visibleRef.current = v;
+      },
+    });
     io.observe(el);
     return () => {
       io.unobserve(el);
@@ -93,9 +106,11 @@ export function RevealOnScroll({
     };
   }, [delay, once]);
 
+  const visibleClass = visibleRef.current ? " is-visible" : "";
+
   return (
     // @ts-expect-error dynamic tag
-    <As ref={ref} className={`reveal reveal-${variant} ${className}`} style={style}>
+    <As ref={ref} className={`reveal reveal-${variant} ${className}${visibleClass}`} style={style}>
       {children}
     </As>
   );
