@@ -1575,36 +1575,36 @@ function FAQ() {
           {items.map((it, i) => {
             const isOpen = open === i;
             return (
-              <RevealOnScroll
-                key={it.q}
-                delay={i * 50}
-                className={`overflow-hidden rounded-xl border bg-card transition-[border-color,box-shadow] duration-300 ${
-                  isOpen
-                    ? "border-primary/40 shadow-[0_12px_30px_-20px_rgba(5,8,32,0.35)]"
-                    : "border-border"
-                }`}
-              >
-                <button
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-muted/50"
-                  aria-expanded={isOpen}
-                >
-                  <span className="font-semibold text-foreground">{it.q}</span>
-                  <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform ${
-                      isOpen ? "rotate-180 text-primary" : ""
-                    }`}
-                  />
-                </button>
+              <RevealOnScroll key={it.q} delay={i * 50}>
                 <div
-                  className={`grid transition-all duration-300 ease-out ${
-                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  className={`overflow-hidden rounded-xl border bg-card transition-[border-color,box-shadow] duration-300 ${
+                    isOpen
+                      ? "border-primary/40 shadow-[0_12px_30px_-20px_rgba(5,8,32,0.35)]"
+                      : "border-border"
                   }`}
                 >
-                  <div className="overflow-hidden">
-                    <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
-                      {it.a}
-                    </p>
+                  <button
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-muted/50"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="font-semibold text-foreground">{it.q}</span>
+                    <ChevronDown
+                      className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform ${
+                        isOpen ? "rotate-180 text-primary" : ""
+                      }`}
+                    />
+                  </button>
+                  <div
+                    className={`grid transition-all duration-300 ease-out ${
+                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
+                        {it.a}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </RevealOnScroll>
